@@ -1,0 +1,307 @@
+#chart {
+  max-width: 380px;
+  // margin: 35px auto;
+  margin: 20px 0px 20px 0px;
+  padding: 0;
+}
+
+:host ::ng-deep .apexcharts-menu-icon,
+.apexcharts-reset-icon,
+.apexcharts-zoom-icon {
+  display: none;
+}
+
+:host ::ng-deep .leads-chart2 .card .card-header h5 {
+  border-bottom: 1px solid #00000040;
+}
+
+:host ::ng-deep .leads-chart2 .card .card-header {
+  text-align: center;
+}
+
+.leads-chart-container {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 55px;
+
+  @media (max-width: 768px) {
+    display: flex;
+    flex-direction: column-reverse;
+  }
+
+  .leads-chart1 {
+    padding-right: 6px;
+    overflow-x: auto; /* Enable horizontal scrolling */
+    white-space: nowrap; /* Prevent line breaks */
+    @media (max-width: 768px) {
+      overflow-x: auto; /* Ensure horizontal scrolling on mobile */
+    }
+  }
+
+  // Today's Task css
+  .leads-chart2 {
+    padding-left: 6px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .Todays-Task {
+      width: 100%;
+    }
+
+    .no-events-message {
+      text-align: center;
+    }
+
+    .task-buttons {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+      margin-bottom: 10px;
+    }
+
+    .task-buttons .nav-button,
+    .task-buttons .today-button {
+      background-color: #007bff;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .task-buttons .nav-button:hover,
+    .task-buttons .today-button:hover {
+      background-color: #0056b3;
+    }
+
+    .todayBtn {
+      margin: 0px 15px;
+    }
+
+    .task-details {
+      width: 100%;
+    }
+
+    .task-item {
+      padding: 10px;
+      margin-bottom: 5px;
+      border-radius: 5px;
+    }
+
+    .event-date {
+      margin-bottom: 3px;
+      font-weight: 600;
+    }
+
+    .event-title {
+      margin-bottom: 3px;
+    }
+
+    .meeting {
+      background-color: #ffa50030;
+    }
+
+    .follow-up {
+      background-color: #0080002b;
+      color: black;
+    }
+  }
+}
+
+:host ::ng-deep .mat-mdc-unelevated-button > .mat-icon,
+.mat-mdc-raised-button > .mat-icon,
+.mat-mdc-outlined-button > .mat-icon {
+  margin-left: 0px;
+  margin-right: 0px;
+}
+
+//------------------------search box-------------------
+:host ::ng-deep .mat-mdc-form-field-focus-overlay {
+  background-color: #fff !important;
+}
+
+:host ::ng-deep .mat-mdc-form-field-flex {
+  height: 47px !important;
+}
+
+:host ::ng-deep .mat-mdc-form-field:not(.mat-form-field-disabled) .mat-mdc-floating-label.mdc-floating-label {
+  cursor: inherit;
+  font-size: 14px;
+  padding: 0px 5px 5px 0px !important;
+}
+
+//------------------------search box-----------------
+.Follow-Ups {
+  color: #222;
+  font-size: xx-large;
+  font-weight: 600;
+}
+.fa-arrow-circle-right{
+  font-size: 16px;
+  }
+.btn-box {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  margin-top: -41px;
+  .each-btn-box {
+    width: 23.5%;
+    .btn {
+      color: #555658;
+      font-size: 16px;
+      font-weight: 600;cursor: auto;
+    }
+    .one,
+    .two,
+    .three,
+    .four {
+      border: 1px solid #55565857;
+    }
+
+    @media (max-width: 768px) {
+      width: 48%;
+      margin-bottom: 10px;
+    }
+
+    @media (min-width: 769px) and (max-width: 1200px) {
+      width: 49%;
+      margin-bottom: 10px;
+    }
+    .fa,
+    .feather,
+    .arrow-navigate {
+      @media (max-width: 768px) {
+        display: none;
+      }
+    }
+  }
+
+  @media (max-width: 768px) {
+    margin-top: 0px;
+  }
+}
+/* dash-analytics.component.css */
+.arrow-navigate {
+  float: right;
+}
+@keyframes wiggle {
+  0% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(5px);
+  }
+  50% {
+    transform: translateX(0);
+  }
+  75% {
+    transform: translateX(-5px);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+.btn:hover .arrow-navigate {
+  animation: wiggle 1s ease-in-out infinite;
+}
+
+// .each-btn-box button:hover {
+//   box-shadow: rgba(0, 0, 0, 0.15) 0px 5px 15px;
+// }
+.card-icon {
+  width: 75px;
+  /* Set width */
+  height: auto;
+  /* Maintain aspect ratio */
+  display: inline-block;
+  /* Ensure inline display */
+  margin-right: 10px;
+  /* Adjust spacing */
+  @media (max-width: 1260px) {
+    width: 68px;
+    height: auto;
+    display: inline-block;
+    margin-right: 10px;
+  }
+}
+
+// .text-white {
+//   color: #ffffff;
+//   /* Example text color */
+
+// }
+
+.card-number {
+  color: #ffffff;
+  font-size: xxx-large;
+}
+
+.mainBox {
+  display: flex;
+  flex-direction: row;
+  height: 82px;
+  align-items: center;
+}
+
+:host ::ng-deep .card .card-body {
+  /* padding: 20px 25px; */
+  padding: 20px 12px 20px 12px;
+}
+
+/* Add more styles as needed */
+:host ::ng-deep .card .card-header {
+  border-bottom: 0px solid #e2e5e8;
+  position: relative;
+  padding: 14px 25px 5px 25px;
+  margin-bottom: 0;
+}
+
+@media (max-width: 768px) {
+  .mat-mdc-paginator {
+    width: 38rem;
+  }
+
+  .leads-chart-container .leads-chart2 {
+    padding: 0px;
+  }
+
+  .leads-chart-container .leads-chart1 {
+    padding-right: 0px;
+  }
+}
+.mainBox-rt-responsive {
+  display: none;
+  .text-white-responsive {
+    color: white;
+    font-size: 16px;
+    @media (min-width: 350px) and (max-width: 380px) {
+      font-size: 14px;
+    }
+    @media (min-width: 328px) and (max-width: 349px) {
+      font-size: 13px;
+    }
+    @media (min-width: 310px) and (max-width: 327px) {
+      font-size: 12px;
+    }
+
+    @media (max-width: 309px) {
+      font-size: 11px;
+    }
+  }
+  @media (max-width: 768px) {
+    display: block;
+  }
+}
+.text-white {
+  @media (max-width: 768px) {
+    display: none;
+  }
+}
+@media (min-width: 1200px) and (max-width: 1260px) {
+  .text-white {
+    font-size: 14px;
+  }
+}

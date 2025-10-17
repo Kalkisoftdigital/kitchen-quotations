@@ -1,0 +1,151 @@
+<ul class="navbar-nav ms-auto">
+  <li>
+    <a href="javascript:" (click)="toggleFullScreen()">
+      <i class="feather" [ngClass]="isFullScreen ? 'icon-minimize' : 'icon-maximize'"></i>
+    </a></li>
+  <li *ngIf="userRole !== 'kalkisoft'">
+    <div class="dropdown" ngbDropdown placement="auto">
+      <a ngbDropdownToggle href="javascript:"><i class="icon feather icon-bell" title="Notification"></i><span
+          class="badge bg-danger"><span class="sr-only"></span></span></a>
+      <div ngbDropdownMenu class="dropdown-menu dropdown-menu-end notification">
+        <div class="noti-head">
+          <h6 class="d-inline-block m-b-0">Notifications</h6>
+        </div>
+        <ul class="noti-body">
+          <!-- Yesterday -->
+          <div class="yesterdays" *ngIf="eventsByDate.yesterday.length > 0">
+            <li class="n-title">
+              <p class="m-b-0">Yesterday</p>
+            </li>
+            <li class="notification" *ngFor="let event of eventsByDate.yesterday">
+              <div class="media">
+                <div class="media-body">
+                  <p><strong>{{ event.title.split(' - ')[0] }}</strong>
+                    <span class="n-time text-muted"><i class="icon feather icon-clock m-r-10"></i>
+                      <span class="text-mut"> {{ event.date | date:'dd/MM/yyyy hh:mm a' }}</span>
+                    </span>
+                  </p>
+                  <p>{{ event.title.split(' - ')[1] }}</p>
+                </div>
+              </div>
+            </li>
+          </div>
+          <!-- Today -->
+          <div class="Todays" *ngIf="eventsByDate.today.length > 0">
+            <li class="n-title">
+              <p class="m-b-0">Today</p>
+            </li>
+            <li class="notification" *ngFor="let event of eventsByDate.today">
+              <div class="media">
+                <div class="media-body">
+                  <p><strong>{{ event.title.split(' - ')[0] }}</strong><span class="n-time text-muted"><i
+                        class="icon feather icon-clock m-r-10"></i>
+                      <span class="text-mut">{{ event.date | date:'dd/MM/yyyy hh:mm a' }} </span>
+                    </span>
+                  </p>
+                  <p>{{ event.title.split(' - ')[1] }}</p>
+                </div>
+              </div>
+            </li>
+          </div>
+          <!-- Tomorrow -->
+          <div class="tomorrows" *ngIf="eventsByDate.tomorrow.length > 0">
+            <li class="n-title">
+              <p class="m-b-0">Tomorrow</p>
+            </li>
+            <li class="notification" *ngFor="let event of eventsByDate.tomorrow">
+              <div class="media">
+                <div class="media-body">
+                  <p><strong>{{ event.title.split(' - ')[0] }}</strong><span class="n-time text-muted"><i
+                        class="icon feather icon-clock m-r-10"></i>
+                      <span class="text-mut">{{ event.date | date:'dd/MM/yyyy hh:mm a' }}</span>
+                    </span>
+                  </p>
+                  <p>{{ event.title.split(' - ')[1] }}</p>
+                </div>
+              </div>
+            </li>
+          </div>
+          <div
+            *ngIf="eventsByDate.yesterday.length === 0 && eventsByDate.today.length === 0 && eventsByDate.tomorrow.length === 0;"
+            class="no-events-message">
+            <p>You don't have any Task.</p>
+          </div>
+          <br>
+        </ul>
+
+
+      </div>
+    </div>
+  </li>
+
+  <!-- <li>
+    <div class="dropdown" ngbDropdown placement="auto">
+
+
+      <div ngbDropdownMenu class="dropdown-menu dropdown-menu-end notification">
+
+        <ul class="noti-body">
+          <li class="n-title">
+            <p class="m-b-0">NEW</p>
+          </li>
+          <li class="notification">
+            <div class="media">
+              <div *ngIf="userDetails" class="user-details">
+                <span>Hi, {{ userDetails.fullname }}</span>
+            
+              </div>
+            </div>
+          </li>
+          <li class="n-title">
+            <p class="m-b-0">EARLIER</p>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </li>
+  <li (click)="this.visibleUserList = !this.visibleUserList">
+    <div class="dropdown">
+
+
+    </div>
+  </li> -->
+  <li>
+    <div class="dropdown drp-user" ngbDropdown placement="auto"
+      matTooltip="{{userDetails.fullname ? userDetails.fullname : 'N/A'}}">
+      <!-- {{ userDetails.fullname }} -->
+      <a href="javascript:" ngbDropdownToggle>
+        <div class="avatar-placeholder img-radius wid-40" *ngIf="userDetails">
+          {{ getInitials(userDetails.fullname) }}
+        </div>
+      </a>
+
+
+      <div class="dropdown-menu dropdown-menu-end profile-notification" ngbDropdownMenu>
+        <div class="pro-head">
+          <div *ngIf="userDetails" class="user-details">
+            <span>Hi, {{ userDetails.fullname }} <span>
+                ({{userDetails.role === 'kalkisoft' ? 'kalkisoft' :
+                userDetails.role === 'superadmin' ? 'Superadmin' :
+                userDetails.role === 'manager' ? 'Manager' :
+                userDetails.role === 'accountant' ? 'Accountant' :
+                userDetails.role === 'executive' ? 'Executive' :
+                'User'
+                }})
+              </span>
+            </span> <!-- Assuming the username is stored in userDetails -->
+          </div>
+          <!-- <a href="javascript:" class="dud-logout" title="Logout">
+            <i class="feather icon-log-out" (click)=logout()></i>
+          </a> -->
+        </div>
+        <ul class="pro-body">
+          <li *ngIf="userRole == 'superadmin'"><a class="dud-logout" class="dropdown-item myProfile" title="Profile"
+              (click)="profile(userId)"><i class="feather icon-user"></i> Profile</a></li>
+          <li><a routerLink="/signIn" class="dud-logout" title="Logout" class="dropdown-item"
+              (click)="handleLogout($event)"><i class="feather icon-log-out"></i> Log Out</a></li>
+        </ul>
+      </div>
+    </div>
+  </li>
+</ul>

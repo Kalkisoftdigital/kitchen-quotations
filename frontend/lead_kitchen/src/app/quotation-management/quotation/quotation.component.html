@@ -1,0 +1,457 @@
+<div *ngIf="isLoading"><app-loader></app-loader></div>
+<div class="row">
+  <div class="col-xl-12"> </div>
+<form action="" [formGroup]="customerForm">
+    <div class="col-sm-12">
+      <app-card cardTitle="" [options]="false">
+        <div class="header-Quotation col-12 col-md-12">
+          <div class="col-6 col-md-9 headers-box">
+            <div class="headers" *ngIf="!isCopyMode">
+              {{
+              editingMode
+              ? 'Update Quotation for (QUOTE' +
+              customerForm.get('quotation_id')?.value +
+              (customerForm.get('agent_commission')?.value === '0'
+              ? '-B'
+              : customerForm.get('agent_commission')?.value === '0'
+              ? '-C'
+              : '') +
+              ') ' +
+              customerForm.get('customer_name')?.value +
+              (customerForm.get('is_coppied')?.value === 'yes' ? ' (Copied)' : '')
+              : 'Add Quotation'
+              }}
+            </div>
+         <div class="headers" *ngIf="isCopyMode">
+              {{ 'Copy Quotation' }} for (QUOTE{{ customerForm.get('quotation_id')?.value }}) {{
+              customerForm.get('customer_name')?.value }}
+              <button mat-raised-button color="warn" (click)="onSubmitcopy()" *ngIf="isCopyMode">Copy</button>
+            </div>
+          </div>
+          <div class="Icon-Box col-6 col-md-3"><span class="cross-Icon" (click)="goBack()">&#10006;</span> </div>
+        </div>
+     <div class="row formfirst">
+          <form action="javascript:" [formGroup]="customerForm">
+            <div class="formContainer col-md-12 col-12">
+              <div class="form-group col-md-4 col-12 quotation-field">
+                <mat-form-field appearance="outline" class="mat-form-fields">
+                  <mat-label>Date</mat-label>
+                  <input matInput formControlName="quotation_date" readonly />
+                </mat-form-field>
+              </div>
+ <div class="form-group col-md-4 col-12 quotation-field" *ngIf="!editingMode">
+                <mat-form-field appearance="outline" class="mat-form-fields">
+                  <mat-label>Select Customer</mat-label>
+                  <mat-select formControlName="select_customer" placeholder="-- Select Customer --"
+                    [compareWith]="compareCustomers">
+                    <mat-option *ngFor="let customer of selectCustomer" [value]="customer"
+                      (click)="onSelectCustomer(customer)">
+                      {{ customer.name }}</mat-option></mat-select></mat-form-field>
+              </div>
+
+              <div class="form-group col-md-4 col-12 quotation-field">
+                <mat-form-field appearance="outline" class="mat-form-fields">
+                  <mat-label>Reference</mat-label>
+                  <input matInput formControlName="reference" placeholder="Reference" />
+                </mat-form-field>
+              </div>
+              <!--  -->
+              <div class="form-group col-md-4 col-12 quotation-field"
+                *ngIf="isCopyMode || customerForm.get('is_coppied')?.value !== ''">
+                <div class="">
+                  <textarea id="copy_remark" formControlName="copy_remark" class="form-control" rows="1"
+                    placeholder="Copy Remark..." maxlength="990"></textarea>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+        <!-- --------------------------------------------------------------------------------------- -->
+        <div class="header">Client Information</div>
+        <hr />
+        <div class="row">
+          <form action="javascript:" [formGroup]="customerForm">
+            <div class="formContainer col-md-12 col-12">
+              <!-- left-side -->
+              <div class="form-group col-md-6 col-12 quotation-field">
+                <div class="mat-form-fields customerData">
+                  <p class="dataHeader">Customer Name:</p>&nbsp;
+                  <p>{{ customerForm.get('customer_name')?.value }}</p>
+                </div>
+              <div class="mat-form-fields customerData">
+                  <p class="dataHeader">Consignee Address:</p>&nbsp;
+                  <p>{{ customerForm.get('consignee_address')?.value }}</p>
+                </div>
+                <div class="mat-form-fields customerData">
+                  <p class="dataHeader">Customer Number:</p>&nbsp;
+                  <p>{{ customerForm.get('contact_number')?.value }}</p>
+                </div>
+              </div>
+             <div class="form-group col-md-6 col-12 quotation-field">
+                <div class="mat-form-fields customerData">
+                  <p class="dataHeader">Business Name:</p>&nbsp;
+                  <p>{{ customerForm.get('business_name')?.value ? customerForm.get('business_name')?.value : 'N/A' }}
+                  </p>
+                </div>
+                <div class="mat-form-fields customerData">
+                  <p class="dataHeader">State:</p>&nbsp;
+                  <p>{{ customerForm.get('state')?.value ? customerForm.get('state')?.value : 'N/A' }}</p>
+                </div>
+                <div class="mat-form-fields customerData">
+                  <p class="dataHeader-email">Email:</p>&nbsp;
+                  <!-- <p>{{ customerForm.get('email')?.value }}</p> -->
+                  <input type="text" formControlName="email" placeholder="email"
+                    class="form-control dataHeader-email-input">
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </app-card>
+    </div>
+    <!------------------------------------ images --------------------------->
+    <app-card cardTitle="" [options]="false">
+      <div class="row" [formGroup]="customerForm">
+        <div class="formContainer">
+          <!-- left-side -->
+          <div class="col-md-12 col-12 image">
+            <div class="form-group">
+              <mat-label>Item Images: </mat-label>
+              <input type="file" (change)="onFilesSelected($event)" multiple />
+            </div>
+            <div *ngIf="fileSizeError" class="error" style="color: red">*File size must be less than 250 KB for each file.</div>
+            <div *ngIf="customerForm.get('companyLogoOne')?.invalid && customerForm.get('companyLogoOne')?.touched">
+              <span class="error" style="color: red">*Please upload images.</span>
+            </div>
+            <div *ngIf="selectedLogos.length > 0" class="image-box">
+              <div *ngFor="let logo of selectedLogos" class="image-box-subclass">
+                <img [src]="logo" alt="Selected Logo" class="selected-image" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </app-card>
+    <!------------------------------------ images --------------------------->
+    <!-- -------------------------------service table ------------------------------- -->
+    <div class="col-xl-12 tesbox">
+      <app-card cardTitle="" [options]="false" blockClass="table-border-style">
+        <div class="table-responsive">
+          <div class="add-box">
+            <div class="form-group col-md-6 col-12 quotation-field">
+              <p>Add Item</p>
+            </div>
+            <div class="form-group col-md-6 col-12 quotation-field">
+              <div class="offset-md-6 col-md-3 commissionBox">
+                <div class="form-group">
+                  <mat-form-field class="mat-form-fields">
+                    <mat-select formControlName="agent_commission" (selectionChange)="onCommissionChange($event)"
+                      [disabled]="isReadOnly || editingMode">
+                      <!-- <mat-option value="" disabled selected>Type</mat-option> -->
+                      <mat-option value="">Type-A</mat-option>
+                      <mat-option value="">Type-B</mat-option>
+                      <mat-option value="">Type-C</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="col-md-3 amountHide">
+                <div class="form-group">
+                  <mat-form-field class="mat-form-fields">
+                    <mat-select formControlName="amount_show_hide">
+                      <mat-option value="hideAmount">Hide Amt.</mat-option>
+                      <mat-option value="showAmount">Show Amt.</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Table structure -->
+          <div class="table-container" formArrayName="quotations_descriptions">
+            <table class="table table-striped custom-table">
+              <thead>
+                <tr>
+                  <th scope="col" class="select-item">Add Item</th>
+                  <th scope="col" class="button-add"></th>
+                  <th scope="col" class="hsn-code">Image</th>
+                  <!-- <th scope="col" class="rate">Rate (sq/ft)</th> -->
+                  <!-- <th scope="col" class="discount">Dis (%)</th> -->
+                  <th scope="col" class="sgst">Width(mm)</th>
+                  <th scope="col" class="cgst">Depth(mm)</th>
+                  <th scope="col" class="igst">Height(mm)</th>
+                  <th scope="col" class="quantity">Quantity</th>
+                  <th scope="col" class="unit">Unit</th>
+                  <th scope="col" class="amount">Amount</th>
+                  <th scope="col" class="delete">Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let element of quotations_descriptions.controls; let i = index" [formGroupName]="i"
+                  class="custom-row-height">
+                  <td class="select-item">
+                    <div *ngIf="!element.get('isDuplicated')?.value" class="aaaaaaa">
+                      <div class="service_name_static" *ngIf="!element.get('isNewEntry')?.value && !editingMode">
+                        <input type="text" matInput formControlName="service_name" readonly />
+                      </div>
+                      <mat-form-field *ngIf="element.get('isNewEntry')?.value">
+                        <!-- <mat-label>Select Item</mat-label> -->
+                        <mat-select formControlName="select_service" (openedChange)="onDropdownOpened()"
+                          (selectionChange)="onSelectService($event.value)" placeholder="Select Item">
+                          <!-- Search input field -->
+                          <mat-option>
+                            <div class="search-container">
+                              <!-- <mat-icon class="search-icon">search</mat-icon> -->
+                              <ngx-mat-select-search [formControl]="serviceSearchCtrl" placeholderLabel="Search Item..."
+                                noEntriesFoundLabel="No Items found"></ngx-mat-select-search>
+                            </div>
+                          </mat-option>
+                          <!-- Loop through filtered services -->
+                          <mat-option *ngFor="let service of filteredServices$ | async" [value]="service"
+                            [disabled]="isServiceSelected(service)" [ngClass]="{ hidden: isServiceSelected(service) }"
+                            class="servicedata">
+                            {{ service.service_name }}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                    </div>
+                    <div class="free_item_desc" *ngIf="element.get('item_category')?.value == 'FREE-ITEM'">
+                      <!-- <div class=""> <mat-label class="Remark-title">Remark :</mat-label></div> -->
+                      <div class="">
+                        <textarea id="free_item_desc" formControlName="free_item_desc" class="form-control" rows="1"
+                          placeholder="Free Item Details..." maxlength="990"></textarea>
+                      </div>
+                    </div>
+                    <div *ngIf="editingMode">
+                      <div *ngIf="!element.get('isDuplicated')?.value">
+                        <p *ngIf="element.get('item_name')?.value"><b>{{ element.get('item_name')?.value }}</b>
+                          <br />
+                          <span *ngIf="element.get('itemDescription')?.value">Desc:&nbsp;{{
+                            element.get('itemDescription')?.value }}</span>
+                        </p>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="button-add">
+                    <!-- *ngIf="!element.get('isDuplicated')?.value && !element.get('id')" -->
+                    <div *ngIf="!element.get('isDuplicated')?.value">
+                      <button mat-icon-button class="button-add-row" [ngClass]="{
+                          'disabled-button':
+                            element.get('item_category')?.value !== 'CABINET' &&
+                            element.get('item_category')?.value !== 'OTHER-CABINET' &&
+                            element.get('item_category')?.value !== 'FREE-ITEM'
+                        }" [disabled]="
+                          element.get('item_category')?.value !== 'CABINET' &&
+                          element.get('item_category')?.value !== 'OTHER-CABINET' &&
+                          element.get('item_category')?.value !== 'FREE-ITEM'
+                        " (click)="duplicateRow($event, i)">
+                        <span class="material-icons" [ngClass]="{
+                            'disabled-button':
+                              element.get('item_category')?.value !== 'CABINET' &&
+                              element.get('item_category')?.value !== 'OTHER-CABINET' &&
+                              element.get('item_category')?.value !== 'FREE-ITEM'
+                          }">
+                          content_copy
+                        </span>
+                      </button>
+                    </div>
+                  </td>
+                  <td class="hsn-code">
+                    <div *ngIf="!element.get('isDuplicated')?.value">
+                      <img *ngIf="element.get('hsn_code')?.value" [src]="element.get('hsn_code')?.value"
+                        alt="Item image" class="company-logo" [ngClass]="{ zoomed: isActiveImage(i) }"
+                        (click)="toggleZoom(i)" />
+                    </div>
+                  </td>
+                  <td class="sgst" *ngIf="element.get('item_category')?.value !== 'SHUTTER'">
+                    <input type="number" matInput formControlName="initial_sgst" class="form-control rate-input"
+                      (input)="allFieldWorking(i)" />
+                  </td>
+                  <td class="cgst" *ngIf="element.get('item_category')?.value !== 'SHUTTER'">
+                    <input type="number" matInput formControlName="initial_cgst" class="form-control rate-input"
+                      (input)="allFieldWorking(i)" />
+                  </td>
+                  <td class="igst" *ngIf="element.get('item_category')?.value !== 'SHUTTER'">
+                    <input type="number" matInput formControlName="initial_igst" class="form-control rate-input"
+                      (input)="allFieldWorking(i)" />
+                  </td>
+                  <td colspan="3" class="igst" *ngIf="element.get('item_category')?.value == 'SHUTTER'">
+                    <div class="area-row">
+                      <span class="col-md-4 area-header">
+                        <p>Area (Sq.ft.)</p>
+                      </span>
+                      <span class="col-md-4 area-input">
+                        <input type="number" matInput formControlName="area_shutter" class="form-control rate-input"
+                          (input)="allFieldWorking(i)" />
+                      </span>
+                      <span class="col-md-4 area-input2">
+                        <input type="number" matInput formControlName="add_extra_area" class="form-control rate-input"
+                          (input)="allFieldWorking(i)" />
+                      </span>
+                    </div>
+                  </td>
+                  <td class="quantity">
+                    <input type="number" matInput formControlName="quantity" class="form-control quantity-input"
+                      (input)="allFieldWorking(i)"
+                      [ngClass]="{ 'disabled-class': element.get('item_category')?.value === 'SHUTTER' }"
+                      [disabled]="element.get('item_category')?.value === 'SHUTTER'" />
+                  </td>
+                  <td class="unit_of_measurement">
+                    <input class="amount-val" style="text-align: center" formControlName="unit_of_measurement" />
+                  </td>
+                  <td class="amount" *ngIf="element.get('item_category')?.value !== 'FREE-ITEM'">
+                    <p class="amount-val"
+                      [ngClass]="{ hidden: customerForm.get('amount_show_hide')?.value === 'hideAmount' }">
+                      {{ calculateAmount(element.value) | number: '1.2-2' }}
+                    </p>
+                  </td>
+                  <td class="amount" *ngIf="element.get('item_category')?.value == 'FREE-ITEM'">
+                    <input type="number" matInput formControlName="free_item_amount" class="form-control rate-input"
+                      (input)="allFieldWorking(i)"
+                      [ngClass]="{ hidden: customerForm.get('amount_show_hide')?.value === 'hideAmount' }" />
+                  </td>
+                  <td class="delete">
+                    <button mat-icon-button (click)="removeItem(i)">
+                      <mat-icon>delete</mat-icon>
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="dataContainers box-cont" [formGroup]="customerForm">
+            <div class="second-boxDesc col-md-6 col-12">
+              <button mat-raised-button class="myBtn" color="primary" type="button" (click)="addItem()">Add
+                Item</button>
+            </div>
+            <div class="second-boxDesc col-md-6 col-md-6 col-12">
+              <div class="example-container col-md-6 col-12 other_charges">
+                <div class="total-containerFieldsRight">
+                  <p class="total-header">Total Inv. Val:</p>&nbsp;&nbsp;
+                  <p class="total_quantity_text">{{ customerForm.get('total_quantity')?.value }}</p>
+                </div>
+              </div>
+              <div class="example-container col-md-6 col-12 other_charges">
+                <div>
+                  <mat-form-field appearance="outline" class="fields_width">
+                    <mat-label>Total Amount</mat-label>
+                    <input matInput placeholder="Placeholder" formControlName="total_amount" readonly />
+                  </mat-form-field>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!---------------------- special discount -------------------------------------------->
+        <div class="dataContainers myBOX box-cont arraytable" [formGroup]="customerForm">
+          <div class="first-box col-md-6 col-12">
+            <div class="col-md-2 col-12"> <mat-label class="Remark-title">Remark :</mat-label></div>
+            <div class="col-md-10 col-12">
+              <textarea id="special_discount_remark" formControlName="special_discount_remark" class="form-control"
+                rows="1" placeholder="Remark..." maxlength="990"></textarea>
+            </div>
+          </div>
+          <div class="second-boxDesc col-md-6 col-12">
+            <div class="example-container col-md-6 col-12 other_charges">
+              <div>
+                <mat-form-field appearance="outline" class="mat-form-fields">
+                  <mat-label>Discount %</mat-label>
+                  <input matInput formControlName="special_discount" placeholder="Discount %" />
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="example-container col-md-6 col-12 other_charges">
+              <div>
+                <mat-form-field appearance="outline" class="mat-form-fields">
+                  <mat-label>Discounted Total (-)</mat-label>
+                  <input matInput formControlName="special_discount_total" readonly />
+                  <span style="position: absolute; right: 8px">₹</span>
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="second-box-gst col-md-6 offset-md-6 col-12">
+          <div class="example-container  col-md-6 offset-md-6 col-12 other_charges">
+            <div class="first-boxDiscount">
+              <div>
+                <mat-form-field appearance="outline" class="mat-form-fields">
+                  <mat-label>Discounted Amount</mat-label>
+                  <input matInput formControlName="discounted_total_amount_display" readonly />
+                  <span style="position: absolute; right: 8px">₹</span>
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- ============      gst      ==================== -->
+        <div class="second-box-gst col-md-6 offset-md-6 col-12">
+          <div class="example-container  col-md-6 col-12 other_charges">
+            <div>
+              <mat-form-field appearance="outline" class="mat-form-fields">
+                <mat-label>GST</mat-label>
+                <input matInput formControlName="transport" />
+                <span style="position: absolute; right: 8px">%</span>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="example-container  col-md-6 col-12 other_charges">
+            <div>
+              <mat-form-field appearance="outline" class="mat-form-fields">
+                <mat-label>GST Amount (+)</mat-label>
+                <input matInput formControlName="other_charges" readonly />
+                <span style="position: absolute; right: 8px">₹</span>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+        <!-- ============      gst      ==================== -->
+        <!-- ------------------------------------------------------------------------------------------------- -->
+        <div class="dataContainerNEW">
+          <div class="first-boxS col-md-12 col-12">
+            <div class="col-md-12 col-12 quotation-fields">
+              <div class="example-container transport grandTotalInWords col-md-8 col-12"
+                *ngIf="customerForm.get('grand_total_in_words')?.value">
+                <p class="grand_totalWords-head">Amount in words:&nbsp;</p>
+                <p class="grand_totalWords"> {{ customerForm.get('grand_total_in_words')?.value }} only </p>
+              </div>
+              <div class="example-container transport" class="col-md-4 col-12 grandTOtal">
+                <mat-form-field appearance="outline">
+                  <mat-label>Grand Total</mat-label>
+                  <input matInput formControlName="grand_total" class="grand_total"
+                    [value]="customerForm.get('grand_total')?.value" readonly />
+                  <span style="position: absolute; right: 3px">₹</span>
+                  <mat-hint class="GrandhintTotal">Grand Total</mat-hint>
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- --------------------------------------------------------------------------------------- -->
+        <div class="dataContainer box-cont" [formGroup]="customerForm">
+          <div class="first-box col-md-12 col-12 remarked">
+            <mat-label class="Remark-title">Terms And Conditions</mat-label>
+            <textarea id="special_discount_remark" formControlName="remark" class="form-control" rows="8"
+              placeholder="Terms And Conditions..." maxlength="990"></textarea>
+          </div>
+        </div>
+      </app-card>
+    </div>
+    <!-- ------------------------------item table ----------------------->
+    <!-- table end -->
+    <div class="button-mainContainer row justify-content-center col-12 col-md-12">
+      <div class="goBack-container col-4 col-md-2">
+        <button mat-raised-button color="accent" (click)="goBack()"><i class="fa fa-angle-double-left"></i>Back</button>
+      </div>
+      <div class="submit-container col-4 col-md-2">
+        <button type="submit" mat-raised-button color="primary" [class.spinner]="isSendingEmail"
+          [disabled]="isSendingEmail" [ngClass]="{ 'disabled-buttonS': isCopyMode }"
+          (click)="onSubmit()">Submit</button>
+      </div>
+      <div class="reset-container col-4 col-md-2">
+        <button mat-raised-button color="warn" (click)="resetForm()"
+          [ngClass]="{ 'disabled-buttonS': editingMode }">Reset</button>
+      </div>
+    </div>
+  </form>
+</div>

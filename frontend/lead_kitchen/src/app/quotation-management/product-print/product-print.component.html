@@ -1,0 +1,341 @@
+<div *ngIf="isLoading">
+  <app-loader></app-loader>
+</div>
+
+<div class="table-container printable">
+  <div class="header-Quotation col-12 col-md-12">
+    <div class="col-10 col-md-7 headers-box">
+      <div class="headers">Quotation Infomation</div>
+    </div>
+    <div class="col-4 col-md-4 allicons-box">
+      <button button mat-flat-button color="primary" (click)="printQuotation()" matTooltip="Print">
+        <span class="material-icons">print</span>
+      </button>
+      <button mat-flat-button color="warn" (click)="saveAsPDF()" class="save-as-Pdf" matTooltip="Save as Pdf">
+        <span class="material-icons">picture_as_pdf</span>
+      </button>
+
+      <button mat-flat-button color="accent" [class.spinner]="isSendingEmails" [disabled]="isSendingEmails"
+        (click)="sendQuotationByEmails()" matTooltip="Send Via Email">
+        <span class="material-icons">forward_to_inbox</span>
+      </button>
+    </div>
+    <div class="Icon-Box col-2 col-md-1"><span class="cross-Icon" (click)="goBack()">&#10006;</span> </div>
+  </div>
+  <!-- image -->
+  <div class="imageROW">
+    <div colspan="10">
+      <div class="imageRow">
+        <ng-container *ngIf="parseLogoArray(quotation?.data?.quotation?.companyLogoOne).length > 0">
+          <ng-container *ngFor="let logo of parseLogoArray(quotation.data.quotation.companyLogoOne)">
+            <div class="col-md-12 col-12 image-container watermark-container">
+              <img class="Image-size-top" [src]="'https://kitchen-backend-2.cloudjiffy.net/' + logo" alt="Company Logo"
+                aria-label="Company Logo" />
+              <div class="watermark">--NABYTEK--</div>
+            </div>
+          </ng-container>
+        </ng-container>
+        <!-- <ng-template #defaultImage>
+          <div class="col-md-12 col-12 image-container watermark-container">
+            <img
+              class="Image-size-top"
+              src="assets/default-image.png"
+              alt="Default Company Logo"
+              aria-label="Default Company Logo"
+            />
+            <div class="watermark">--NABYTEK--</div>
+          </div>
+        </ng-template> -->
+      </div>
+    </div>
+  </div>
+
+  <!-- image -->
+  <div #printable>
+    <table class="table table-bordered">
+      <thead>
+        <tr class="row-style">
+          <td colspan="10">
+            <div class="row">
+              <div class="col-sm-8 logo-box">
+                <div class="logo-img-container selected-logo" *ngIf="selectedLogo">
+                  <img [src]="selectedLogo" alt="Selected Logo" class="selected-image logo-img" />
+                </div>
+                <div *ngIf="selectedCompanyName" class="selected-company">
+                  <b class="address-info-header"> {{ selectedCompanyName }}</b>
+                </div>
+                <div class="address-info" *ngIf="companyAddress">{{ companyAddress }} </div>
+                <div class="contact-info">
+                  <label class="contact-no">Ph.No:</label><span *ngIf="companyLandline"> &nbsp;{{ companyLandline
+                    }}&nbsp;</span><label class="contact-no">E-mail :</label>
+                  <span *ngIf="email">
+                    {{ email }}
+                  </span>
+                </div>
+              </div>
+              <div class="col-sm-3 logo-img-container selected-logo" *ngIf="selectedLogo">
+                <p class="Quotation-head">QUOTATION</p>
+              </div>
+            </div>
+          </td>
+        </tr>
+
+        <!-- <tr class="row-style">
+          <td colspan="11">
+            <div class="row"> -->
+        <tr>
+          <td colspan="3">
+            <b style="font-size: 17px">Customer Details</b> <br />
+            <b>&nbsp;To : </b> &nbsp;&nbsp;{{ quotation?.data?.quotation?.customer_name }} <br />
+            <b>&nbsp;GSTIN No : </b> &nbsp;&nbsp; {{ quotation?.data?.quotation?.gstin_no ?
+            quotation?.data?.quotation?.gstin_no : 'N/A'
+            }}<br />
+            <b>&nbsp;Address : </b> &nbsp;&nbsp;{{
+            quotation?.data?.quotation?.consignee_address ? quotation?.data?.quotation?.consignee_address : 'N/A'
+            }}<br />
+            <b>&nbsp;Customer Number : </b> &nbsp;{{
+            quotation?.data?.quotation?.contact_number ? quotation?.data?.quotation?.contact_number : 'N/A'
+            }} <span *ngIf="quotation?.data?.quotation?.email"> <b>&nbsp;Email : </b> &nbsp;{{
+              quotation?.data?.quotation?.email ? quotation?.data?.quotation?.email : 'N/A'
+              }}</span>
+          </td>
+          <td colspan="7">
+            <b style="font-size: 17px">Quotation Details</b> <br />
+            <b>&nbsp;Quote No :</b> &nbsp;&nbsp;QUOTE{{ quotation?.data?.quotation?.quotation_id
+            }}<span
+              *ngIf="quotation?.data?.quotation?.agent_commission === '50' || quotation?.data?.quotation?.agent_commission === '100'">-</span>{{
+            quotation?.data?.quotation?.agent_commission === '50'
+            ? 'B'
+            : quotation?.data?.quotation?.agent_commission === '100'
+            ? 'C'
+            : ''
+            }}
+            <br />
+            <b>&nbsp;Created On :</b> &nbsp;&nbsp;{{ quotation?.data?.quotation?.created_at | date: 'dd-MM-yyyy' }}
+            <br />
+            <b>&nbsp;Updated On :</b> &nbsp;&nbsp;{{ quotation?.data?.quotation?.updated_at | date: 'dd-MM-yyyy' }}
+            <br />
+            <b>&nbsp;Customer Ref.:</b> &nbsp;&nbsp;
+            {{ quotation?.data?.quotation?.reference ? quotation?.data?.quotation?.reference : 'N/A' }} <br />
+            <b style="color: white">&nbsp;:</b>
+          </td>
+        </tr>
+
+
+
+        <tr align="center" [ngClass]="{
+            'page-break': parseLogoArray(quotation.data.quotation.companyLogoOne).length <= 4,
+            'no-page-break':
+              parseLogoArray(quotation.data.quotation.companyLogoOne).length == 4 ||
+              parseLogoArray(quotation.data.quotation.companyLogoOne).length == 0 ||
+              parseLogoArray(quotation.data.quotation.companyLogoOne).length === 1 ||
+              parseLogoArray(quotation.data.quotation.companyLogoOne).length === 2 ||
+              parseLogoArray(quotation.data.quotation.companyLogoOne).length === 3
+          }" style="background-color: #4099ff57">
+          <th rowspan="2" class="SrNo" align="center">Sr.No.</th>
+          <th rowspan="2" class="Description">Description</th>
+          <th rowspan="2" class="HSN">Image</th>
+
+          <!-- <th rowspan="2" class="Price">Disc %</th> -->
+          <th colspan="3" class="text-center GST">Size (mm)</th>
+          <th rowspan="2" class="Quantity">Qty</th>
+          <th rowspan="2" class="unit">Unit</th>
+          <th rowspan="2" colspan="2" class="Price" style="text-align: right">Price</th>
+        </tr>
+        <tr class="size-box" align="center" style="background-color: #4099ff57">
+          <th class="size-box">Width</th>
+          <th class="size-box">Depth</th>
+          <th class="size-box">Height</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let quotation of quotation?.data?.descriptions; let i = index">
+          <td align="center">{{ i + 1 }}</td>
+          <td>
+            <strong class="serviceName" *ngIf="!quotation?.free_item_desc">
+              <!-- Check for the first occurrence of service_name -->
+              {{ isFirstOccurrence('item_name', quotation) ? quotation?.item_name : '' }}
+            </strong>
+            <strong class="serviceName" *ngIf="quotation?.free_item_desc">
+              <!-- Check for the first occurrence of service_name -->
+              {{ isFirstOccurrence('free_item_desc', quotation) ? quotation?.free_item_desc : '' }}
+            </strong>
+            <br />
+            {{ isFirstOccurrence('itemDescription', quotation) ? quotation?.itemDescription : '' }}
+            <!-- <br *ngIf="quotation?.item_category == 'FREE-ITEM'" />
+            <span *ngIf="quotation?.item_category == 'FREE-ITEM'">
+              <span style="font-weight: 500">Remark:</span> {{ quotation?.free_item_desc }}
+            </span> -->
+          </td>
+          <td id="Image">
+            <img class="Image-size" [src]="
+                quotation?.item_category === 'FREE-ITEM'
+                  ? quotation?.hsn_code
+                  : isFirstOccurrences('hsn_code', quotation) && quotation?.hsn_code
+                  ? quotation?.hsn_code
+                  : 'assets/images/1727165138325.JPG'
+              " alt="Item Image" />
+          </td>
+
+          <ng-container *ngIf="quotation?.item_category !== 'SHUTTER'">
+            <td align="center">{{ quotation?.initial_sgst ? quotation?.initial_sgst : '-' }}</td>
+            <td align="center">{{ quotation?.initial_cgst ? quotation?.initial_cgst : '-' }}</td>
+            <td align="center">{{ quotation?.initial_igst ? quotation?.initial_igst : '-' }}</td>
+          </ng-container>
+
+          <td colspan="3" *ngIf="quotation?.item_category === 'SHUTTER'">
+            <div class="area-row">
+              <span class="col-md-6 area-header">
+                <p>Area :</p>
+              </span>
+              <span class="col-md-6 area-input">
+                <p> &nbsp;{{ quotation?.safeTotalShutterArea | number: '1.2-2' }} Sq.ft.</p>
+              </span>
+            </div>
+          </td>
+
+          <td align="center">{{ quotation?.quantity }}</td>
+
+          <td align="center">{{ quotation?.unit_of_measurement }}</td>
+
+          <td colspan="2" style="text-align: right">
+            <ng-container *ngIf="quotation?.initial_discount === 'showAmount'; else hideAmount">
+              {{ quotation?.amount | number: '1.2-2' }}
+            </ng-container>
+            <ng-template #hideAmount> - </ng-template>
+          </td>
+        </tr>
+
+        <!-- <ng-container *ngIf="quotation?.data?.descriptions?.length < 2">
+          <tr *ngFor="let emptyRow of getEmptyRows()" class="empty-row">
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td colspan="2">&nbsp;</td>
+          </tr>
+        </ng-container> -->
+      </tbody>
+      <tfoot>
+        <!-- [attr.rowspan]="quotation?.data?.quotation?.special_discount > 0 ? '3' : '2'" -->
+        <!-- [attr.rowspan]="quotation?.data?.quotation?.special_discount > 0 ? '5' : '4'" -->
+        <tr>
+          <td colspan="3" [attr.rowspan]="
+  quotation?.data?.quotation?.special_discount > 0 
+    ? (quotation?.data?.quotation?.transport > 0 ? '5' : '4') 
+    : (quotation?.data?.quotation?.transport > 0 ? '4' : '3')">
+            <b>Name of Account:</b><br />
+            <b>Signet Kitchen Studio</b><br />
+            <b>Bank Name: <span *ngIf="bankDetails">&nbsp;{{ bankDetails }}&nbsp;</span></b><br />
+            <b>Account No: <span *ngIf="accountNo">{{ accountNo }}</span></b><br />
+            <b>IFSC CODE: <span *ngIf="ifscCode">{{ ifscCode }}</span>
+            </b>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="1" align="center"><b>Total {{ quotation?.data?.quotation?.total_quantity | number: '1.0-0' }}</b>
+          </td>
+          <td colspan="4" align="right"><b>Total Price (in ₹)</b></td>
+          <td align="right" colspan="2">{{
+            quotation?.data?.quotation?.total_amount ? quotation?.data?.quotation?.total_amount : 'N/A'
+            }}</td>
+        </tr>
+
+
+        <!-- Only show this block if special_discount > 0 -->
+
+        <tr>
+          <td colspan="5">
+            <div class="discount_percent">
+              <b *ngIf="quotation?.data?.quotation?.special_discount > 0">
+                Discount ({{ quotation?.data?.quotation?.special_discount }}%)
+              </b>
+            </div>
+            <div *ngIf="quotation?.data?.quotation?.special_discount > 0" style="font-weight: 500"
+              class="special_discount_remark">
+              {{ quotation?.data?.quotation?.special_discount_remark }}
+            </div>
+          </td>
+          <td align="right">
+            <ng-container *ngIf="quotation?.data?.quotation?.special_discount > 0; else emptyDiscount">
+              - {{
+              quotation?.data?.quotation?.special_discount_total
+              ? quotation?.data?.quotation?.special_discount_total
+              : 'N/A'
+              }}
+            </ng-container>
+            <ng-template #emptyDiscount>
+            </ng-template>
+          </td>
+        </tr>
+
+        <tr *ngIf="quotation?.data?.quotation?.special_discount > 0">
+          <td colspan="5" align="right">
+            <b>Discounted Amount (in ₹)</b>
+          </td>
+          <td align="right">
+            {{
+            quotation?.data?.quotation?.discounted_total_amount_display
+            ? quotation?.data?.quotation?.discounted_total_amount_display
+            : '0.00'
+            }}
+          </td>
+        </tr>
+
+
+
+
+
+        <!-- <tr>
+          <td colspan="5" align="right"><b>Other Charges (in ₹)</b></td>
+          <td align="right">{{ quotation?.data?.quotation?.other_charges ? quotation?.data?.quotation?.other_charges : 'N/A' }}</td>
+        </tr> -->
+        <tr class="total-amount">
+          <td colspan="3" rowspan="2" class="total-amount"><b>Rupees in words: <br />{{
+              quotation?.data?.quotation?.grand_total_in_words }}</b>
+          </td>
+          <td colspan="5" align="right" class="total-amount sumMoney"><b>TOTAL (in ₹)</b></td>
+          <td align="right" class="total-amount sumMoney" style="font-weight: 600">{{
+            quotation?.data?.quotation?.grand_total | number: '1.2-2'
+            }}</td>
+        </tr>
+
+        <!-- FOR {{ selectedCompanyName
+        }} -->
+        <tr height="70px">
+          <td valign="bottom" align="center" colspan="6"><b>Authorized Signatory</b></td>
+        </tr>
+        <tr>
+          <td colspan="10" rowspan="3" valign="top" align="left" class="Conditions"><strong>Terms And Conditions
+              :</strong>
+            <div [innerHTML]="quotation.remark"></div>
+          </td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+
+  <div class="button-mainContainer row justify-content-center col-12 col-md-12">
+    <div class="goBack-container col-12 col-md-2">
+      <button type="submit" mat-raised-button color="primary" (click)="printQuotation()"><span
+          class="material-icons">print</span> &nbsp;Print</button>
+    </div>
+    <div class="submit-container col-12 col-md-2">
+      <button type="submit" mat-raised-button color="warn" (click)="saveAsPDF()"><span
+          class="material-icons">picture_as_pdf</span> &nbsp;Save as Pdf</button>
+    </div>
+
+    <div class="reset-container col-12 col-md-3">
+      <button mat-raised-button color="accent" [class.spinner]="isSendingEmail" [disabled]="isSendingEmail"
+        (click)="sendQuotationByEmail()"><span class="material-icons">mail_outline</span> &nbsp;Send via Email</button>
+
+      <!-- <button mat-raised-button color="success" (click)="sendWhatsapp()">
+        <span class="material-icons">chat</span> &nbsp;Send via WhatsApp
+      </button> -->
+    </div>
+  </div>
+</div>

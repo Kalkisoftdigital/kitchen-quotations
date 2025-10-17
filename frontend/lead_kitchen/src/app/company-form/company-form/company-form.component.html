@@ -1,0 +1,335 @@
+<div class="row">
+    <form action="" [formGroup]="companyForm" (ngSubmit)="onSubmit()">
+        <div class="col-sm-12">
+            <app-card cardTitle="Location Infomation" [options]="false">
+                <div class="header-box col-12 col-md-12">
+                    <div class="header col-6 col-md-6"></div>
+                    <div class="crossIconBox col-6 col-md-6"><span class="crossIcon" (click)="goBack()">&#10006;</span>
+                    </div>
+                </div>
+                <div class="row">
+
+
+                    <div class="formContainer">
+                        <!-- left-side -->
+                        <div class="col-md-6 ltSide">
+                            <div class="form-group">
+                                <mat-form-field appearance="outline" class="mat-form-fields">
+                                    <mat-label>Select Country</mat-label>
+                                    <mat-select formControlName="country">
+                                        <mat-option value="" disabled selected>-- Select Country --</mat-option>
+                                        <mat-option *ngFor="let country of countries" [value]="country">{{ country
+                                            }}</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 RtSide">
+
+                            <div class="form-group">
+                                <mat-form-field appearance="outline" class="mat-form-fields">
+                                    <mat-label>Select State</mat-label>
+                                    <mat-select formControlName="state" placeholder="-- Select State --">
+                                        <mat-option *ngFor="let state of states" [value]="state">{{ state
+                                            }}</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="formContainer">
+                        <!-- left-side -->
+                        <div class="col-md-6 ltSide">
+                            <div class="form-group">
+                                <mat-form-field appearance="outline" class="mat-form-fields">
+                                    <mat-label>District Name</mat-label>
+                                    <input matInput formControlName="district" placeholder="District Name" maxlength="50"/>
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 RtSide">
+                            <div class="form-group">
+                                <mat-form-field appearance="outline" class="mat-form-fields">
+                                    <mat-label>City Name</mat-label>
+                                    <input matInput formControlName="city" placeholder="City Name" maxlength="50"/>
+                                </mat-form-field>
+                            </div>
+
+                        </div>
+                    </div>
+
+
+                    <div class="formContainer">
+                        <!-- left-side -->
+                        <div class="col-md-6 ltSide">
+                            <div class="form-group">
+                                <mat-form-field appearance="outline" class="mat-form-fields">
+                                    <mat-label>Pincode</mat-label>
+                                    <input matInput formControlName="pincode" placeholder="Pincode"
+                                        (input)="onInput($event)" maxlength="6" />
+                                    <mat-error class="error-msg"
+                                        *ngIf="companyForm.get('pincode')?.errors?.['pattern']">
+                                        Pincode must be of 6-digits.
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 RtSide">
+
+                            <div class="form-group" *ngIf="this.selectedUserRole === 'kalkisoft'">
+                                <mat-form-field appearance="outline" class="mat-form-fields">
+                                    <mat-label>Users Allowed</mat-label>
+                                    <input matInput (input)="onInput($event)" formControlName="users_allowed"
+                                        placeholder="Users Allowed" maxlength="4"/>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="formContainer" *ngIf="this.selectedUserRole === 'kalkisoft'">
+                        <!-- left-side -->
+                        <div class="col-md-6 ltSide">
+                            <div class="form-group">
+                                <mat-form-field appearance="outline" class="mat-form-fields">
+                                    <mat-label>Start Date</mat-label>
+                                    <input matInput [matDatepicker]="startDatePicker" formControlName="start_date">
+                                    <mat-datepicker-toggle matSuffix [for]="startDatePicker"></mat-datepicker-toggle>
+                                    <mat-datepicker #startDatePicker></mat-datepicker>
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 RtSide">
+                            <div class="form-group">
+                                <mat-form-field appearance="outline" class="mat-form-fields">
+                                    <mat-label>End Date</mat-label>
+                                    <input matInput [matDatepicker]="endDatePicker" formControlName="end_date">
+                                    <mat-datepicker-toggle matSuffix [for]="endDatePicker"></mat-datepicker-toggle>
+                                    <mat-datepicker #endDatePicker></mat-datepicker>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </app-card>
+        </div>
+
+        <!-- --------------------------------------------------------------------------------------- -->
+        <app-card cardTitle="Company Infomation" [options]="false">
+            <div class="row">
+                <div class="formContainer">
+                    <!-- left-side -->
+                    <div class="col-md-6 ltSide">
+                        <div class="form-group">
+                            <mat-form-field appearance="outline" class="mat-form-fields">
+                                <mat-label>Company Name</mat-label>
+                                <input matInput formControlName="companyName" placeholder="Company Name" maxlength="50"/>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="form-group">
+                            <mat-form-field appearance="outline" class="mat-form-fields">
+                                <mat-label>First Name</mat-label>
+                                <input matInput formControlName="firstName" placeholder="First Name" maxlength="30"/>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="form-group">
+                            <mat-form-field appearance="outline" class="mat-form-fields">
+                                <mat-label>Email id</mat-label>
+                                <input matInput formControlName="email" placeholder="Enter your email address" maxlength="150"/>
+                                <mat-error class="error-msg" *ngIf="companyForm.get('email')?.errors?.['email']">
+                                    Invalid email address.
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="form-group">
+                            <mat-form-field appearance="outline" class="mat-form-fields">
+                                <mat-label>Landline No.</mat-label>
+                                <input matInput formControlName="landline" placeholder="Landline No."
+                                    (input)="onInput($event)" maxlength="10" />
+                                <mat-error class="error-msg" *ngIf="companyForm.get('landline')?.errors?.['pattern']">
+                                    Landline number must be of 10-digit.
+
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="form-group">
+                            <mat-form-field appearance="outline" class="mat-form-fields">
+                                <mat-label>Company Landline No.</mat-label>
+                                <input matInput formControlName="companyLandline" placeholder="Company Landline No."
+                                    (input)="onInput($event)" maxlength="10" />
+                                <mat-error class="error-msg"
+                                    *ngIf="companyForm.get('companyLandline')?.errors?.['pattern']">
+                                    Company Landline number must be of 10-digit.
+
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="form-group">
+                            <mat-form-field appearance="outline" class="mat-form-fields">
+                                <mat-label>Company Type</mat-label>
+
+                                <mat-select formControlName="companyType">
+                                    <mat-option value="" disabled selected>--company Type--</mat-option>
+                                    <mat-option value="Regular_business">Regular Business</mat-option>
+                                    <mat-option value="others">Others</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+
+
+                        <div class="form-group">
+                            <mat-form-field appearance="outline" class="mat-form-fields">
+                                <mat-label>Account No.</mat-label>
+                                <input matInput formControlName="accountNo" placeholder="Account No."
+                                    (input)="onInput($event)" maxlength="50"/>
+                            </mat-form-field>
+                        </div>
+
+
+                    </div>
+
+                    <!-- right side -->
+                    <div class="col-md-6 RtSide">
+                        <div class="form-group">
+                            <mat-form-field appearance="outline" class="mat-form-fields">
+                                <mat-label>Company Address</mat-label>
+                                <textarea matInput formControlName="companyAddress"
+                                    placeholder="Enter Company Address..." rows="1" maxlength="150"></textarea>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="form-group">
+                            <mat-form-field appearance="outline" class="mat-form-fields">
+                                <mat-label>Last Name</mat-label>
+                                <input matInput formControlName="lastName" placeholder="Last Name" maxlength="30"/>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="form-group">
+                            <mat-form-field appearance="outline" class="mat-form-fields">
+                                <mat-label>Mobile No.</mat-label>
+                                <input matInput formControlName="phoneNo" placeholder="Mobile No."
+                                    (input)="onInput($event)" maxlength="10" />
+                                <mat-error class="error-msg" *ngIf="companyForm.get('phoneNo')?.errors?.['pattern']">
+                                    Phone number must be of 10-digit.
+
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="form-group">
+                            <mat-form-field appearance="outline" class="mat-form-fields">
+                                <mat-label>Company Phone No.</mat-label>
+                                <input matInput formControlName="companyPhoneNo" placeholder="Company Phone No."
+                                    (input)="onInput($event)" maxlength="10" />
+                                <mat-error class="error-msg"
+                                    *ngIf="companyForm.get('companyPhoneNo')?.errors?.['pattern']">
+                                    Company Phone number must be of 10-digit.
+
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="form-group">
+                            <mat-form-field appearance="outline" class="mat-form-fields">
+                                <mat-label>GST IN</mat-label>
+                                <input matInput formControlName="gstIN" placeholder="Enter GST IN" maxlength="15"/>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="form-group">
+                            <mat-form-field appearance="outline" class="mat-form-fields">
+                                <mat-label>Bank Details</mat-label>
+                                <input matInput formControlName="bankDetails" placeholder="Bank Details" maxlength="50"/>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="form-group">
+                            <mat-form-field appearance="outline" class="mat-form-fields">
+                                <mat-label>IFSC Code</mat-label>
+                                <input matInput formControlName="ifscCode" placeholder="IFSC Code" maxlength="15"/>
+                            </mat-form-field>
+                        </div>
+
+                    </div>
+                </div>
+
+
+
+            </div>
+            <div class="formContainer" *ngIf="selectedUserRole == 'kalkisoft'">
+                <!-- left-side -->
+                <div class="col-md-6 ltSide">
+                    <section class="example-section">
+                        <mat-checkbox class="example-margin" formControlName="status" (change)="updateStatus($event)">
+                            Status:
+                            <label class="form-check-label" [ngClass]="{'statusRedColor': !companyForm.get('status')?.value}">
+                              {{ companyForm.get('status')?.value ? 'Active' : 'Inactive' }}
+                            </label>
+                          </mat-checkbox>
+                          
+                    </section>
+                </div>
+            </div>
+
+            <!-- to display the selected logo -->
+            <div class="row">
+                <div class="formContainer">
+                    <!-- left-side -->
+                    <div class="col-md-6 RtSide">
+                        <div class="form-group">
+
+                            <!-- File input to update company logo -->
+                            <div class="form-group" id="companyLogo">
+                                <div class="col-md-4 col-xl-3 col-12 companyLogo-label">
+                                    <mat-label>Company Logo</mat-label>
+                                </div>
+                                <div class="col-md-8 col-xl-9 col-12 companyLogo-file">
+                                    <input type="file" (change)="onFileSelected($event)" />
+                                </div>
+                            </div>
+                            <div *ngIf="fileSizeError" class="error" style="color: red">
+                                *File size must be less than 150 KB.
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 RtSide">
+                        <!-- separate div to display the selected logo -->
+                        <div class="form-group">
+                            <div *ngIf="selectedLogo" class="selected-logo">
+                                <img [src]="selectedLogo" alt="Selected Logo" class="selected-image" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </app-card>
+
+        <!-- ------------------------------- ------------------------------- -->
+
+        <div class="button-mainContainer row justify-content-center col-12 col-md-12">
+            <div class="goBack-container col-4 col-md-2">
+                <button type="submit" class="btn btn-primary" (click)="goBack()"><i class="fa fa-angle-double-left"></i>
+                    Back</button>
+            </div>
+            <div class="submit-container col-4 col-md-2">
+                <button type="submit" class="btn btn-success">Submit</button>
+            </div>
+            <div class="reset-container col-4 col-md-2">
+                <button type="button" class="btn btn-danger" (click)="resetForm()">Reset</button>
+            </div>
+        </div>
+    </form>
+</div>

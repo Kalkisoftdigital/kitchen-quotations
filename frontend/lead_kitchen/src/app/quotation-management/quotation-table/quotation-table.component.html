@@ -1,0 +1,165 @@
+<div *ngIf="isLoading">
+  <app-loader></app-loader>
+</div>
+
+<div class="col-xl-12">
+  <app-card cardTitle="" [options]="false" blockClass="table-border-style">
+    <div class="smallContainer">
+      <div class="col-md-6 List-of-Talukas">
+        <p class="Talukas">List of Quotations</p>
+        <p class="TalukasResponsive">Quotations</p>
+      </div>
+      <!-- Inside your smallContainer div -->
+      <div class="col-md-6 opennewPopup">
+        <button mat-raised-button color="primary" class="customer-popup" (click)="openForm()">
+          <i class="fa fa-plus" aria-hidden="true"></i> Add Quotation
+        </button>
+      </div>
+    </div>
+
+    <!-- SEARCH -->
+    <div class="search">
+      <div class="col-12 col-md-6 totalCustomer">
+        <mat-chip color="accent" class="totalCustomer-chip">
+          <p
+            >Total Quotations: <span class="totalCount">{{ this.totalCount }}</span>
+          </p>
+        </mat-chip>
+      </div>
+      <mat-form-field class="col-12 col-md-6">
+        <mat-label>Search</mat-label>
+        <input matInput (keyup)="applyFilter($event)" />
+      </mat-form-field>
+    </div>
+
+    <!------------------------------- table --------------------------------->
+    <div class="table-container" id="tableContainer">
+      <!-- table -->
+      <div class="table-responsive-wrapper">
+        <div class="table-responsive">
+          <table mat-table [dataSource]="dataSource" matSort (matSortChange)="announceSortChange($event)" class="mat-elevation-z0">
+            <!-- Position Column -->
+
+            <!-- Name Column -->
+            <ng-container matColumnDef="quotation_id">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by quotation_id"> Id </th>
+              <td mat-cell *matCellDef="let element">
+               {{ element.quotation_id }}<span *ngIf="element.agent_commission === '50' || element.agent_commission === '100'">-</span
+                >{{ element.agent_commission === '50' ? 'B' : element.agent_commission === '100' ? 'C' : '' }}
+              </td>
+            </ng-container>
+
+            <!-- Weight Column -->
+            <ng-container matColumnDef="created_at">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by created_at"> Created on</th>
+              <td mat-cell *matCellDef="let element"> {{ element.created_at | date: 'dd/MM/yyyy' }} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="customer_name">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by customer_name"> Customer Name </th>
+              <td mat-cell *matCellDef="let element" matTooltip="{{ element.customer_name }}"> {{ element.customer_name }} </td>
+            </ng-container>
+
+            <!-- <ng-container matColumnDef="business_name">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by business_name"> Biz Name </th>
+              <td mat-cell *matCellDef="let element"> {{ element.business_name ? element.business_name : 'N/A' }} </td>
+            </ng-container> -->
+
+            <!-- Symbol Column -->
+
+            <ng-container matColumnDef="grand_total">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by grand_total"> Grand Total </th>
+              <td mat-cell *matCellDef="let element"> <b>₹</b>{{ element.grand_total | number: '1.2-2' }} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="updated_at">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by updated_at">Updated on </th>
+              <td mat-cell *matCellDef="let element"> {{ element.updated_at | date: 'dd/MM/yyyy' }} </td>
+            </ng-container>
+            <ng-container matColumnDef="Edit">
+              <th mat-header-cell *matHeaderCellDef sortActionDescription="Sort by number" class="action"> Edit </th>
+              <td mat-cell *matCellDef="let element" class="editIcon">
+                <span class="material-icons matEditIcon" (click)="editQuotation(element.quotation_id)">edit</span>
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="Copy">
+              <th mat-header-cell *matHeaderCellDef sortActionDescription="Sort by number" class="action"> Copy </th>
+              <td mat-cell *matCellDef="let element" class="editIcon">
+                <span
+                  [ngClass]="{
+                    'alert alert-danger': element.is_coppied !== ''
+                  }"
+                  *ngIf="element.is_coppied !== ''">
+                  {{element.is_coppied}}{{ element.type_of_commission === '50' ? '-B' : element.type_of_commission === '100' ? '-C' : '' }}</span
+                >
+                <span
+                  class="material-icons matEditIcon"
+                  (click)="copyQuotation(element.quotation_id, element.customer_name)"
+                  *ngIf="element.is_coppied === ''"
+                  >content_copy</span
+                >
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="Delete" *ngIf="userRole == 'superadmin'">
+              <th mat-header-cell *matHeaderCellDef sortActionDescription="Sort by number" class="action"> Delete </th>
+              <td mat-cell *matCellDef="let element" class="deleteIcon"
+                ><span class="material-icons matDeleteIcon" (click)="deleteCustomer(element.quotation_id, element.customer_name)"
+                  >delete_outline</span>
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="View">
+              <th mat-header-cell *matHeaderCellDef sortActionDescription="Sort by View" class="action"> Print </th>
+
+              <td mat-cell *matCellDef="let element" class="deleteIcon"
+                ><span class="material-icons matPrintIcon" (click)="viewQuotation(element.quotation_id)">print</span>
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="sendWhatsapp">
+              <th mat-header-cell *matHeaderCellDef sortActionDescription="Sort by number" class="action"> Send </th>
+
+              <td mat-cell *matCellDef="let element" class="deleteIcon"
+                ><i class="fab fa-whatsapp" aria-hidden="true" (click)="sendWhatsapp(element.contact_number)"></i>
+              </td>
+            </ng-container>
+            <ng-container matColumnDef="sendEmail">
+              <th mat-header-cell *matHeaderCellDef sortActionDescription="Sort by number" class="action"> Send </th>
+
+              <td mat-cell *matCellDef="let element" class="deleteIcon"
+                ><i class="fa fa-envelope" aria-hidden="true" (click)="viewQuotation(element.quotation_id)"></i>
+              </td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+          </table>
+          <!-- <mat-paginator [pageSizeOptions]="[10, 20, 30]" showFirstLastButtons aria-label="Select page of periodic elements">
+        </mat-paginator> -->
+
+          <div class="row download-file">
+            <div class="col-md-8 col-12 cont-pagination">
+              <div class="items-per-page-dropdown">
+                <label for="itemsPerPage">Quotations Per Page:&nbsp;</label>
+                <select id="itemsPerPage" [(ngModel)]="selectedItemsPerPage" (change)="onItemsPerPageChange()">
+                  <option *ngFor="let option of itemsPerPageOptions" [value]="option">
+                    {{ option }}
+                  </option>
+                </select>
+              </div>
+              <ngb-pagination
+                [(page)]="p"
+                [pageSize]="itemsPerPage"
+                [collectionSize]="totalItems"
+                (pageChange)="onPageChange($event)"
+                [maxSize]="5"
+                [boundaryLinks]="true"
+              ></ngb-pagination>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </app-card>
+</div>

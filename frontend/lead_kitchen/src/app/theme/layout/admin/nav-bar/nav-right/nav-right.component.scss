@@ -1,0 +1,129 @@
+.avatar-placeholder {
+  width: 40px;
+  height: 40px;
+  background-color: white;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 18px;
+  color: #4099ff;
+  font-weight: 600;
+  transition: color 0.3s;
+
+  @media (max-width: 768px) {
+    color: white;
+    background-color: #4099ff;
+  }
+}
+
+.avatar-placeholder:hover {
+  color: #3f51b5;
+}
+
+.drp-user {
+  color: white;
+}
+
+.myProfile {
+  cursor: pointer;
+}
+
+/* Make sure dropdown menu adjusts its height based on the content */
+.dropdown-menu.notification {
+  max-height: none;
+  /* Allow the height to grow as needed */
+  overflow-y: auto;
+  /* Add scroll if the content overflows */
+  width: auto;
+  scrollbar-width: thin;
+  /* For Firefox: thin scrollbar */
+  scrollbar-color: #6c757d61 #f8f9fa;
+  /* For Firefox: scrollbar colors */
+}
+
+/* For WebKit browsers (Chrome, Safari, etc.) */
+.dropdown-menu.notification::-webkit-scrollbar {
+  width: 8px;
+  /* Width of the scrollbar */
+}
+
+.dropdown-menu.notification::-webkit-scrollbar-track {
+  background-color: #f8f9fa;
+  /* Background of the track */
+  border-radius: 4px;
+  /* Rounded corners for track */
+}
+
+.dropdown-menu.notification::-webkit-scrollbar-thumb {
+  background-color: #6c757d61;
+  /* Color of the scrollbar */
+  border-radius: 4px;
+  /* Rounded corners for scrollbar */
+  border: 2px solid #f8f9fa;
+  /* Space around the scrollbar thumb */
+}
+
+.dropdown-menu.notification::-webkit-scrollbar-thumb:hover {
+  background-color: #6c757d61;
+  /* Darker color when hovering */
+}
+
+@media (max-width: 768px) {
+  .dropdown-menu.notification {
+    width: 90%;
+  }
+}
+
+.no-events-message {
+  padding: 15px 20px;
+}
+
+.feather {
+  line-height: 2;
+}
+
+.Todays,
+.yesterdays,
+.tomorrows {
+  margin: 5px;
+  border-radius: 5px;
+}
+
+.Todays {
+  background-color: rgba(0, 128, 0, 0.168627451);
+}
+
+.yesterdays {
+  background-color: rgba(255, 165, 0, 0.1882352941);
+}
+
+.tomorrows {
+  background-color: #6c757d61;
+  margin-bottom: 5px !important;
+}
+
+/* Ensure each section title is properly displayed */
+.n-title {
+  text-align: center;
+  font-weight: bold;
+  margin-top: 10px;
+  border-bottom: 1px solid #00000040;
+  margin-left: 9px;
+  margin-right: 9px;
+}
+
+.icon-clock,
+.text-mut {
+  font-size: 12px;
+  color: black;
+}
+
+/* Optional: Add spacing between notifications */
+.notification {
+  // margin-bottom: 10px;
+}
+.navbar-nav {
+  display: flex;
+  flex-direction: row;
+}

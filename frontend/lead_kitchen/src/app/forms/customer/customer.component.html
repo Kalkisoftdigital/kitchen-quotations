@@ -1,0 +1,236 @@
+<div class="row">
+  <div class="col-sm-12">
+    <app-card cardTitle="{{ editingMode ? 'Update Customer' : 'Add Customer' }}" [options]="false">
+      <div class="header-box col-12 col-md-12">
+        <div class="header col-6 col-md-6"></div>
+        <div class="crossIconBox col-6 col-md-6"><span class="crossIcon" (click)="goBack()">&#10006;</span> </div>
+      </div>
+      <form [formGroup]="customerForm" (ngSubmit)="onSubmit()">
+        <div class="formContainer">
+          <!-- left-side -->
+          <div class="col-md-6 ltSide">
+            <div class="form-group">
+              <mat-form-field appearance="outline" class="mat-form-fields">
+                <mat-label>Customer Name</mat-label>
+                <input matInput formControlName="name" placeholder="Customer Name" maxlength="30" />
+              </mat-form-field>
+            </div>
+          </div>
+          <!-- right side -->
+          <div class="col-md-6 RtSide">
+            <div class="form-group">
+              <mat-form-field appearance="outline" class="mat-form-fields">
+                <mat-label>Customer Mobile No.</mat-label>
+                <input matInput formControlName="owner_mobile" placeholder="Customer Mobile No." (input)="onInput($event)" maxlength="10" />
+                <mat-error class="error-msg" *ngIf="customerForm.get('owner_mobile')?.errors?.['pattern']">
+                  Phone number must be of 10-digit.
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+        <div class="formContainer">
+          <!-- left-side -->
+
+          <div class="col-md-6 ltSide">
+            <div class="form-group">
+              <mat-form-field appearance="outline" class="mat-form-fields">
+                <mat-label>Reference Person Name</mat-label>
+                <input matInput formControlName="contact_person" placeholder="Reference Person Name" maxlength="30" />
+              </mat-form-field>
+            </div>
+          </div>
+          <!-- right side -->
+          <div class="col-md-5 RtSide">
+            <div class="form-group">
+              <mat-form-field appearance="outline" class="mat-form-fields">
+                <mat-label>Mobile No.</mat-label>
+                <input matInput formControlName="contact_number" placeholder="Mobile No." (input)="onInput($event)" maxlength="10" />
+                <mat-error class="error-msg" *ngIf="customerForm.get('contact_number')?.errors?.['pattern']">
+                  Phone number must be of 10-digit.
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div class="col-md-1 add-button">
+            <button
+              mat-mini-fab
+              color="primary"
+              aria-label="Example icon button with a menu icon"
+              (click)="addServiceDescription($event)"
+              [disabled]="serviceDescriptionControls.length >= 2"
+            >
+              <i class="fa fa-plus" aria-hidden="true"></i>
+            </button>
+          </div>
+        </div>
+
+        <div class="formContainer">
+          <div class="col-md-12 col-12">
+            <div class="form-group">
+              <!-- <button type="button" class="btn btn-success" (click)="addServiceDescription()">Add Another Service Description</button> -->
+
+              <div formArrayName="person_description">
+                <div *ngFor="let description of serviceDescriptionControls.controls; let i = index" [formGroupName]="i">
+                  <div class="description-box">
+                    <div class="col-md-6 ltSide">
+                      <div class="form-group">
+                        <mat-form-field appearance="outline" class="mat-form-fields">
+                          <mat-label>Reference Person Name</mat-label>
+                          <input
+                            matInput
+                            formControlName="contact_person2"
+                            id="contact_person2"
+                            placeholder="Reference Person Name"
+                            maxlength="30"
+                          />
+                        </mat-form-field>
+                      </div>
+                    </div>
+                    <div class="col-md-5 RtSide">
+                      <div class="form-group">
+                        <mat-form-field appearance="outline" class="mat-form-fields">
+                          <mat-label>Mobile No.</mat-label>
+                          <input
+                            matInput
+                            formControlName="contact_number2"
+                            id="contact_number2"
+                            placeholder="Mobile No."
+                            (input)="onInput($event)"
+                            maxlength="10"
+                          />
+                        </mat-form-field>
+                      </div>
+                    </div>
+                    <div class="col-md-1 del-button">
+                      <button mat-icon-button color="warn" class="deleteIcon" (click)="removeServiceDescription(i)">
+                        <i class="fa fa-trash fa-trashMy" aria-hidden="true"></i
+                      ></button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="formContainer">
+          <!-- left-side -->
+
+          <div class="col-md-6 ltSide">
+            <div class="form-group">
+              <mat-form-field appearance="outline" class="mat-form-fields">
+                <mat-label>Email id</mat-label>
+                <input matInput formControlName="email" placeholder="Enter email address" maxlength="50" />
+                <mat-error class="error-msg" *ngIf="customerForm.get('email')?.errors?.['email']"> Invalid email address. </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+          <!-- right side -->
+          <div class="col-md-6 RtSide">
+            <div class="form-group">
+              <mat-form-field appearance="outline" class="mat-form-fields">
+                <mat-label>Address</mat-label>
+                <textarea matInput formControlName="address" placeholder="Enter Address..." rows="1" maxlength="150"></textarea>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+
+        <div class="formContainer">
+          <!-- left-side -->
+          <div class="col-md-6 ltSide">
+            <div class="form-group">
+              <mat-form-field appearance="outline" class="mat-form-fields">
+                <mat-label>State</mat-label>
+                <mat-select formControlName="state" placeholder="-- Select State --" (selectionChange)="onStateChange()">
+                  <mat-option *ngFor="let state of states" [value]="state.state_name">{{ state.state_name }}</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </div>
+          <!-- right side -->
+          <div class="col-md-6 RtSide">
+            <div class="form-group">
+              <mat-form-field appearance="outline" class="mat-form-fields">
+                <mat-label>City</mat-label>
+                <input matInput formControlName="city" placeholder="Enter City" maxlength="50" />
+              </mat-form-field>
+
+              <!-- <mat-form-field appearance="outline" class="mat-form-fields">
+                                <mat-label>Select City</mat-label>
+                                <mat-select formControlName="city" placeholder="-- Select City --">
+                                    <mat-option *ngFor="let city of cities" [value]="city.id">{{ city.city_name
+                                        }}</mat-option>
+                                </mat-select>
+                            </mat-form-field> -->
+            </div>
+          </div>
+        </div>
+
+        <div class="formContainer">
+          <!-- left-side -->
+          <div class="col-md-6 ltSide">
+            <div class="form-group">
+              <mat-form-field appearance="outline" class="mat-form-fields">
+                <mat-label>Pincode</mat-label>
+                <input matInput formControlName="pincode" placeholder="Enter Pincode" (input)="onInput($event)" maxlength="6" />
+                <mat-error class="error-msg" *ngIf="customerForm.get('pincode')?.errors?.['pattern']">
+                  Pincode must be of 6-digit.
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+          <!-- right side -->
+          <div class="col-md-6 RtSide">
+            <div class="form-group">
+              <mat-form-field appearance="outline" class="mat-form-fields">
+                <mat-label>Landline No.</mat-label>
+                <input matInput formControlName="landline_no" placeholder="Landline No." (input)="onInput($event)" maxlength="10" />
+                <mat-error class="error-msg" *ngIf="customerForm.get('landline_no')?.errors?.['pattern']">
+                  Landline number must be of 10-digit.
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+
+        <div class="formContainer">
+          <!-- left-side -->
+          <div class="col-md-6 ltSide">
+            <div class="form-group">
+              <mat-form-field appearance="outline" class="mat-form-fields">
+                <mat-label>GST IN</mat-label>
+                <input matInput formControlName="gst_in" placeholder="Enter GST IN" maxlength="15" />
+              </mat-form-field>
+            </div>
+          </div>
+          <!-- right side -->
+
+          <div class="col-md-6 RtSide">
+            <div class="form-group">
+              <mat-form-field appearance="outline" class="mat-form-fields">
+                <mat-label>Company Name</mat-label>
+                <input matInput formControlName="business_name" placeholder="Company Name" maxlength="50" />
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+
+        <div class="button-mainContainer row justify-content-center col-12 col-md-12">
+          <div class="goBack-container col-4 col-md-2">
+            <button mat-raised-button color="accent" (click)="goBack()"><i class="fa fa-angle-double-left"></i> Back</button>
+          </div>
+          <div class="submit-container col-4 col-md-2">
+            <button type="submit" mat-raised-button color="primary" [class.spinner]="isSendingEmail" [disabled]="isSendingEmail"
+              >Submit</button
+            >
+          </div>
+          <div class="reset-container col-4 col-md-2">
+            <button type="button" mat-raised-button color="warn" (click)="resetForm()">Reset</button>
+          </div>
+        </div>
+      </form>
+    </app-card>
+  </div>
+</div>

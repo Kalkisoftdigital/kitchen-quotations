@@ -1,0 +1,137 @@
+<div *ngIf="isLoading">
+  <app-loader></app-loader>
+</div>
+
+<div class="col-xl-12">
+  <app-card cardTitle="" [options]="false" blockClass="table-border-style">
+
+    <div class="smallContainer">
+      <div class="col-md-6 List-of-Talukas">
+        <p class="Talukas">List of Categories</p>
+        <p class="TalukasResponsive">Categories</p>
+      </div>
+      <!-- Inside your smallContainer div -->
+      <div class="col-md-6 opennewPopup">
+        <button mat-raised-button color="primary" class="customer-popup" (click)="openDialog('0ms', '0ms')">
+          <i class="fa fa-plus" aria-hidden="true"></i> Add Category
+        </button>
+      </div>
+    </div>
+
+    <!-- Add this at the end of your existing HTML content -->
+
+
+    <!------------------------------- table --------------------------------->
+
+
+    <!-- SEARCH -->
+    <div class="search">
+
+      <div class="col-12 col-md-6 totalCustomer">
+        <mat-chip color="accent" class="totalCustomer-chip">
+       <p>Total Categories: <span class="totalCount">{{this.totalCount}}</span> </p>
+        </mat-chip>
+      </div>
+      <mat-form-field class="col-12 col-md-6">
+        <mat-label>Search</mat-label>
+        <input matInput (keyup)="applyFilter($event)">
+      </mat-form-field>
+    </div>
+    <!-- table -->
+    <div class="table-responsive-wrapper">
+    <div class="table-responsive">
+      <table mat-table [dataSource]="dataSource" matSort (matSortChange)="announceSortChange($event)"
+        class="mat-elevation-z0">
+
+        <!-- Position Column -->
+        <!-- Position Column -->
+        <ng-container matColumnDef="id">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by id">
+            S/N
+          </th>
+          <td mat-cell *matCellDef="let element; let i = index"> {{(p - 1) * itemsPerPage + i + 1}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="created_at">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by created_at" class="date">
+            Date
+          </th>
+          <td mat-cell *matCellDef="let element"> {{element.created_at | date: 'dd-MM-yyyy'}} </td>
+        </ng-container>
+        <!-- Name Column -->
+        <ng-container matColumnDef="loginUserName">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by loginUserName">
+            Executive
+          </th>
+          <td mat-cell *matCellDef="let element"> {{element.loginUserName}} </td>
+        </ng-container>
+
+
+        <!-- Weight Column -->
+        <ng-container matColumnDef="sub_category">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by sub_category">
+            Category Name
+          </th>
+          <td mat-cell *matCellDef="let element" class="truncate" matTooltip="{{element.sub_category ? element.sub_category : 'N/A'}}"> {{element.sub_category ? element.sub_category : 'N/A'}} </td>
+        </ng-container>
+
+        <!-- Weight Column -->
+        <ng-container matColumnDef="description">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by description">
+            Description
+          </th>
+          <td mat-cell *matCellDef="let element" class="truncates" matTooltip="{{element.description ? element.description : 'N/A'}}"> {{element.description ? element.description : 'N/A'}} </td>
+        </ng-container>
+        <!-- Symbol Column -->
+        <ng-container matColumnDef="status">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by status">
+            Status
+          </th>
+          <td mat-cell *matCellDef="let element" [ngClass]="{'statusRedColor' : element.status ==='inactive' }">
+            {{element.status === 'active' ? 'Active' : 'Inactive'}} </td>
+        </ng-container>
+
+
+
+        <ng-container matColumnDef="Edit">
+          <th mat-header-cell *matHeaderCellDef sortActionDescription="Sort by number" class="action">
+            Edit
+          </th>
+          <td mat-cell *matCellDef="let element" class="editIcon">
+            <span class='material-icons matEditIcon' matTooltip="Edit" (click)="editCustomer(element.id)">edit</span>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="Delete" *ngIf="userRole == 'superadmin'">
+          <th mat-header-cell *matHeaderCellDef sortActionDescription="Sort by number" class="action">
+            Delete
+          </th>
+
+
+          <td mat-cell *matCellDef="let element" class="deleteIcon">
+            <span class="material-icons matDeleteIcon" matTooltip="Delete"
+              (click)="deleteCustomer(element.id, element.sub_category)">delete_outline</span>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+      <div class="row download-file">
+        <div class="col-md-8 col-12 cont-pagination">
+          <div class="items-per-page-dropdown">
+            <label for="itemsPerPage">Categories Per Page:&nbsp;</label>
+            <select id="itemsPerPage" [(ngModel)]="selectedItemsPerPage" (change)="onItemsPerPageChange()">
+              <option *ngFor="let option of itemsPerPageOptions" [value]="option">
+                {{ option }}
+              </option>
+            </select>
+          </div>
+          <ngb-pagination [(page)]="p" [pageSize]="itemsPerPage" [collectionSize]="totalItems"
+            (pageChange)="onPageChange($event)" [maxSize]="5" [boundaryLinks]="true"></ngb-pagination>
+        </div>
+      </div>
+    </div>
+  </div>
+  </app-card>
+</div>

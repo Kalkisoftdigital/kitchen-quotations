@@ -1,0 +1,133 @@
+<div *ngIf="isLoading">
+  <app-loader></app-loader>
+</div>
+<div class="col-xl-12">
+  <app-card cardTitle="" [options]="false" blockClass="table-border-style">
+
+    <div class="smallContainer">
+      <div class="col-md-6 List-of-Talukas">
+        <p class="Talukas">List of Quotations send</p>
+        <p class="TalukasResponsive">Quotations send</p>
+      </div>
+      <!-- Inside your smallContainer div -->
+
+    </div>
+
+    <!-- Add this at the end of your existing HTML content -->
+
+
+    <!------------------------------- table --------------------------------->
+    <!-- <pre>
+        {{ dataSource.data | json }}
+      </pre> -->
+
+    <!-- SEARCH -->
+      <!-- SEARCH -->
+      <div class="search">
+
+        <div class="col-12 col-md-6 totalCustomer">
+          <mat-chip color="accent" class="totalCustomer-chip">
+         <p>Quotations send: <span class="totalCount">{{this.totalCount}}</span> </p>
+          </mat-chip>
+        </div>
+        <mat-form-field class="col-12 col-md-6">
+          <mat-label>Search</mat-label>
+          <input matInput (keyup)="applyFilter($event)">
+        </mat-form-field>
+      </div>
+    <!-- table -->
+    <div class="table-responsive-wrapper">
+    <div class="table-responsive">
+      <table mat-table [dataSource]="dataSource" matSort (matSortChange)="announceSortChange($event)"
+        class="mat-elevation-z0">
+
+        <!-- Position Column -->
+        <ng-container matColumnDef="id">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by number">
+            Id
+          </th>
+          <td mat-cell *matCellDef="let element; let i = index"> {{(p - 1) * itemsPerPage + i + 1}} </td>
+        </ng-container>
+
+
+
+        <!-- Weight Column -->
+        <ng-container matColumnDef="created_on">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by created_on">
+            Date
+          </th>
+          <td mat-cell *matCellDef="let element"> {{element.created_on | date:'dd-MM-yyyy'}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="userName">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by userName">
+            Sender
+          </th>
+          <td mat-cell *matCellDef="let element"> {{element.userName }} </td>
+        </ng-container>
+        <!-- Symbol Column -->
+        <ng-container matColumnDef="quotationId">
+          <th mat-header-cell *matHeaderCellDef>Quote Id</th>
+          <td mat-cell *matCellDef="let element">
+            QUOTE{{element.quotationId}}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="businessName">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by businessName">
+            Business Name
+          </th>
+          <td mat-cell *matCellDef="let element"> {{element.businessName}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="recipientEmail">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by recipientEmail">
+            Recipient Email
+          </th>
+          <td mat-cell *matCellDef="let element"> {{element.recipientEmail}} </td>
+        </ng-container>
+
+
+
+
+
+
+        <ng-container matColumnDef="ViewQuote">
+          <th mat-header-cell *matHeaderCellDef sortActionDescription="Sort by ViewQuote" class="action">
+            View Quotation
+          </th>
+          <td mat-cell *matCellDef="let element" class="editIcon matEditIcon"><i class="fa fa-eye" aria-hidden="true"
+              (click)="openQuotationPrint(element.quotationId)" matTooltip="View Quotation"></i>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="Delete">
+          <th mat-header-cell *matHeaderCellDef sortActionDescription="Sort by number" class="action">
+            Delete
+          </th>
+
+          <td mat-cell *matCellDef="let element" class="deleteIcon"><span class="material-icons matDeleteIcon"
+              (click)="deleteProduct(element.id, element.businessName)" matTooltip="Delete Record">delete_outline</span>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+      <div class="row download-file">
+        <div class="col-md-8 col-12 cont-pagination">
+            <div class="items-per-page-dropdown">
+                <label for="itemsPerPage">Quotation Per Page:&nbsp;</label>
+                <select id="itemsPerPage" [(ngModel)]="selectedItemsPerPage" (change)="onItemsPerPageChange()">
+                    <option *ngFor="let option of itemsPerPageOptions" [value]="option">
+                        {{ option }}
+                    </option>
+                </select>
+            </div>
+            <ngb-pagination [(page)]="p" [pageSize]="itemsPerPage" [collectionSize]="totalItems"
+                (pageChange)="onPageChange($event)" [maxSize]="5" [boundaryLinks]="true"></ngb-pagination>
+        </div>
+    </div>
+    </div></div>
+  </app-card>
+</div>

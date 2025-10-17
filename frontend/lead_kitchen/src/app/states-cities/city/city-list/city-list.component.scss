@@ -1,0 +1,74 @@
+
+
+.smallContainer {
+    display: flex;
+    margin: -30px 0px 17px 0px;
+    justify-content: space-between;
+
+    .opennewPopup {
+        display: flex;
+        justify-content: flex-end !important;
+    }
+}
+
+.customer-popup {
+    // height: 45px;
+}
+
+.List-of-Talukas {
+    display: flex;
+    justify-content: flex-start;
+}
+
+.Talukas {
+    font-size: xx-large;
+    color: black;
+}
+table {
+    th {
+        font-weight: 500;
+        background-color: #4099ff !important;
+        color: white !important;
+    }
+
+    tr {
+        // background-color: rgba(128, 128, 128, 0.0705882353) !important; 
+        height: 34px;
+    }
+    tr:nth-child(odd) {
+        background-color: rgba(192, 192, 192, 0.1) !important;
+    }
+}
+//------------------------search box-------------------
+::ng-deep .mat-mdc-form-field-focus-overlay {
+    background-color: #fff !important;
+}
+
+::ng-deep .mat-mdc-form-field-flex {
+    height: 47px !important;
+}
+
+::ng-deep .mat-mdc-form-field:not(.mat-form-field-disabled) .mat-mdc-floating-label.mdc-floating-label {
+    cursor: inherit;
+    font-size: 14px;
+    padding: 0px 5px 5px 0px !important;
+}
+
+//------------------------search box-----------------
+
+.status-Active {
+    color: black;
+}
+
+.status-Inactive {
+    color: #f44336;
+}
+@media (max-width: 768px) {
+    .mat-mdc-paginator {
+        width: 38rem;
+    }
+
+    .mat-mdc-table {
+        width: 600px;
+    }
+}

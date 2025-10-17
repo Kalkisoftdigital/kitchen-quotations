@@ -1,0 +1,361 @@
+<div *ngIf="isLoading">
+    <app-loader></app-loader>
+  </div>
+
+<div class="col-xl-12">
+    <app-card cardTitle="" [options]="false" blockClass="table-border-style">
+        <div class="smallContainer">
+            <div class="col-md-6 List-of-Talukas">
+                <p class="Talukas">List of Enquiries</p>
+                <p class="TalukasResponsive">Enquiries</p>
+            </div>
+            <!-- Inside your smallContainer div -->
+            <div class="col-md-6 opennewPopup">
+                <button mat-raised-button color="primary" class="customer-popup" (click)="openForm()">
+                    <i class="fa fa-plus" aria-hidden="true"></i> Add Enquiry
+                </button>
+            </div>
+        </div>
+
+        <!-------------------------- stepper--------------------------------->
+
+        <!-- <ng-container *ngIf="stepperOrientation | async as orientation">
+            <ng-container [ngSwitch]="orientation">
+                <div *ngSwitchCase="'horizontal'">Make your screen smaller to see a vertical stepper</div>
+                <div *ngSwitchCase="'vertical'">Make your screen larger to see a horizontal stepper</div>
+            </ng-container>
+        </ng-container> -->
+
+        <mat-stepper class="example-stepper" [orientation]="(stepperOrientation | async)!" #stepper
+            (click)="stepSelectionChanged(stepper.selectedIndex)">
+            <mat-step>
+                <ng-template matStepLabel>All Leads
+                    <!-- data -->
+                    <span class="badge-container">
+                        <span class="md-badge custom-badge" matBadge="{{ allEnquiryCount }}"
+                            matBadgeColor="warn"></span>
+                    </span>
+                </ng-template>
+            </mat-step>
+
+            <mat-step>
+                <ng-template matStepLabel>Quote Send
+                    <!-- data -->
+                    <span class="badge-container">
+                        <span class="md-badge custom-badge" matBadge="{{ QuotationCount }}" matBadgeColor="warn"></span>
+                    </span>
+                </ng-template>
+            </mat-step>
+
+            <mat-step>
+                <ng-template matStepLabel>Confirmed
+
+                    <!-- data -->
+                    <span class="badge-container">
+                        <span class="md-badge custom-badge" matBadge="{{ ConfirmedOrder }}" matBadgeColor="warn"></span>
+                    </span>
+                </ng-template>
+            </mat-step>
+
+            <mat-step>
+                <ng-template matStepLabel>In Progress
+
+                    <!-- data -->
+                    <span class="badge-container">
+                        <span class="md-badge custom-badge" matBadge="{{ WorkInProgress }}" matBadgeColor="warn"></span>
+                    </span>
+                </ng-template>
+            </mat-step>
+
+            <mat-step>
+                <ng-template matStepLabel>Completed
+
+                    <!-- data -->
+                    <span class="badge-container">
+                        <span class="md-badge custom-badge" matBadge="{{ ProjectCompleted }}"
+                            matBadgeColor="warn"></span>
+                    </span>
+                </ng-template>
+            </mat-step>
+
+            <mat-step>
+                <ng-template matStepLabel>On Hold
+
+                    <!-- data -->
+                    <span class="badge-container">
+                        <span class="md-badge custom-badge" matBadge="{{ onHoldCount }}" matBadgeColor="warn"></span>
+                    </span>
+                </ng-template>
+            </mat-step>
+
+            <mat-step>
+                <ng-template matStepLabel>Rejected
+
+                    <!-- data -->
+                    <span class="badge-container">
+                        <span class="md-badge custom-badge" matBadge="{{ rejectedCount }}" matBadgeColor="warn"></span>
+                    </span>
+                </ng-template>
+            </mat-step>
+        </mat-stepper>
+
+        <!----------------------------- search  -------------------------->
+        <!-- SEARCH -->
+        <div class="search">
+            <mat-form-field class="col-12 col-md-12">
+                <mat-label><span class="material-icons">search</span> </mat-label>
+                <input matInput (keyup)="applyFilter($event)" />
+            </mat-form-field>
+        </div>
+        <!------------------------------- table --------------------------------->
+        <div class="table-responsive-wrapper">
+        <div class="table-responsive">
+            <mat-table class="mat-elevation-z0" #table [dataSource]="dataSource" multiTemplateDataRows="true" matSort
+                (matSortChange)="announceSortChange($event)">
+                <!-- Expand Column -->
+                <ng-container matColumnDef="expand">
+                    <mat-header-cell *matHeaderCellDef> Expand </mat-header-cell>
+                    <mat-cell *matCellDef="let element">
+                        <span *ngIf="!element.isExpanded" class="deleteIcon signs"><i
+                                class="fa fa-arrow-up fa-plusColor"></i></span>
+                        <span *ngIf="element.isExpanded" class="deleteIcon signs"><i
+                                class="fa fa-arrow-down fa-plusColor"></i></span>
+                    </mat-cell>
+                </ng-container>
+
+                <!-- Roll No Column -->
+                <ng-container matColumnDef="id">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by number"> Id
+                    </mat-header-cell>
+                    <!-- <mat-cell *matCellDef="let element"> {{ element.id }} </mat-cell> -->
+                    <mat-cell *matCellDef="let row; let i = dataIndex;">{{(p - 1) * itemsPerPage + i + 1}}</mat-cell>
+                </ng-container>
+
+                <!-- Name Column -->
+                <ng-container matColumnDef="createdOn">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by createdOn">
+                        Created On
+                    </mat-header-cell>
+                    <mat-cell *matCellDef="let element"> {{ element.createdOn | date: 'dd-MM-yyyy' }} </mat-cell>
+                </ng-container>
+
+                <!-- contact_person Column -->
+                <ng-container matColumnDef="name">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by name">
+                        Customer
+                    </mat-header-cell>
+                    <mat-cell *matCellDef="let element"> {{
+                        element.name }} </mat-cell>
+                </ng-container>
+                <!-- contact_number Column -->
+                <!-- <ng-container matColumnDef="contact_number">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by number"> Contact
+                        Number </mat-header-cell>
+                    <mat-cell *matCellDef="let element"> {{ element.contact_number }} </mat-cell>
+                </ng-container> -->
+                <!-- contactPerson Column -->
+                <ng-container matColumnDef="business_name">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by business_name">
+                        Business Name</mat-header-cell>
+                    <mat-cell *matCellDef="let element"> {{ element.business_name ? element.business_name : 'N/A' }} </mat-cell>
+                </ng-container>
+                <!-- contact_person Column -->
+                <ng-container matColumnDef="contact_person">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by contact_person">
+                        Contact Person
+                    </mat-header-cell>
+                    <mat-cell *matCellDef="let element"> {{ element.contact_person ? element.contact_person : 'N/A' }} </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="contact_number">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by contact_number">
+                        Contact Number
+                    </mat-header-cell>
+                    <mat-cell *matCellDef="let element"> {{ element.contact_number }} </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="quotationMailSend">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header
+                        sortActionDescription="Sort by quotationMailSend">
+                        Quotation Send
+                    </mat-header-cell>
+                    <mat-cell *matCellDef="let element" class="text-center">
+                        <ng-container *ngIf="element.quotationMailSend === 'yes'; else notSent">
+                            <span class="material-icons doneAll" matTooltip="Quotation Send">done_all</span>
+                        </ng-container>
+                        <ng-template #notSent>
+                            <!-- You can put an alternative icon or text here if needed -->
+                            <!-- <span class="material-icons NotDone" >cancel</span> -->
+                        </ng-template>
+                    </mat-cell>
+                </ng-container>
+
+
+                <ng-container matColumnDef="status_main">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by status_main">
+                        Status </mat-header-cell>
+                    <mat-cell *matCellDef="let element">
+                        <div [ngClass]="{
+                              'alert alert-primary': element.status_main === 'Meeting',
+                              'alert alert-warning': element.status_main === 'Follow Up',
+                              'alert alert-success': element.status_main === 'Quotation Send'
+                            }" role="alert">
+                            {{ element.details && element.details.length > 0 ? element.details[element.details.length -
+                            1].status : element.status_main }}
+                        </div>
+                    </mat-cell>
+                </ng-container>
+
+
+
+                <ng-container matColumnDef="action">
+                    <mat-header-cell *matHeaderCellDef class="action"> Action </mat-header-cell>
+                    <mat-cell *matCellDef="let element">
+                        <div>
+                            <span class="material-icons matDetailIcon" matTooltip="Details"
+                                (click)="openDialog('0ms', '0ms', element.id)">fullscreen</span>
+                        </div>
+                        <div *ngIf="userRole === 'superadmin'">
+                            <span class="material-icons matEditIcon" matTooltip="Edit"
+                                (click)="editCustomer(element.id)">edit</span>
+                        </div>
+                        <div *ngIf="userRole === 'superadmin'">
+                            <span class="material-icons matDeleteIcon" matTooltip="Delete"
+                                (click)="deleteCustomer(element.id, element.name)">delete_outline</span>
+                        </div>
+                    </mat-cell>
+                </ng-container>
+
+                <!-- Expanded Content Column - The detail row is made up of this one column -->
+
+                <ng-container matColumnDef="expandedDetail">
+                    <mat-cell *matCellDef="let element" [attr.colspan]="displayedColumns.length">
+                        <div *ngIf="element.isExpanded" class="expanded-detail-rows">
+                            <div *ngFor="let detail of element.details; let i = index"
+                                class="col-md-12 col-12 detail-rows" style="width: 100%">
+                                <!-- Date, remark, and Textarea fields -->
+                                <!-- Date input field -->
+                                <div class="col-md-2 col-2 date" *ngIf="!detail.id">
+                                    <input type="date" [ngModel]="formattedDate(detail.date)"
+                                        (ngModelChange)="detail.date = $event" class="form-control date-input"
+                                        placeholder="Date" name="date" [min]="currentDate" required>
+                                    <!-- Add the required attribute for validation -->
+                                </div>
+
+                                <div class="col-md-2 col-2 date display-value" *ngIf="detail.id">
+                                    <p>{{detail.date | date: 'dd/MM/yyyy'}}</p>
+                                </div>
+
+                                <div class="col-md-2 col-2 date" *ngIf="!detail.id">
+                                    <mat-select [(ngModel)]="detail.status" class="form-control">
+                                        <mat-option value="">-- Status --</mat-option>
+                                        <mat-option *ngFor="let statusOption of statusOptions" [value]="statusOption">{{
+                                            statusOption }}</mat-option>
+                                        <hr>
+                                        <mat-option *ngFor="let statusOption of selectEnqMaster"
+                                            [value]="statusOption">{{
+                                            statusOption }}</mat-option>
+                                    </mat-select>
+                                </div>
+                                <div class="col-md-2 col-2 date display-value" *ngIf="detail.id">
+                                    <p>{{ detail.status }}</p>
+                                </div>
+                                <!-- For new added row -->
+                                <div class="col-md-4 col-4 date" *ngIf="!detail.id">
+                                    <textarea [(ngModel)]="detail.remark" class="form-control" placeholder="Remark"
+                                        rows="1" [disabled]="submitClicked" maxlength="220" required></textarea>
+                                </div>
+
+                                <!-- For already added row after data is saved -->
+                                <div class="col-md-4 col-4 date display-value" *ngIf="detail.id">
+                                    <p>{{ detail.remark }}</p>
+                                </div>
+
+
+                                <div class="col-md-2 col-2 date"
+                                    *ngIf="detail?.status === 'Document Upload' && !detail.id">
+                                    <div class="form-group">
+
+                                        <!-- File input to update company logo -->
+                                        <div class="form-group" id="companyLogo">
+
+                                            <div class="col-md-8 col-xl-9 col-8 companyLogo-file">
+                                                <input type="file" (change)="onFileSelected($event, detail)"
+                                                    formControlName="member_files"
+                                                    accept=".pdf,.doc,.docx,.xls,.xlsx" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-2 col-2 date"
+                                    *ngIf=" detail?.status === 'Document Upload' && detail.member_files && detail.id">
+                                    <p>{{ detail.member_files }}</p>
+                                </div>
+
+
+                                <div class="col-md-2 col-2 date date-time"
+                                    *ngIf="!detail.id && (detail?.status === 'Meeting' || detail?.status === 'Follow Up')">
+                                    <input type="datetime-local" id="appointmentTime" placeholder="Date & Time"
+                                        class="form-control date-input" [(ngModel)]="detail.time"
+                                        [min]="currentDateTime" />
+                                </div>
+                                <div class="col-md-2 col-2 date date-time display-value"
+                                    *ngIf="detail.id && (detail?.status === 'Meeting' || detail?.status === 'Follow Up')">
+                                    <p>{{ detail.time | date: 'dd/MM/yyyy HH:mm' }}</p>
+                                </div>
+
+                                <div class="col-md-2 col-2 date">
+                                    <button mat-icon-button color="warn" *ngIf="i === element.details.length - 1"
+                                        (click)="removeDetail(element.id, detail.id)">
+                                        <i class="fa fa-trash fa-trashMy" aria-hidden="true"></i>
+                                    </button>
+                                    <button mat-icon-button color="warn" (click)="addDetail(element)"
+                                        *ngIf="i === element.details.length - 1"><i
+                                            class="fa fa-plus fa-plus"></i></button>
+                                </div>
+                            </div>
+                            <!-- Add Detail and Submit buttons -->
+                            <div class="offset-md-11 col-md-1 offset-11 col-1">
+                                <button *ngIf="element.details.length" mat-raised-button color="primary" class=""
+                                    (click)="submit()" [disabled]="!isFormValid()">Submit</button>
+
+                                <!-- Error message -->
+                            </div>
+                            <div *ngIf="!isFormValid()" class="error-message">
+                                Please fill in all required fields.
+                            </div>
+
+                        </div>
+                    </mat-cell>
+                </ng-container>
+
+                <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+
+                <mat-row *matRowDef="let row; columns: displayedColumns" matRipple class="element-row"
+                    [class.expanded]="row.isExpanded" (click)="expandCollapse(row, $event)">
+                </mat-row>
+
+                <mat-row *matRowDef="let row; columns: ['expandedDetail']"
+                    [@detailExpand]="row.isExpanded == true ? 'expanded' : 'collapsed'" style="overflow: hidden">
+                </mat-row>
+            </mat-table>
+
+            <div class="row download-file">
+                <div class="col-md-8 col-12 cont-pagination">
+                    <div class="items-per-page-dropdown">
+                        <label for="itemsPerPage">Enquiries Per Page:&nbsp;</label>
+                        <select id="itemsPerPage" [(ngModel)]="selectedItemsPerPage" (change)="onItemsPerPageChange()">
+                            <option *ngFor="let option of itemsPerPageOptions" [value]="option">
+                                {{ option }}
+                            </option>
+                        </select>
+                    </div>
+                    <ngb-pagination [(page)]="p" [pageSize]="itemsPerPage" [collectionSize]="totalItems"
+                        (pageChange)="onPageChange($event)" [maxSize]="5" [boundaryLinks]="true"></ngb-pagination>
+                </div>
+            </div>
+        </div>
+    </div>
+        <!-- table -->
+    </app-card>
+</div>

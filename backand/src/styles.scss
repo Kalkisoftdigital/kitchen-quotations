@@ -1,0 +1,171 @@
+// /* You can add global styles to this file, and also import other style files */
+
+// /**======================================================================
+// =========================================================================
+// Template Name: Gradient Able Admin Template
+// Author: Codedscss/themes
+// supports: https://codedscss/themes.com/submit-ticket/
+// File: style.css
+// =========================================================================
+// =========================================================================
+//   == Table of Contents==
+// 	- Generic classes
+// 		-	Margin, Padding, Font class, text align, position, floating, overflow, background class, text color, display class, boarder class
+// 	- Theme Elements
+// 		-	Accordion, Button, tabs, typography, buttons, box shadow, Lable & Badges, Alert, Pagination, Breadcumb, Cards, Collapse,
+//         -   Carousel, Grid, Progress, Model, tooltip, popover, Datepicker, Gridstack, lightbox, notification, Nestable, pnotify, rating,
+//         -   Rangeslider, Slider, Syntax Highlighter, Tour, Treeview, Toolbar, Session Timeout, Session idle Timeout, offline, Animation
+//     - Forms
+//         -   Forms Elements, Advance Form Control, Validation, Masking, Wizard, Picker, Select
+// 	- Pages
+// 		-   authentication, Maintenance, Maps, Landing page messages, task, Todo, Notes, Charts, Icons, Gallery, Editors,
+//         -   Invoice, Full Calender, File Upload,
+// =================================================================================
+// =================================================================================== */
+
+// // Theme Font
+// @import 'scss/themes/font/theme-font';
+
+// // main framework
+// @import 'node_modules/bootstrap/scss/functions';
+// @import 'node_modules/bootstrap/scss/variables';
+// @import 'scss/settings/custom-variables';
+// @import 'scss/settings/theme-variables';
+
+// // bootstrap
+// @import 'node_modules/bootstrap/scss/bootstrap';
+// @import 'node_modules/bootstrap/scss/mixins';
+// @import 'node_modules/bootstrap/scss/utilities';
+// @import 'node_modules/bootstrap/scss/utilities/api';
+// @import '../node_modules/bootstrap/dist/css/bootstrap.css';
+// @import 'scss/themes/general';
+// @import 'scss/themes/generic';
+// @import 'scss/themes/minixs/function';
+
+// // icon
+// @import 'scss/themes/font/datta-icon';
+// @import 'scss/themes/font/feather';
+// @import 'scss/themes/font/fontawesome';
+// @import 'scss/themes/font/flaticon';
+
+// // component
+// @import 'scss/themes/component/component';
+
+// // theme layouts
+// @import 'scss/themes/layouts/menu-lite';
+// @import 'scss/themes/layouts/menu-ng';
+
+// // dashboard
+// @import 'scss/themes/pages/dashboard.scss';
+// @import 'scss/themes/pages/authentication';
+
+// @import 'scss/themes/chat/chat';
+
+// // custom
+// @import 'scss/themes/custom';
+
+// // font-awesome
+// @import '~font-awesome/css/font-awesome.css';
+// @import "~bootstrap/dist/css/bootstrap.css";
+
+// @import '~@angular/material/prebuilt-themes/indigo-pink.css';
+
+// // mat-form-fields
+// .mat-form-fields {
+//   width: 100%;
+// }
+
+// table {
+//   width: 100%;
+//   overflow-x: auto;
+// }
+
+// .header-box {
+//   display: flex;
+//   flex-direction: row;
+//   margin-top: -65px;
+//   font-size: 17px;
+//   font-weight: 600;
+//   margin-bottom: 33px;
+//   z-index: 12;
+//   position: relative;
+
+
+//   .header {
+//     display: flex;
+//     justify-content: flex-start;
+//   }
+
+//   .crossIconBox {
+//     display: flex;
+//     justify-content: flex-end;
+
+//     .crossIcon {
+//       cursor: pointer !important;
+//       color: black;
+//     }
+//   }
+// }
+
+// // my table
+// @import 'scss/themes/myTable';
+
+// .TalukasResponsive {
+//   display: none;
+// }
+
+// .Talukas {
+//   display: block;
+// }
+
+// @media (max-width: 768px) {
+//   .TalukasResponsive {
+//     display: block;
+//     font-size: large;
+//     color: black;
+//     top: 6px;
+//     position: relative;
+//   }
+
+//   .Talukas {
+//     display: none;
+//   }
+
+//   .form-group {
+//     margin-bottom: 0rem;
+//   }
+  
+// }
+
+// .form-group {
+//   margin-bottom: 0rem;
+// }
+
+// .error-msg {
+//   margin-top: -10px;
+// }
+
+// .matEditIcon:hover {
+//   color: #3f51b5;
+//   cursor: pointer;
+// }
+
+// .matDeleteIcon:hover {
+//   color: red;
+//   cursor: pointer;
+// }
+
+// .matEditIcon {
+//   padding: 0px 7px 0px 7px;
+// }
+
+// .matDeleteIcon {
+
+//   padding-left: 5px;
+// }
+
+// .action-container {
+//   display: flex;
+//   flex-direction: row;
+//   align-items: center;
+// }

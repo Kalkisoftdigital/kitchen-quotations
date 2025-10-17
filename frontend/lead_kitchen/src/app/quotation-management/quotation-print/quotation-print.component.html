@@ -1,0 +1,185 @@
+<!-- <pre>{{ quotation | json }}</pre> -->
+<div class="table-container printable">
+  <div class="header-Quotation col-12 col-md-12">
+    <div class="col-6 col-md-6 headers-box">
+      <div class="headers">Service Quotation Infomation</div>
+    </div>
+    <div class="Icon-Box col-6 col-md-6"><span class="cross-Icon" (click)="goBack()">&#10006;</span>
+    </div>
+  </div>
+
+  <div #printable>
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th colspan="6" class="text-center">Quotation</th>
+        </tr>
+        <tr class="row-style">
+          <td colspan="6">
+            <div class="row">
+
+              <div class="col-sm-2 logo-img-container selected-logo" *ngIf="selectedLogo">
+                <img [src]="selectedLogo" alt="Selected Logo" class="selected-image logo-img" />
+              </div>
+              <div class="col-sm-10" align="center">
+
+                <div *ngIf="selectedCompanyName" class="selected-company">
+                  <b class="address-info-header"> {{ selectedCompanyName }}</b>
+                </div>
+                <div class="address-info" *ngIf="companyAddress">{{ companyAddress }}
+                </div>
+                <div class="contact-info">
+                  <label class="contact-no">Ph.No:</label><span *ngIf="companyLandline">
+                    &nbsp;{{companyLandline}}&nbsp;</span><label class="contact-no">E-mail
+                    :</label>
+                  <span *ngIf="email">
+                    {{email}}
+                  </span>
+                </div>
+              </div>
+            </div>
+          </td>
+        </tr>
+
+        <tr>
+          <th colspan="3">Details of Consignee</th>
+          <th colspan="3">Quotation Details</th>
+        </tr>
+
+        <!-- <tr class="row-style">
+        <td colspan="10">
+          <div class="row"> -->
+        <tr>
+          <td colspan="3">
+            <b>&nbsp;To : </b> &nbsp;&nbsp;{{ quotation.data.quotation.customer_name }} <br />
+            <b>&nbsp;GSTIN No : </b> &nbsp;&nbsp; {{ quotation.data.quotation.gstin_no }}<br />
+            <b>&nbsp;Address : </b> &nbsp;&nbsp;{{ quotation.data.quotation.consignee_address }} <br />
+            <b>&nbsp;Email : </b> &nbsp;&nbsp;{{ quotation.data.quotation.email }}
+          </td>
+          <td colspan="3">
+            <b>&nbsp;Quotation No :</b> &nbsp;&nbsp;QUOTE{{ quotation.data.quotation.quotation_id }} <br />
+            <b>&nbsp;Quotation Date :</b> &nbsp;&nbsp;{{ quotation.data.quotation.created_at | date: 'dd-MM-yyyy' }}
+            <br />
+            <b>&nbsp;Customer Ref.:</b> &nbsp;&nbsp; {{ quotation.data.quotation.reference }}
+          </td>
+        </tr>
+        <!-- </div>
+        </td>
+      </tr> -->
+        <tr>
+          <th rowspan="2" class="Sr.No">Sr.No.</th>
+          <th rowspan="2" class="Description">Service with Description</th>
+          <th rowspan="2" class="HSN">HSN</th>
+          <th rowspan="2" class="Quantity">Quantity</th>
+          <th rowspan="2" class="Price">Price</th>
+          <th rowspan="2" class="Price">Amount</th>
+
+
+        </tr>
+
+      </thead>
+      <tbody>
+        <tr *ngFor="let Quotation of quotation?.data?.descriptions; let i = index">
+          <td>{{ i + 1 }}</td>
+          <td><strong class="serviceName">{{ parseServiceName(Quotation?.select_service) }}</strong>
+            <div *ngFor="let description of Quotation?.itemDescription.split(','); let j = index">
+              {{ j + 1 }}. {{ description.trim() }}
+            </div>
+          </td>
+          <td>{{ Quotation?.hsn_code }}</td>
+          <td>{{ Quotation?.quantity }}</td>
+          <td>{{ Quotation?.rate }}</td>
+          <td>{{ calculateAmount(Quotation) }} </td>
+
+
+
+        </tr>
+        <tr *ngFor="let empty of emptyRows" class="empty-row">
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+
+
+        </tr>
+      </tbody>
+      <tfoot>
+
+        <tr>
+          <td colspan="3" rowspan="7"><b>Bank Details:</b><br/>
+            <b>Account No: <span *ngIf="accountNo">{{accountNo}}</span></b><br /><b>Bank Details: <span
+                *ngIf="bankDetails">&nbsp;{{bankDetails}}&nbsp;</span></b>(<b>IFSC CODE-
+              <span *ngIf="ifscCode">{{ifscCode}}</span> </b>)
+          </td>
+        </tr>
+        <tr>
+          <td colspan="2" align="center"><b>Less Discount ({{ quotation.data.quotation.discount }}%)</b></td>
+          <td align="center">{{ quotation.data.quotation.discountedAmount }}</td>
+        </tr>
+
+        <tr>
+          <td colspan="2" align="center"><b>Add IGST ({{ quotation.data.quotation.IGST }}%)</b></td>
+          <td align="center">{{ quotation.data.quotation.igstAmount }}</td>
+        </tr>
+        <tr>
+          <td colspan="2" align="center"><b>Add CGST ({{ quotation.data.quotation.cgst }}%)</b></td>
+          <td align="center">{{ quotation.data.quotation.cgstAmount }}</td>
+        </tr>
+        <tr>
+          <td colspan="2" align="center"><b>Add SGST ({{ quotation.data.quotation.sgst }}%)</b></td>
+          <td align="center">{{ quotation.data.quotation.sgstAmount }}</td>
+        </tr>
+        <tr>
+          <td colspan="2" align="center"><b>Transport Charges</b></td>
+          <td align="center">{{ quotation.data.quotation.transport }}</td>
+        </tr>
+        <tr>
+          <td colspan="2" align="center"><b>Other Charges</b></td>
+          <td align="center">{{ quotation.data.quotation.other_charges }}</td>
+        </tr>
+
+        <tr class="tatal-amount">
+          <td colspan="3" class="tatal-amount"><b>Rupees - {{ quotation.data.quotation.grand_total_in_words }}</b></td>
+          <td colspan="2" align="center" class="tatal-amount"><b>Total</b></td>
+          <td align="center" class="tatal-amount">{{ quotation.data.quotation.grand_total }}</td>
+        </tr>
+        <tr>
+          <td colspan="3" rowspan="3" valign="top" align="left"><strong>Remarks :</strong><br />
+            {{ quotation.data.quotation.remark }}
+          </td>
+        </tr>
+        <tr>
+          <td colspan="3" align="center" class="tatal-amount"><b *ngIf="selectedCompanyName">FOR {{ selectedCompanyName }}</b></td>
+        </tr>
+        <tr height="70px">
+          <td valign="bottom" align="center" colspan="5"><b>Authorized Signatory</b></td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+
+  <div class="button-mainContainer row justify-content-center col-12 col-md-12">
+    <div class="goBack-container col-4 col-md-2">
+      <button type="submit" mat-raised-button color="primary" (click)="printQuotation()"><span
+          class="material-icons">print</span> &nbsp;Print</button>
+    </div>
+    <div class="submit-container col-4 col-md-2">
+      <button type="submit" mat-raised-button color="warn" (click)="saveAsPDF()"><span
+          class="material-icons">picture_as_pdf</span> &nbsp;Save as Pdf</button>
+    </div>
+
+    <div class="reset-container col-4 col-md-3">
+
+      <div style="text-align:center">
+        <button mat-raised-button color="accent" [class.spinner]="isSendingEmail" [disabled]="isSendingEmail"
+          (click)="sendQuotationByEmail()"><span class="material-icons">mail_outline</span> &nbsp;Send via
+          Email</button>
+      </div>
+      <!-- <button mat-raised-button color="success" (click)="sendWhatsapp()">
+        <span class="material-icons">chat</span> &nbsp;Send via WhatsApp
+      </button> -->
+    </div>
+  </div>
+</div>

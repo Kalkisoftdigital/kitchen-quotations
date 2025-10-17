@@ -1,0 +1,918 @@
+@mixin flex-row {
+  display: flex;
+  flex-direction: row;
+}
+
+@mixin flex-column {
+  display: flex;
+  flex-direction: column;
+}
+
+@mixin flex-wrap {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+/* In your styles.css or component-specific CSS */
+textarea {
+  padding-bottom: 1rem;
+  box-sizing: border-box;
+}
+
+.free_item_desc {
+  margin-bottom: 7px;
+}
+
+.spinner:before {
+  content: '';
+  box-sizing: border-box;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 20px;
+  height: 20px;
+  margin-top: -10px;
+  margin-left: -10px;
+  border-radius: 50%;
+  border: 2px solid #ffffff;
+  border-top-color: #000000;
+  animation: spinner 0.8s linear infinite;
+}
+
+@keyframes spinner {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.buttons-box {
+  @include flex-row;
+  margin-bottom: 10px;
+
+  .each-btn1 {
+    margin-right: 5px;
+  }
+
+  .each-btn2 {
+    margin-left: 5px;
+  }
+}
+
+.selected-button {
+  background-color: #007bff;
+  color: white;
+  border-color: #007bff;
+}
+
+.unselected-button {
+  background-color: #6c757d;
+  color: white;
+  border-color: #6c757d;
+}
+
+.btn:disabled {
+  background-color: #6c757d;
+  color: white;
+  border-color: #6c757d;
+}
+
+.radio-box {
+  @include flex-row;
+  margin-bottom: 17px;
+
+  @media (max-width: 768px) {
+    @include flex-row;
+  }
+}
+
+.example-container .mat-form-field + .mat-form-field {
+  margin-left: 8px;
+}
+
+.other_charges {
+  display: flex;
+  justify-content: center;
+}
+
+.header {
+  font-size: 20px;
+  color: #222;
+  font-weight: 600;
+  margin-top: -4px;
+}
+
+.header-Quotation {
+  display: flex;
+  flex-direction: row;
+  margin-top: -30px;
+
+  .headers-box {
+    .headers {
+      font-size: 20px;
+      // margin-top: -50px;
+      color: #222;
+      font-weight: 600;
+    }
+  }
+
+  .Icon-Box {
+    display: flex;
+    justify-content: flex-end;
+
+    .cross-Icon {
+      cursor: pointer;
+    }
+  }
+}
+
+.example-container {
+  @include flex-row;
+}
+
+.formContainer {
+  @include flex-row;
+
+  .customerData {
+    display: flex;
+    flex-direction: row;
+
+    .dataHeader {
+      font-weight: 500;
+    }
+
+    .dataHeader-email {
+      font-weight: 500;
+      margin-top: 8px;
+    }
+
+    .dataHeader-email-input {
+      width: 60%;
+      height: 37px;
+    }
+  }
+
+  .quotation-field {
+    padding: 0px 5px 0px 5px;
+  }
+
+  .ltSide {
+    padding-right: 5px;
+  }
+
+  .RtSide {
+    padding-left: 5px;
+  }
+
+  @media (max-width: 768px) {
+    @include flex-column;
+  }
+
+  .box-cont {
+    display: flex;
+
+    flex-direction: column;
+
+    .first-box {
+      @include flex-row;
+    }
+
+    .second-box {
+      @include flex-row;
+    }
+  }
+
+  @media (max-width: 768px) {
+    @include flex-column;
+  }
+}
+
+.formfirst {
+  margin-top: 20px;
+}
+
+.button-mainContainer {
+  @include flex-row;
+
+  .goBack-container {
+    display: flex;
+    justify-content: flex-end;
+    padding-right: 10px;
+  }
+
+  .submit-container {
+    display: flex;
+    justify-content: center;
+    padding-right: 10px;
+  }
+
+  .reset-container {
+    display: flex;
+    justify-content: flex-start;
+    padding-left: 10px;
+  }
+
+  @media (max-width: 768px) {
+    .mat-mdc-unelevated-button.mat-mdc-button-base,
+    .mat-mdc-outlined-button.mat-mdc-button-base {
+      height: 38px;
+    }
+  }
+}
+
+.fa-angle-double-left,
+.GrandhintTotal {
+  @media (max-width: 768px) {
+    display: none;
+  }
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type='number'] {
+  -moz-appearance: textfield;
+}
+
+.action,
+.delete,
+.id {
+  width: 5%;
+}
+
+.sgst,
+.cgst,
+.igst {
+  width: 9%;
+}
+
+.unit_of_measurement {
+  width: 9%;
+  text-align: center;
+}
+
+.amount,
+.rate,
+.quantity,
+.total_quantity,
+.total_rate {
+  width: 10%;
+}
+
+.Item_description {
+  width: 34%;
+}
+
+.sac_Code {
+  width: 16%;
+}
+
+.total_inv_val {
+  width: 60%;
+}
+
+.total_amount {
+  width: 20%;
+}
+
+textarea {
+  width: 100%;
+}
+
+.selected-image {
+  width: 100%;
+  height: 200px;
+  padding: 5px;
+}
+
+.image-box {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.image-box-subclass {
+  width: 50%;
+}
+
+.table-container {
+  margin-top: 20px;
+}
+
+.table-container table {
+  width: 100%;
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+.table-container th,
+.table-container td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+
+  input {
+    margin-top: 15px;
+  }
+
+  .amount-val {
+    margin-top: 18px;
+  }
+}
+
+.table-container th {
+  background-color: #f2f2f2;
+}
+
+.select-service,
+.mat-input-element,
+.mat-form-field {
+  width: 100%;
+}
+
+.item-description {
+  margin-top: 5px;
+  font-size: 14px;
+  color: #555;
+}
+
+.fa {
+  cursor: pointer;
+  margin-right: 5px;
+}
+
+::ng-deep .tesbox .card .card-header {
+  padding: 10px;
+}
+
+.add-box {
+  @include flex-row;
+
+  p {
+    font-size: 20px;
+    color: #222;
+    font-weight: 600;
+  }
+}
+
+.truncate {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 150px;
+}
+
+.table-responsive {
+  margin: -20px 0px;
+
+  .quotation-field {
+    @include flex-row;
+  }
+
+  .myBtn {
+    height: 29px;
+
+    @media (max-width: 768px) {
+      width: 100%;
+    }
+  }
+
+  .area-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .area-header {
+      p {
+        margin: 16px 0px 0px 0px !important;
+      }
+    }
+
+    .area-input {
+      width: 40%;
+      padding-right: 5px;
+    }
+
+    .area-input2 {
+      width: 20%;
+    }
+  }
+}
+
+.hidden {
+  display: none;
+}
+
+table {
+  overflow-x: auto;
+
+  .action {
+    text-align: center;
+  }
+
+  .fa-plus {
+    font-size: 20px;
+    color: #007bff;
+    cursor: pointer;
+  }
+
+  .fa-pencil-square-o {
+    font-size: 20px;
+    color: #22b922;
+    cursor: pointer;
+  }
+
+  .fa-trash {
+    font-size: 20px;
+    color: red;
+    cursor: pointer;
+  }
+
+  .editIcon,
+  .deleteIcon,
+  .addIcon {
+    text-align: center;
+  }
+
+  .editIcon i:hover {
+    transform: scale(1.2);
+    cursor: pointer;
+  }
+
+  .deleteIcon i:hover {
+    transform: scale(1.2);
+    cursor: pointer;
+  }
+
+  .addIcon i:hover {
+    transform: scale(1.2);
+    cursor: pointer;
+  }
+
+  th,
+  td {
+    border: 1px solid #ddd;
+    padding: 8px;
+  }
+
+  th {
+    background-color: #f2f2f2;
+  }
+
+  tr:hover {
+    background-color: #f5f5f5;
+  }
+
+  @media (max-width: 768px) {
+    .table-responsive {
+      overflow-x: auto;
+    }
+  }
+}
+
+.total-container {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 26px;
+
+  .total-containerFields {
+    display: flex;
+    justify-content: flex-end;
+
+    .total-header {
+      margin-top: 16px;
+    }
+
+    .total-containerFieldsRight {
+      display: flex;
+      justify-content: space-around;
+
+      .fields_width {
+        width: 30%;
+      }
+    }
+  }
+}
+
+.total-containerFieldsRight {
+  @include flex-row;
+  margin-top: 12px;
+
+  p {
+    font-size: 16px;
+  }
+}
+.Remark-titleDiscounted{
+  display: flex;
+  justify-content: flex-start;
+}
+.dataContainers {
+  @include flex-wrap;
+
+  margin-top: 20px;
+
+  .first-box {
+    @include flex-wrap;
+    display: flex;
+    justify-content: flex-start;
+  }
+.first-boxDiscount{
+  display: flex;
+  justify-content: flex-end;
+}
+  .example-container {
+    display: flex;
+    justify-content: center;
+
+    .total_quantity_text {
+      font-weight: 600;
+    }
+  }
+
+  .quotation-field {
+    padding: 10px 5px 10px 5px;
+    text-align: center;
+  }
+
+  .second-box {
+    @include flex-wrap;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+  }
+
+  .second-boxDesc {
+    @include flex-wrap;
+    display: flex;
+    flex-direction: row;
+  }
+}
+
+.second-box-gst {
+  display: flex;
+  flex-direction: row;
+}
+
+.arraytable,
+.dataContainers {
+  @media (max-width: 768px) {
+    margin-top: 34px;
+  }
+}
+
+.remarked {
+  @media (max-width: 768px) {
+    margin-bottom: 25px;
+  }
+}
+
+.dataContainer {
+  @include flex-wrap;
+
+  border-top: 1px solid #00000045;
+  margin-top: 10px;
+  padding-top: 24px;
+
+  .first-box {
+    @include flex-wrap;
+    display: flex;
+    justify-content: flex-start;
+  }
+
+  .example-container {
+    display: flex;
+    justify-content: center;
+
+    @media (max-width: 768px) {
+      justify-content: center;
+    }
+  }
+
+  .quotation-field {
+    padding: 10px 5px 10px 5px;
+    text-align: center;
+  }
+
+  .second-box {
+    @include flex-wrap;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+  }
+
+  .second-boxDesc {
+    @include flex-wrap;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+  }
+}
+
+.table-container th {
+  padding: 8px;
+}
+
+.table-container td {
+  padding: 5px 6px 0px 6px;
+}
+
+.custom-row-height {
+  height: 10%;
+}
+
+.select-item {
+  width: 26%;
+}
+
+::ng-deep .select-item .mat-mdc-form-field {
+  width: 100%;
+}
+
+.disabled-button {
+  opacity: 0.5;
+  color: #6c757d;
+
+  pointer-events: none;
+  cursor: not-allowed;
+}
+
+.disabled-buttonS {
+  opacity: 0.5;
+  color: white;
+
+  pointer-events: none;
+  cursor: not-allowed;
+}
+
+.hidden {
+  visibility: hidden;
+}
+
+.disabled-class {
+  background-color: #f5f5f5;
+  pointer-events: none;
+  opacity: 0.6;
+}
+
+.commissionBox {
+  padding-right: 3px;
+}
+
+.amountHide {
+  padding-left: 3px;
+}
+
+.button-add {
+  width: 1%;
+}
+
+.hsn-code {
+  width: 12%;
+
+  .company-logo {
+    width: 100%;
+    height: 70px;
+  }
+}
+
+.company-logo {
+  transition: transform 0.3s ease;
+  cursor: pointer;
+}
+
+.company-logo.zoomed {
+  transform: scale(2);
+  border: 1px solid #00000063;
+  border-radius: 5px;
+}
+
+.mat-optgroup-label {
+  font-weight: 600;
+  color: #333;
+  display: block;
+}
+
+::ng-deep .cdk-overlay-pane {
+  width: 500px !important;
+}
+
+.mat-mdc-option:hover:not(.mdc-list-item--disabled) {
+  background-color: #4099ff;
+  color: white;
+}
+
+::ng-deep .mat-mdc-optgroup-label {
+  border-bottom: 1px solid black;
+  background-color: #d3e7ff;
+  z-index: 200;
+}
+
+::ng-deep .select-item .mat-mdc-icon-button.mat-mdc-button-base {
+  padding: 0px;
+  width: 30px;
+  height: 30px;
+  float: right;
+  margin-top: -20px;
+}
+
+.table-container input {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.custom-table {
+  width: 100%;
+  border-collapse: collapse;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+}
+
+.custom-table thead {
+  background-color: #f0f0f0;
+  border-bottom: 1px solid #ddd;
+}
+
+.custom-table th {
+  font-weight: bold;
+  text-align: center;
+}
+
+//
+::ng-deep .mat-select-search-input {
+  background-color: #e1e5e986 !important;
+}
+
+.search-container {
+  display: flex;
+  align-items: center;
+  padding: 8px;
+}
+
+.ngx-mat-select-search {
+  flex-grow: 1;
+}
+
+.ngx-mat-select-search .mat-input-element {
+  padding-left: 40px;
+}
+
+//
+.custom-table tbody tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.custom-table tbody tr:hover {
+  background-color: #f1f1f1;
+}
+
+.custom-table input {
+  width: 100%;
+  padding: 5px;
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.table th.select-item,
+.table td.select-item {
+  border-right: none;
+}
+
+.table th.button-add,
+.table td.button-add {
+  border-left: none;
+}
+
+.custom-table button {
+  border: none;
+  color: #e53935;
+}
+
+.custom-table button:hover {
+  color: #c62828;
+}
+
+.grandTOtal {
+  display: flex;
+  justify-content: flex-end;
+
+  @media (max-width: 768px) {
+    justify-content: center;
+  }
+}
+
+.GrandhintTotal {
+  font-size: 18px;
+}
+
+.grand_total {
+  font-size: 18px;
+}
+
+.dataContainerNEW {
+  @include flex-wrap;
+  border-top: 1px solid #00000045;
+  margin-top: 10px;
+  padding-top: 10px;
+
+  .first-boxS {
+    @include flex-wrap;
+  }
+
+  .quotation-fields {
+    padding: 10px 5px 10px 5px;
+    text-align: left;
+    display: flex;
+    justify-content: flex-end;
+    @include flex-row;
+
+    .grandTotalInWords {
+      display: flex;
+      flex-direction: column;
+
+      .grand_totalWords {
+        margin-bottom: 0px;
+        font-size: 18px;
+      }
+
+      .grand_totalWords-head {
+        font-size: 18px;
+        font-weight: 600;
+        margin-bottom: 0px;
+      }
+
+      @media (max-width: 768px) {
+        width: 100%;
+      }
+    }
+
+    @media (max-width: 768px) {
+      text-align: start;
+      justify-content: flex-end;
+      display: flex;
+      flex-direction: column-reverse;
+    }
+
+    .grand_total {
+      font-weight: bold;
+    }
+  }
+
+  .second-boxS {
+    @include flex-wrap;
+  }
+}
+
+.myBOX {
+  @media (max-width: 768px) {
+    flex-direction: column-reverse;
+  }
+}
+
+::ng-deep .mdc-notched-outline {
+  height: 84% !important;
+}
+
+::ng-deep .mat-mdc-text-field-wrapper .mat-mdc-form-field-flex .mat-mdc-floating-label {
+  top: 55% !important;
+  padding-bottom: 5px;
+  font-size: 14px !important;
+}
+
+::ng-deep .mat-mdc-text-field-wrapper.mdc-text-field--outlined .mat-mdc-form-field-infix {
+  padding-top: 11px;
+  padding-bottom: 0px;
+  font-size: 14px !important;
+}
+
+::ng-deep .mat-mdc-option .mdc-list-item__primary-text {
+  font-size: 12px !important;
+}
+
+::ng-deep .mat-mdc-option {
+  min-height: 32px !important;
+}
+
+::ng-deep .mat-mdc-optgroup-label {
+  min-height: 32px !important;
+}
+
+::ng-deep .mat-mdc-select-value-text {
+  font-size: 12px;
+}
+
+.detail-row {
+  background-color: #f5f5f5;
+}
+
+::ng-deep mat-form-field {
+  ::placeholder {
+    font-size: 14px !important;
+  }
+}

@@ -1,0 +1,177 @@
+.smallContainer {
+  display: flex;
+  margin: 30px 0px 17px 0px;
+  justify-content: space-between;
+
+  .opennewPopup {
+    display: flex;
+    justify-content: flex-end !important;
+  }
+}
+
+#title {
+  text-align: center;
+  font-size: 17px;
+  margin-top: 12px;
+  color: black;
+
+}
+
+.date-container {
+  display: flex;
+  justify-content: center !important;
+}
+
+::ng-deep .email-container {
+  display: flex;
+  justify-content: center !important;
+}
+
+::ng-deep .fc-direction-ltr .fc-daygrid-event.fc-event-end,
+.fc-direction-rtl .fc-daygrid-event.fc-event-start {
+
+  font-size: 12px;
+}
+
+::ng-deep .fc .fc-daygrid-day-events {
+
+  margin-bottom: 41px;
+}
+
+.form-container {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+  padding-top: 20px;
+  padding-bottom: 0px;
+
+  .schedule-button-container {
+    display: flex;
+    justify-content: center;
+
+  }
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    padding-bottom: 14px;
+
+    mat-form-field {
+      width: 90% !important;
+    }
+  }
+
+  .schedule-btn {
+    margin-top: 5px;
+
+    @media (max-width: 768px) {
+      margin-top: 0px;
+      width: 90% !important;
+    }
+  }
+}
+
+::ng-deep .fc .fc-toolbar-title {
+  font-size: 16px;
+
+}
+
+.card {
+  margin-top: 10px;
+  padding: 8px;
+}
+
+.card:hover {
+  box-shadow: none;
+}
+
+.follow-up {
+  color: green;
+  /* Green color for 'Follow Up' */
+}
+
+.meeting {
+  color: orange;
+  /* Orange color for 'Meeting' */
+}
+
+// ---------------------calender--------------------
+::ng-deep .st-c .te {
+  background-color: #ffa5006b !important;
+}
+
+.google-calendar-container iframe {
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.google-calendar-container iframe {
+  @media (min-width: 430px)and (max-width: 768px) {
+    width: 180%;
+  }
+
+  @media (max-width: 431px) {
+    width: 200%;
+  }
+
+  width: 100%;
+  height: 600px;
+
+  /* Adjust height as needed */
+}
+
+.google-calendar-container iframe .wk,
+.google-calendar-container iframe .dow,
+.google-calendar-container iframe .nav {
+  display: none !important;
+}
+
+.google-calendar-container iframe .event-title {
+  font-weight: bold;
+  color: #333;
+}
+
+.google-calendar-container iframe .event-details {
+  color: #666;
+}
+
+.google-calendar-container iframe .event-bg {
+  background-color: #f3f3f3;
+}
+
+.google-calendar-container iframe .event {
+  border: 1px solid #ccc;
+}
+
+.google-calendar-container {
+  background-color: white;
+}
+
+.google-calendar-container:hover {
+  background-color: white;
+}
+
+:host ::ng-deep .fc .fc-scrollgrid-section :hover {
+  background-color: white;
+}
+
+//scroll in responsive
+.calendar-scroll-wrapper {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+}
+
+.google-calendar-container {
+  min-width: 600px; /* Set minimum width for scrollability */
+}
+
+@media (max-width: 768px) {
+  .calendar-scroll-wrapper {
+    overflow-x: scroll;
+    overflow-y: scroll;
+  }
+  .google-calendar-container {
+    min-width: 700px; /* Adjust based on your calendar's ideal width */
+  }
+}
+
+// ---------------------calender--------------------

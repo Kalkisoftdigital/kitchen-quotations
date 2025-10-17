@@ -1,0 +1,71 @@
+<input type="file" #fileInput id="uploadFile" multiple="multiple" name="name" change="uploadFile($event)" accept="image"
+  hidden="" />
+<div fxLayout="column">
+  <div class="fl-attach-lbl" *ngIf="viewUploadOption" fxLayoutAlign="end center" (click)="fileInput.click()">
+    <mat-icon>file_upload</mat-icon>
+    <span class="upload-file">Upload File</span> 
+  </div>
+  <div class="col-12 col-md-12 matIcon-container">
+    <div *ngIf="uploaded_file_array.length" class="matIcon col-6 col-md-6">
+      <mat-chip-set class="mt-chip" *ngFor="let uploaded_file of uploaded_file_array" aria-label="File selection"
+        fxLayoutAlign="end center">
+        <mat-chip *ngIf="
+            uploaded_file.org_filename &&
+            uploaded_file.org_filename.length &&
+            uploaded_file.isvisible == 'Active'
+          " color="primary" selected>
+          <mat-icon class="visibility_icon" *ngIf="
+              attachValue == 'composition_attachments' &&
+              uploaded_file.isvisible == 'inActive'
+            " style="color: white" (click)="changeFileStatus(uploaded_file)"
+            matTooltip="Show file">visibility_off</mat-icon>
+          <mat-icon class="visibility_icon" *ngIf="
+              attachValue == 'composition_attachments' &&
+              uploaded_file.isvisible == 'Active'
+            " style="color: white" (click)="changeFileStatus(uploaded_file)"
+            matTooltip="Hide file">visibility</mat-icon>
+          {{ uploaded_file.org_filename }}
+          <mat-icon matChipRemove [matMenuTriggerFor]="menu">more_vert</mat-icon>
+          <mat-menu #menu="matMenu">
+            <button mat-menu-item (click)="uploaded_preview(uploaded_file)">
+              <mat-icon>open_in_new</mat-icon>
+              <span>Preview</span>
+            </button>
+            <button mat-menu-item (click)="
+                download(uploaded_file.file_path, uploaded_file.org_filename)
+              ">
+              <mat-icon>file_download</mat-icon>
+              <span>Download</span>
+            </button>
+            <button mat-menu-item *ngIf="
+                attachValue == 'composition_attachments' &&
+                uploaded_file.isvisible == 'Active'
+              " (click)="changeFileStatus(uploaded_file)">
+              <mat-icon>visibility_off</mat-icon>
+              <span>Invisible File</span>
+            </button>
+            <button mat-menu-item *ngIf="
+                attachValue == 'composition_attachments' &&
+                uploaded_file.isvisible == 'inActive'
+              " (click)="changeFileStatus(uploaded_file)">
+              <mat-icon>visibility</mat-icon>
+              <span>Visible File</span>
+            </button>
+            <button *ngIf="viewUploadOption" mat-menu-item (click)="delete_uploaded(uploaded_file)">
+              <mat-icon>delete</mat-icon>
+              <span>Delete</span>
+            </button>
+            <button mat-menu-item>
+              <mat-icon>cancel</mat-icon>
+              <span>Close</span>
+            </button>
+          </mat-menu>
+        </mat-chip>
+      </mat-chip-set>
+    </div>
+  </div>
+  <div *ngIf="viewUploadOption" fxLayoutAlign="end center">
+    <mat-progress-bar class="progress-bar" mode="determinate" [value]="progress" *ngIf="progress" [color]="color">
+    </mat-progress-bar>
+  </div>
+</div>

@@ -1,0 +1,133 @@
+<div *ngIf="isLoading">
+  <app-loader></app-loader>
+</div>
+<div class="col-xl-12">
+  <app-card cardTitle="" [options]="false" blockClass="table-border-style">
+    <div class="smallContainer">
+      <div class="col-md-6 List-of-Talukas">
+        <p class="Talukas">List of Items</p>
+        <p class="TalukasResponsive">Items</p>
+      </div>
+      <!-- Inside your smallContainer div -->
+      <div class="col-md-6 opennewPopup">
+        <button mat-raised-button color="primary" class="customer-popup" (click)="openForm()">
+          <i class="fa fa-plus" aria-hidden="true"></i> Add Item
+        </button>
+      </div>
+    </div>
+
+    <!-- Add this at the end of your existing HTML content -->
+
+    <!------------------------------- table --------------------------------->
+
+    <!-- SEARCH -->
+    <div class="search">
+      <div class="col-12 col-md-6 totalCustomer">
+        <mat-chip color="accent" class="totalCustomer-chip">
+          <p
+            >Total Items: <span class="totalCount">{{ this.totalCount }}</span>
+          </p>
+        </mat-chip>
+      </div>
+      <mat-form-field class="col-12 col-md-6">
+        <mat-label>Search</mat-label>
+        <input matInput (keyup)="applyFilter($event)" />
+      </mat-form-field>
+    </div>
+    <!-- table -->
+    <div class="table-responsive-wrapper">
+      <div class="table-responsive">
+        <table mat-table [dataSource]="dataSource" matSort (matSortChange)="announceSortChange($event)" class="mat-elevation-z0">
+          <!-- Position Column -->
+          <ng-container matColumnDef="service_id">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by number"> S. No. </th>
+            <td mat-cell *matCellDef="let element; let i = index"> {{ (p - 1) * itemsPerPage + i + 1 }} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="companyLogo">
+            <th mat-header-cell *matHeaderCellDef sortActionDescription="Sort by companyLogo"> Image </th>
+            <td mat-cell *matCellDef="let element">
+              <img *ngIf="element.companyLogo" [src]="element.companyLogo" alt="Company Logo" style="width: 35px; height: 35px" />
+            </td>
+          </ng-container>
+          <!-- Name Column -->
+          <ng-container matColumnDef="created_at">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by maintain_stock"> Created on </th>
+            <td mat-cell *matCellDef="let element"> {{ element.created_at | date: 'dd-MM-yyyy' }} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="select_sub_category">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by select_sub_category"> Category </th>
+            <td mat-cell *matCellDef="let element"> {{ element.select_sub_category ? element.select_sub_category : 'NA' }} </td>
+          </ng-container>
+
+          <!-- <ng-container matColumnDef="select_sub_category">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by select_sub_category">
+            Executive
+          </th>
+          <td mat-cell *matCellDef="let element"> {{element.select_sub_category}} </td>
+        </ng-container> -->
+          <ng-container matColumnDef="service_description">
+            <th mat-header-cell *matHeaderCellDef>Name</th>
+            <td mat-cell *matCellDef="let element">
+              <div class="header-container">
+                <div class="truncate" matTooltip="{{ element.service_name ? element.service_name : 'N/A' }}">
+                  <strong>{{ element.service_name }} </strong>
+                </div>
+              </div>
+            </td>
+          </ng-container>
+
+          <!-- Symbol Column -->
+
+<ng-container matColumnDef="selling_price">
+  <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by selling_price">
+    Purchase Price
+  </th>
+<td mat-cell *matCellDef="let element">
+  <span style="font-weight: bold">₹</span> {{ element.display_price }}
+</td>
+</ng-container>
+          <ng-container matColumnDef="Edit">
+            <th mat-header-cell *matHeaderCellDef sortActionDescription="Sort by number" class="action"> Edit </th>
+            <td mat-cell *matCellDef="let element" class="editIcon"
+              ><span class="material-icons matEditIcon" (click)="editCustomer(element.service_id)">edit</span>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="Delete" *ngIf="userRole == 'superadmin'">
+            <th mat-header-cell *matHeaderCellDef sortActionDescription="Sort by number" class="action"> Delete </th>
+
+            <td mat-cell *matCellDef="let element" class="deleteIcon"
+              ><span class="material-icons matDeleteIcon" (click)="deleteServices(element.service_id, element.service_name)"
+                >delete_outline</span
+              >
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+        </table>
+        <div class="row download-file">
+          <div class="col-md-8 col-12 cont-pagination">
+            <div class="items-per-page-dropdown">
+              <label for="itemsPerPage">Items Per Page:&nbsp;</label>
+              <select id="itemsPerPage" [(ngModel)]="selectedItemsPerPage" (change)="onItemsPerPageChange()">
+                <option *ngFor="let option of itemsPerPageOptions" [value]="option">
+                  {{ option }}
+                </option>
+              </select>
+            </div>
+            <ngb-pagination
+              [(page)]="p"
+              [pageSize]="itemsPerPage"
+              [collectionSize]="totalItems"
+              (pageChange)="onPageChange($event)"
+              [maxSize]="5"
+              [boundaryLinks]="true"
+            ></ngb-pagination>
+          </div>
+        </div> </div
+    ></div>
+  </app-card>
+</div>

@@ -1,0 +1,467 @@
+@mixin flex-row {
+  display: flex;
+  flex-direction: row;
+}
+
+@mixin flex-column {
+  display: flex;
+  flex-direction: column;
+}
+
+@mixin flex-wrap {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.last-row td {
+  border-bottom: none;
+}
+
+.discount_percent {
+  text-align: right !important;
+  display: inline-block;
+  float: right;
+}
+
+.special_discount_remark {
+  display: inline-block;
+  float: left;
+}
+
+@keyframes spinner {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+#Image {
+  width: 120px;
+  padding: 1px;
+}
+
+.Image-size {
+  width: 120px;
+}
+
+/* Target the specific image with the fixed path */
+img[src='assets/images/1727165138325.JPG'] {
+  width: 100px;
+  height: 16px;
+  margin-left: 9px;
+  margin-top: 6px;
+}
+
+.area-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .area-header {
+    text-align: right;
+
+    p {
+      font-weight: 500;
+    }
+  }
+
+  .area-input {
+    text-align: left;
+  }
+}
+
+.spinner:before {
+  content: '';
+  box-sizing: border-box;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 20px;
+  height: 20px;
+  margin-top: -10px;
+  margin-left: -10px;
+  border-radius: 50%;
+  border: 2px solid #ffffff;
+  border-top-color: #000000;
+  animation: spinner 0.8s linear infinite;
+}
+
+.logo-box {
+  text-align: left;
+}
+
+.table-bordered {
+  margin-top: 20px;
+
+  .serviceName {
+    font-size: 14px;
+  }
+
+  .row-style {
+    height: 70px;
+
+    .logo-img-container {
+      display: flex;
+      align-items: center;
+
+      .logo-img {
+        width: 30%;
+        height: 60px;
+      }
+    }
+
+    .address-info-header {
+      font-size: 18px;
+    }
+
+    .address-info {
+      font-weight: 500;
+    }
+
+    .contact-info {
+      font-weight: 500;
+
+      .contact-no {
+        font-weight: 600;
+      }
+    }
+  }
+}
+
+.button-mainContainer {
+  @include flex-row;
+
+  button {
+    display: flex;
+  }
+
+  .goBack-container {
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .submit-container {
+    display: flex;
+    justify-content: center;
+  }
+
+  .reset-container {
+    display: flex;
+    justify-content: flex-start;
+  }
+
+  .goBack-container,
+  .submit-container,
+  .reset-container {
+    @media (max-width: 768px) {
+      justify-content: center;
+    }
+
+    button {
+      width: 100%;
+      margin-bottom: 15px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    @include flex-column;
+  }
+}
+
+.header-Quotation {
+  display: flex;
+  flex-direction: row;
+
+  .headers-box {
+    .headers {
+      font-size: 20px;
+
+      color: #222;
+      font-weight: 600;
+    }
+  }
+
+  .allicons-box {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    cursor: pointer;
+
+    .button-mainContainer {
+      min-width: 0px;
+    }
+
+    .save-as-Pdf {
+      margin: 0px 16px 0px 16px;
+    }
+
+    @media (max-width: 768px) {
+      display: none;
+    }
+  }
+
+  .Icon-Box {
+    display: flex;
+    justify-content: flex-end;
+
+    .cross-Icon {
+      cursor: pointer;
+      font-size: 20px;
+    }
+  }
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  border: 1px solid rgb(0 0 0 / 12%);
+}
+
+.text-position {
+  text-align: left;
+}
+
+.empty-row {
+  border: none !important;
+}
+
+.SrNo {
+  width: 5%;
+  font-size: 16px;
+}
+
+div {
+  white-space: pre-line;
+}
+
+.Description {
+  width: 40%;
+  font-size: 16px;
+}
+
+.HSN {
+  width: 10%;
+  font-size: 16px;
+}
+
+.unit {
+  width: 5%;
+  font-size: 16px;
+}
+
+.Quantity {
+  width: 5%;
+  font-size: 16px;
+}
+
+.Price {
+  width: 13%;
+  font-size: 16px;
+}
+
+.Image-size-top {
+  width: 100%;
+  max-height: 400px;
+}
+
+.imageRow {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+
+  .col-md-6 {
+    flex-basis: 48%;
+  }
+
+  .image-container {
+    display: flex;
+    justify-content: center;
+
+    margin: 5px;
+  }
+}
+
+.sumMoney {
+  font-size: 16px;
+}
+
+.GST {
+  width: 22%;
+  font-size: 16px;
+}
+
+.size-box {
+  font-size: 16px;
+}
+
+.Amount {
+  width: 8%;
+}
+
+.tatal-amount {
+  background-color: #efefef;
+}
+
+.Quotation-head {
+  font-size: 35px;
+  padding: 1px;
+  font-weight: bold;
+  color: #4099ff;
+}
+
+.maintain-heightTwo-images {
+  display: none;
+}
+.watermark-container {
+  position: relative;
+}
+
+.Image-size-top {
+  width: 100% !important;
+  height: 800px !important;
+  object-fit: cover;
+}
+
+.watermark {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: rgb(33 37 41 / 28%);
+  font-size: 5rem;
+  font-weight: bold;
+  pointer-events: none;
+  text-align: center;
+
+  -webkit-text-stroke-width: 1px;
+  -webkit-text-stroke-color: #6c757d;
+  opacity: 0.5;
+}
+
+@media print {
+  // test
+  .watermark {
+    font-size: 3.5rem !important;
+  }
+  td {
+    padding: 0px 5px 0px 5px;
+
+    margin: 0;
+
+    line-height: 1.5;
+  }
+
+  .Image-size-top {
+    width: 100% !important;
+    height: 50vh !important;
+    object-fit: cover;
+  }
+
+  .three-images {
+    height: 250px !important;
+  }
+
+  .two-images {
+    height: 290px !important;
+  }
+  .single-images {
+    margin-top: 20px;
+    height: 300px !important;
+    margin-bottom: 20px;
+  }
+  .maintain-heightTwo-images {
+    display: block;
+    height: 150px;
+  }
+
+  .col-md-6 {
+    flex-basis: 48% !important;
+  }
+  //-----------------------page break based on image start---------------
+  .page-break {
+    page-break-before: always;
+    // border-top: transparent; // -----------------------------
+  }
+
+  .no-page-break {
+    page-break-before: auto;
+    /* This will avoid the page break when image are less than 1 or 0*/
+  }
+  //-----------------------page break based on image ends---------------
+  //-----------------------IMP imageROW TO KEEP IMAGES ON 1ST PAGE---------------
+  .imageROW {
+    page-break-inside: avoid;
+    page-break-inside: auto;
+    // border: transparent; // -----------------------------
+  }
+
+  .imageRow {
+    justify-content: center !important;
+  }
+
+  .image-container {
+    margin: 5px 0px 5px 0px !important;
+  }
+
+  .Conditions {
+    padding: 5px 10px;
+  }
+
+  // test
+  html,
+  body {
+    border: 1px solid white;
+    // height: 99%;
+    min-height: auto;
+    max-height: 100%;
+    page-break-after: avoid;
+    page-break-before: avoid;
+  }
+
+  .header-Quotation,
+  .button-mainContainer {
+    display: none !important;
+  }
+
+  tr {
+    page-break-inside: avoid;
+
+    page-break-after: auto;
+
+    page-break-before: auto;
+  }
+
+  #printable:last-child {
+    page-break-after: avoid;
+    page-break-inside: avoid;
+    margin-bottom: 0px;
+  }
+
+  // important - to hide URL display in print
+  @page {
+    size: auto;
+
+    margin: 30px 30px 20px 30px;
+  }
+}
+
+/* Apply to the table container for horizontal scrolling on small screens */
+
+@media (max-width: 768px) {
+  .table-container {
+    padding: 10px;
+  }
+
+  /* Adjust the table width */
+  .table {
+    min-width: 600px;
+
+    width: 100%;
+  }
+}
+
+.no-left-border {
+  border: 1px solid transparent;
+
+  border-left: none !important;
+}

@@ -1,0 +1,202 @@
+// card start
+
+.card-icon {
+  width: 75px;
+  /* Set width */
+  height: auto;
+  /* Maintain aspect ratio */
+  display: inline-block;
+  /* Ensure inline display */
+  margin-right: 10px;
+  /* Adjust spacing */
+}
+
+.card-number {
+  color: #ffffff;
+  font-size: xxx-large;
+}
+
+.mainBox {
+  display: flex;
+  flex-direction: row;
+  height: 82px;
+  align-items: center;
+}
+
+:host ::ng-deep .card .card-body {
+  /* padding: 20px 25px; */
+  padding: 20px 12px 20px 12px;
+}
+
+/* Add more styles as needed */
+:host ::ng-deep .card .card-header {
+  border-bottom: 0px solid #e2e5e8;
+  position: relative;
+  padding: 14px 25px 5px 25px;
+  margin-bottom: 0;
+}
+
+
+@media (min-width: 1200px) and (max-width: 1260px) {
+  .text-white {
+    font-size: 14px;
+  }
+}
+
+// card end
+
+.todayBtn {
+  margin: 0px 2px;
+}
+
+::ng-deep .mat-mdc-unelevated-button > .mat-icon,
+.mat-mdc-raised-button > .mat-icon,
+.mat-mdc-outlined-button > .mat-icon {
+  margin-left: 0px;
+  margin-right: 0px;
+}
+.download-file {
+  margin-top: 20px !important;
+  display: flex;
+  justify-content: flex-end;
+
+  .cont-pagination {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      gap: 25px;
+
+
+      .items-per-page-dropdown {
+          display: flex;
+          align-items: center;
+          margin-top: -14px;
+      }
+
+      .items-per-page-dropdown label {
+          margin-right: 8px;
+          font-weight: 600;
+      }
+
+      .items-per-page-dropdown select {
+          padding: 5px 10px;
+          border: 1px solid #ccc;
+          border-radius: 4px;
+          background-color: #f8f8f8;
+          font-size: 1rem;
+
+          cursor: pointer;
+      }
+
+      .items-per-page-dropdown select:focus {
+          outline: none;
+          border-color: #007bff;
+      }
+
+      .ngb-pagination {
+          margin-bottom: 0;
+      }
+
+      .ngb-pagination .page-item.active .page-link {
+          background-color: #007bff;
+          border-color: #007bff;
+      }
+
+      .ngb-pagination .page-link {
+          color: #007bff;
+      }
+
+      .ngb-pagination .page-link:hover {
+          color: #0056b3;
+      }
+  }
+
+  // pagination
+  @media (max-width: 768px) {
+      width: 1140px;
+      display: flex;
+      flex-direction: row;
+
+      .mat-mdc-paginator {
+          width: 46rem;
+      }
+  }
+
+  @media (min-width: 769px) and (max-width: 1343px) {
+      .downloadicon {
+          font-size: 13px;
+      }
+
+      .Bulk {
+          font-size: 11px;
+      }
+
+  }
+}
+// pagination
+.table-responsive{
+  overflow: hidden;
+}
+// table head & row
+table {
+  th {
+      font-weight: 500;
+      background-color: #4099ff !important;
+      color: white !important;
+  }
+
+  tr {
+      background-color: rgba(128, 128, 128, 0.0705882353) !important; height: 34px;
+  }
+}
+
+// table head & row
+//------------------------search box-------------------
+::ng-deep .mat-mdc-form-field-focus-overlay {
+  background-color: #fff !important;
+}
+
+::ng-deep .mat-mdc-form-field-flex {
+  height: 47px !important;
+}
+
+::ng-deep .mat-mdc-form-field:not(.mat-form-field-disabled) .mat-mdc-floating-label.mdc-floating-label {
+  cursor: inherit;
+  font-size: 14px;
+  padding: 0px 5px 5px 0px !important;
+}
+
+//------------------------search box-----------------
+.follow-Ups {
+  .follow-Ups-header {
+    font-size: 20px;
+    color: #222;
+    font-weight: 600;
+  }
+}
+
+@media (max-width: 768px) {
+  .mat-mdc-paginator {
+    width: 38rem;
+  }
+}
+
+.alert-success {
+  display: inline-block;
+  padding: 0.75rem 1.25rem;
+  margin-bottom: 0;
+  border-radius: 0.25rem;
+
+  font-weight: bold;
+}
+
+.alert-success {
+  color: #155724;
+  background-color: #d4edda;
+  padding: 0px 6px;
+  border: 1px solid #c3e6cb;
+}
+
+.statusRedColor {
+  color: red;
+}

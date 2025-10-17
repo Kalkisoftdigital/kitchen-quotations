@@ -1,0 +1,236 @@
+<form [formGroup]="customerForm" (ngSubmit)="onSubmit()">
+    <p mat-dialog-title>Item Information</p>
+    <mat-dialog-content>
+
+        <div class="formContainers col-md-12 col-12">
+            <mat-radio-group formControlName="item_type" (change)="onItemTypeChange($event)">
+                <div class="row">
+                    <!-- Cabinet Option -->
+                    <div class="form-group col-md-4 col-12 quotation-field">
+                        <div class="matCard ">
+                            <img src="assets/images/Cabinet.png" alt="Cabinet" class="col-md-9">
+                            <div class="col-md-3 radioPosition">
+                                <mat-radio-button value="Cabinet"></mat-radio-button>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Shutter Option -->
+                    <div class="form-group col-md-4 col-12 quotation-field">
+                        <div class="matCard ">
+                            <img src="assets/images/Shutter.png" alt="Shutter" class="col-md-9">
+                            <div class="col-md-3 radioPosition">
+                                <mat-radio-button value="Shutter"></mat-radio-button>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- OtherItem Option -->
+                    <div class="form-group col-md-4 col-12 quotation-field">
+                        <div class="matCard">
+                            <img src="assets/images/Other.png" alt="Other" class="col-md-9">
+                            <div class="col-md-3 radioPosition">
+                                <mat-radio-button value="OtherItem"></mat-radio-button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </mat-radio-group>
+        </div>
+
+        <div class="formContainer">
+            <!-- left-side -->
+            <div class="col-md-4 col-12 ltSide">
+
+                <div class="form-group" *ngIf="selectedItemType === 'Cabinet'">
+                    <mat-form-field appearance="outline" class="mat-form-fields">
+                        <mat-label>Cabinet Type</mat-label>
+
+                        <mat-select formControlName="cabinet_type" placeholder="Cabinet Type">
+                            <!-- <mat-option value="" disabled selected>--Cabinet Type--</mat-option> -->
+                            <mat-option value="BaseCabinet">Base Cabinet</mat-option>
+                            <mat-option value="BaseCabinetKd">Base Cabinet(Kd)</mat-option>
+                            <mat-option value="WBCWithTOP">WBC With TOP</mat-option>
+                            <mat-option value="WBCWithoutTOP">WBC Without TOP</mat-option>
+                            <mat-option value="WallCabinet">Wall Cabinet</mat-option>
+                            <mat-option value="WallCabinetHandleLess">Wall Cabinet(Handle Less)</mat-option>
+                            <mat-option value="SinkCabinet">Sink Cabinet</mat-option>
+                            <mat-option value="TallCabinet">Tall Cabinet</mat-option>
+                            <mat-option value="BlindCabinet">Blind Cabinet</mat-option>
+                            <mat-option value="BlindCabinetWall">Blind Cabinet Wall</mat-option>
+                            <mat-option value="CarouselCabinet">Carousel Cabinet</mat-option>
+                            <mat-option value="GTPTWaterFilterCabinet">GTPT/Water Filter Cabinet</mat-option>
+                            <mat-option value="CabinetwithOnesideReadymadePanel">Cabinet with One side Readymade
+                                Panel</mat-option>
+                            <mat-option value="CabinetwithBothsideReadymadePanel">Cabinet with Both side Readymade
+                                Panel</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+
+
+
+                <div class="form-group" *ngIf="selectedItemType === 'Shutter'">
+                    <mat-form-field appearance="outline" class="mat-form-fields">
+                        <mat-label>Shutter Profile</mat-label>
+
+                        <mat-select formControlName="Shutter_profile" placeholder="Shutter Profile">
+                            <!-- <mat-option value="" disabled selected>--Cabinet Type--</mat-option> -->
+                            <mat-option value="5PanelShutter">5 Panel Shutter</mat-option>
+                            <mat-option value="EdgeShutter">Edge Shutter</mat-option>
+                            <mat-option value="Glass">Glass</mat-option>
+                            <mat-option value="ProfileShutter">Profile Shutter</mat-option>
+                            <mat-option value="ReadymadeShutter">Readymade Shutter</mat-option>
+                            <mat-option value="PlyShelf">Ply Shelf</mat-option>
+                            <mat-option value="PanelShutter">Panel Shutter</mat-option>
+                            <mat-option value="SingleDoorWardrobe-openable">Single Door Wardrobe-openable</mat-option>
+                            <mat-option value="DoubleDoorWardrobe-openable">Double Door Wardrobe-openable</mat-option>
+                            <mat-option value="SlidingDoorWardrobe-2slidingdoors">Sliding Door Wardrobe-2 sliding
+                                doors</mat-option>
+
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+
+                <div class="form-group" *ngIf="selectedItemType === 'OtherItem'">
+                    <mat-form-field appearance="outline" class="mat-form-fields">
+                        <mat-label>Other Type</mat-label>
+
+                        <mat-select formControlName="other_type" placeholder="Other Type">
+                            <!-- <mat-option value="" disabled selected>--Cabinet Type--</mat-option> -->
+                            <mat-option value="Hardware">Hardware</mat-option>
+                            <mat-option value="Appliances">Appliances</mat-option>
+                            <mat-option value="Accessories">Accessories</mat-option>
+
+
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            </div>
+
+            <div class="col-md-4 col-12 ltSides">
+                <div class="form-group">
+                    <mat-form-field appearance="outline" class="mat-form-fields">
+                        <mat-label>Select Item</mat-label>
+                        <mat-select formControlName="select_item" placeholder="Select Item"
+                            [compareWith]="compareCustomers">
+                            <mat-option *ngFor="let customer of selectCustomer" [value]="customer"
+                                (click)="onSelectCustomer(customer)">
+                                <ng-container *ngIf="customer.cabinet_name">{{ customer.cabinet_name }} - </ng-container>
+                                <ng-container *ngIf="customer.shutter_name">{{ customer.shutter_name }} -
+                                </ng-container>
+                                <ng-container *ngIf="customer.handles_name">{{ customer.handles_name }} - </ng-container>
+                                {{ customer.thickness }}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            </div>
+
+            <div class="col-md-4 col-12 RtSide"
+                *ngIf="selectedItemType === 'Cabinet' || selectedItemType === 'OtherItem'">
+                <div class="form-group">
+                    <div class="form-group">
+                        <mat-form-field appearance="outline" class="mat-form-fields">
+                            <mat-label>Quantity:</mat-label>
+                            <input matInput formControlName="quantity" placeholder="Quantity" maxlength="50" />
+                        </mat-form-field>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+        <div class="formContainer dimention">
+            <div class="col-md-4 col-12 ltSide" *ngIf="selectedItemType === 'Cabinet'">
+                <div class="form-group">
+                    <mat-form-field appearance="outline" class="mat-form-fields">
+                        <mat-label>Lenght(mm):</mat-label>
+                        <input matInput formControlName="length" placeholder="Length(mm)" maxlength="50" />
+                    </mat-form-field>
+                </div>
+            </div>
+
+            <div class="col-md-4 col-12 ltSides"
+                *ngIf="selectedItemType === 'Cabinet' || selectedItemType === 'Shutter'">
+                <div class="form-group">
+                    <mat-form-field appearance="outline" class="mat-form-fields">
+                        <mat-label>Width(mm):</mat-label>
+                        <input matInput formControlName="width" placeholder="Width(mm)" maxlength="50" />
+                    </mat-form-field>
+                </div>
+            </div>
+
+            <div class="col-md-4 col-12 RtSide"
+                *ngIf="selectedItemType === 'Cabinet' || selectedItemType === 'Shutter'">
+                <div class="form-group">
+                    <mat-form-field appearance="outline" class="mat-form-fields">
+                        <mat-label>Height(mm):</mat-label>
+                        <input matInput formControlName="height" placeholder="Height(mm)" maxlength="50" />
+                    </mat-form-field>
+                </div>
+            </div>
+
+            <div class="col-md-4 col-12 RtSide" *ngIf="selectedItemType === 'Shutter'">
+                <div class="form-group">
+                    <div class="form-group">
+                        <mat-form-field appearance="outline" class="mat-form-fields">
+                            <mat-label>Quantity:</mat-label>
+                            <input matInput formControlName="quantity" placeholder="Quantity" maxlength="50" />
+                        </mat-form-field>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- back pannel -->
+        <div class="formContainer dimention" *ngIf="selectedItemType === 'Cabinet'">
+            <p>Do you want back?
+                <mat-checkbox formControlName="wantBack" class="example-margin"
+                    (change)="onCheckboxChange($event)"></mat-checkbox>
+            </p>
+        </div>
+        <div class="formContainer dimentions">
+           
+                <div class="col-md-4 col-12 ltSides"
+                    *ngIf="selectedItemType === 'Cabinet' && customerForm.get('wantBack')?.value">
+                    <div class="form-group">
+                        <mat-form-field appearance="outline" class="mat-form-fields">
+                            <mat-label>Select Item</mat-label>
+                            <mat-select formControlName="select_item_backPanel" placeholder="-- Select Item --"
+                                [compareWith]="compareCustomers">
+                                <mat-option *ngFor="let customer of selectCustomer" [value]="customer"
+                                (click)="onSelectCustomer(customer)">
+                                <ng-container *ngIf="customer.cabinet_name">{{ customer.cabinet_name }} - </ng-container>
+                                <ng-container *ngIf="customer.shutter_name">{{ customer.shutter_name }} -
+                                </ng-container>
+                                <ng-container *ngIf="customer.handles_name">{{ customer.handles_name }} - </ng-container>
+                                {{ customer.thickness }}
+                            </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                </div>
+           
+            <div class="col-md-4 col-12 ltSides"
+                [ngClass]="{ 'other-item-selected': selectedItemType === 'OtherItem' }">
+
+                <div class="form-group">
+                    <mat-form-field appearance="outline" class="mat-form-fields">
+                        <mat-label>Total:</mat-label>
+                        <input matInput formControlName="total" placeholder="Total" maxlength="50" />
+                    </mat-form-field>
+                </div>
+            </div>
+
+            <!-- <div class="col-md-4 col-12 RtSide">
+
+            </div> -->
+        </div>
+    </mat-dialog-content>
+
+    <mat-dialog-actions>
+        <button type="submit" mat-stroked-button color="primary">Save</button>
+        <button mat-stroked-button color="warn" mat-dialog-close>Close</button>
+    </mat-dialog-actions>
+</form>

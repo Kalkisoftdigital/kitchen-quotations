@@ -1,0 +1,59 @@
+<div class="m-header">
+  <a href="javascript:" class="mobile-menu" id="mobile-collapse" title="Click to Menu Collapse" (click)="navCollapse()"><span></span></a>
+  <a href="javascript:" class="header-mobile-collapse" id="mobile-collapse1" (click)="this.NavCollapsedMob.emit()"
+    ><i class="feather icon-menu"></i
+  ></a>
+  <!-- [routerLink]="['/analytics']" -->
+  <a class="b-brand">
+    <div *ngIf="selectedLogo" class="selected-logo">
+      <img [src]="selectedLogo" alt="Selected Logo" class="selected-image" />
+    </div>
+    <img src="assets/images/logo-kalkisoft-whiteBg.png" alt="logo-icon-img" class="logo-thumb" />
+  </a>
+
+  <a class="mob-toggler" [ngClass]="{ on: this.menuClass }" href="javascript:" (click)="toggleMobOption()"
+    ><i class="feather icon-more-vertical"></i
+  ></a>
+</div>
+<div class="collapse navbar-collapse" [style.display]="this.collapseStyle">
+  <div class="centered-content">
+    <div *ngIf="selectedCompanyName" class="selected-company">
+      <div class="selected-company-name">
+        {{ selectedCompanyName | uppercase }}
+      </div>
+    </div>
+  </div>
+  <div class="current-date-time" *ngIf="currentDateTime">
+    {{ currentDateTime }}
+  </div>
+  <app-nav-right class="ms-auto"></app-nav-right>
+</div>
+
+<div class="footer-box">
+  <p class="footer"
+    >Product Designed & Developed by <span style="font-weight: bold"><a style="color: white;" href="https://kalkisoft.com/" target="_blank">Kalkisoft</a></span>
+  </p>
+</div>
+
+<div class="footer-navbar">
+  <a [routerLink]="['/analytics']" class="nav-item" title="Dashboard">
+    <i class="feather icon-home"></i>
+    <span>Dashboard</span>
+  </a>
+  <a [routerLink]="['/customers/list']" class="nav-item" title="Customers">
+    <i class="feather icon-users"></i>
+    <span>Customers</span>
+  </a>
+  <a [routerLink]="['/enquiry/list']" class="nav-item" title="Enquiries">
+    <i class="feather icon-message-circle"></i>
+    <span>Leads</span>
+  </a>
+  <a [routerLink]="['/quotation/list']" class="nav-item" title="Quotations">
+    <i class="feather icon-file-text"></i>
+    <span>Quotations</span>
+  </a>
+  <a [routerLink]="['/calendar']" class="nav-item" title="Calendar">
+    <i class="feather icon-calendar"></i>
+    <span>Calendar</span>
+  </a>
+</div>

@@ -1,0 +1,17 @@
+# Node / build files
+node_modules/
+dist/
+build/
+out/
+.angular/
+coverage/
+frontend/lead_kitchen/.angular/cache/
+# Environment & logs
+.env
+*.log
+
+# IDE / system
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db

@@ -1,0 +1,19 @@
+@media print {
+    /* Hide the navbar and header */
+    .pcoded-navbar,
+    .pcoded-header {
+        display: none !important;
+    }
+
+    /* Remove margins and padding from all containers */
+    .pcoded-main-container,
+    .pcoded-wrapper,
+    .pcoded-content,
+    .pcoded-inner-content,
+    .main-body,
+    .page-wrapper {
+        width: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+}

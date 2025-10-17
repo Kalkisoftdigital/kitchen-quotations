@@ -1,0 +1,282 @@
+<div *ngIf="isLoading">
+    <app-loader></app-loader>
+  </div>
+<div class="row">
+    <div class="col-sm-12">
+        <!-- <app-card cardTitle="Add New Lead" [options]="false"> -->
+        <div class="header-box col-12 col-md-12">
+            <div class="header col-6 col-md-6">{{ editingMode ? 'Update Lead' : 'Add New Lead' }} </div>
+            <div class="crossIconBox col-6 col-md-6"><span class="crossIcon" (click)="goBack()">&#10006;</span> </div>
+        </div>
+        <form [formGroup]="customerForm" (ngSubmit)="onSubmit()">
+            <app-card cardTitle="Customer Information" [options]="false">
+                <div class="formContainer">
+                    <div class="col-md-4 ltSide">
+                        <div class="form-group">
+                            <mat-form-field appearance="outline" class="mat-form-fields">
+                                <mat-label>Select Customer</mat-label>
+                                <mat-select formControlName="select_customer" placeholder="-- Select Customer --"
+                                    [compareWith]="compareCustomers">
+                                    <mat-option *ngFor="let customer of selectCustomer" [value]="customer"
+                                        (click)="onSelectCustomer(customer)">
+                                        {{ customer.name }}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                    </div>
+
+                    <!-- right side -->
+                    <div class="col-md-4 RtSide">
+                        <div class="form-group">
+                            <mat-form-field appearance="outline" class="mat-form-fields">
+                                <mat-label>Customer Name</mat-label>
+                                <input matInput formControlName="name" placeholder="Customer Name" readonly />
+                            </mat-form-field>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 rt-RtSide">
+                        <div class="form-group">
+                            <mat-form-field appearance="outline" class="mat-form-fields">
+                                <mat-label>Company Name</mat-label>
+                                <input matInput formControlName="business_name" placeholder="Company Name" readonly />
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ---------------------------- -->
+                <div class="formContainer">
+                    <div class="col-md-4 ltSide">
+                        <div class="form-group">
+                            <mat-form-field appearance="outline" class="mat-form-fields">
+                                <mat-label>Reference Person</mat-label>
+                                <input matInput formControlName="contact_person" placeholder="Reference Person"
+                                    readonly />
+                            </mat-form-field>
+                        </div>
+                    </div>
+
+                    <!-- right side -->
+                    <div class="col-md-4 RtSide">
+                        <div class="form-group">
+                            <mat-form-field appearance="outline" class="mat-form-fields">
+                                <mat-label>Reference Person Number</mat-label>
+                                <input matInput formControlName="contact_number" placeholder="Reference Person Number"
+                                    readonly />
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <!-- right side -->
+                    <div class="col-md-4 rt-RtSide">
+                        <div class="form-group">
+                            <mat-form-field appearance="outline" class="mat-form-fields">
+                                <mat-label>Email id</mat-label>
+                                <input matInput formControlName="email" placeholder="Enter your email address"
+                                    readonly />
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </div>
+                <!-- --------------------------------------------------------------------------------------------- -->
+
+                <div class="formContainer">
+                    <div class="col-md-4 ltSide">
+                        <div class="form-group">
+                            <mat-form-field appearance="outline" class="mat-form-fields">
+                                <mat-label>Address</mat-label>
+                                <textarea matInput formControlName="address" placeholder="Enter Address..." rows="1"
+                                    readonly></textarea>
+                            </mat-form-field>
+                        </div>
+                    </div>
+
+                    <!-- right side -->
+                    <div class="col-md-4 RtSide">
+                        <div class="form-group">
+                            <mat-form-field appearance="outline" class="mat-form-fields">
+                                <mat-label>Select State</mat-label>
+
+                                <input matInput formControlName="select_state" placeholder="select_state" readonly />
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <!-- right side -->
+                    <div class="col-md-4 rt-RtSide">
+                        <div class="form-group">
+                            <mat-form-field appearance="outline" class="mat-form-fields">
+                                <mat-label>Select City</mat-label>
+
+                                <input matInput formControlName="select_city" placeholder="select_city" readonly />
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </div>
+                <!-- --------------------------------------------------------------------------------------------- -->
+
+                <div class="formContainer">
+                    <div class="col-md-4 ltSide">
+                        <div class="form-group">
+                            <mat-form-field appearance="outline" class="mat-form-fields">
+                                <mat-label>GST IN</mat-label>
+                                <input matInput formControlName="gst_in" placeholder="Enter GST IN" readonly />
+                            </mat-form-field>
+                        </div>
+                    </div>
+
+                    <!-- right side -->
+                    <!-- <div class="col-md-4 RtSide">
+                        
+                    </div> -->
+                    <!-- right side -->
+                    <!-- <div class="col-md-4 rt-RtSide">
+                     
+                    </div> -->
+                </div>
+            </app-card>
+            <!-- ---------------------------------------------- -->
+            <app-card cardTitle="Lead Information" [options]="false">
+                <div class="formContainer">
+                    <div class="col-md-4 ltSide">
+                        <div class="form-group">
+                            <mat-form-field appearance="outline" class="mat-form-fields">
+                                <mat-label>Timeline</mat-label>
+                                <input matInput [matDatepicker]="picker" formControlName="timeline" [min]="minDate" />
+                                <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                                <mat-datepicker #picker></mat-datepicker>
+                            </mat-form-field>
+                        </div>
+                    </div>
+
+                    <!-- right side -->
+                    <div class="col-md-4 RtSide">
+                        <div class="form-group">
+                            <mat-form-field appearance="outline" class="mat-form-fields">
+                                <mat-label>Budget</mat-label>
+                                <input matInput formControlName="budget" placeholder="budget" maxlength="15" />
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <!-- right side -->
+                    <div class="col-md-4 rt-RtSide">
+                        <div class="form-group">
+                            <mat-form-field appearance="outline" class="mat-form-fields">
+                                <mat-label>Lead Qualification</mat-label>
+                                <mat-select formControlName="lead_qualification">
+                                    <mat-option value="" disabled selected>-- Lead Qualification --</mat-option>
+                                    <mat-option value="coldLeads">Cold Leads</mat-option>
+                                    <mat-option value="warmLeads">Warm Leads</mat-option>
+                                    <mat-option value="hotLeads">Hot Leads</mat-option>
+                                    <mat-option value="qualifiedLeads">Qualified Leads</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </div>
+                <!-- --------------------------------------------------------------------------------- -->
+                <!------------------ form---------------- -->
+
+                <div class="formContainer">
+                    <!-- <div class="col-md-4 ltSide">
+
+                        <div class="form-group">
+                            <mat-form-field appearance="outline" class="mat-form-fields">
+                                <mat-label>Product/Service</mat-label>
+
+                                <mat-select formControlName="product_service">
+                                    <mat-option value="" disabled selected>-- Product/Service --</mat-option>
+                                    <mat-option value="product">Product</mat-option>
+                                    <mat-option value="services">Service</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+
+                    </div> -->
+                    <div class="col-md-4 ltSide">
+                        <!-- Additional input box for 'Others' -->
+                        <div class="form-group">
+                            <mat-form-field appearance="outline" class="mat-form-fields">
+                                <mat-label>Lead Source</mat-label>
+
+                                <mat-select formControlName="reference">
+                                    <mat-option value="" disabled selected>-- Lead Source --</mat-option>
+                                    <mat-option value="socialMedia">Social Media</mat-option>
+                                    <mat-option value="portal">Portal</mat-option>
+                                    <mat-option value="personalContact">Personal Contact</mat-option>
+                                    <mat-option value="others">Others</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 rt-RtSide">
+                        <div class="form-group"
+                            *ngIf="customerForm && customerForm.get('reference') && customerForm.get('reference')?.value == 'socialMedia'">
+                            <mat-form-field appearance="outline" class="mat-form-fields">
+                                <mat-label>Social Media</mat-label>
+                                <mat-select formControlName="select_socialMedia" placeholder="-- Social Media --">
+                                    <mat-option value="" disabled selected>-- Lead Source --</mat-option>
+                                    <mat-option value="Facebook">Facebook</mat-option>
+                                    <mat-option value="WhatsApp">WhatsApp</mat-option>
+                                    <mat-option value="Instagram">Instagram</mat-option>
+                                    <mat-option value="Telegram">Telegram</mat-option>
+                                    <mat-option value="LinkedIn">LinkedIn</mat-option>
+                                    <mat-option value="Quora">Quora</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="form-group"
+                            *ngIf="customerForm && customerForm.get('reference') && customerForm.get('reference')?.value == 'portal'">
+                            <mat-form-field appearance="outline" class="mat-form-fields">
+                                <mat-label>Portal Name</mat-label>
+                                <input matInput formControlName="other_portal_name" placeholder="Enter Portal Name"
+                                    maxlength="50" />
+                                <mat-hint class="error-msg">Please specify Portal Name.</mat-hint>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="form-group"
+                            *ngIf="customerForm && customerForm.get('reference') && customerForm.get('reference')?.value == 'personalContact'">
+                            <mat-form-field appearance="outline" class="mat-form-fields">
+                                <mat-label>Contact Person</mat-label>
+                                <input matInput formControlName="other_personal_contact"
+                                    placeholder="Contact Person Name" maxlength="30" />
+
+                                <mat-hint class="error-msg">Please specify Contact Person Name.</mat-hint>
+                            </mat-form-field>
+                        </div>
+                        <div class="form-group"
+                            *ngIf="customerForm && customerForm.get('reference') && customerForm.get('reference')?.value == 'others'">
+                            <mat-form-field appearance="outline" class="mat-form-fields">
+                                <mat-label>Other Reference</mat-label>
+                                <input matInput formControlName="other_personal_reference"
+                                    placeholder="Enter other reference" />
+                                <mat-hint class="error-msg">Please specify Others.</mat-hint>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </div>
+
+                <!------------------ form---------------- -->
+
+                <div class="button-mainContainer row justify-content-center col-12 col-md-12">
+                    <div class="goBack-container col-4 col-md-2">
+                        <button mat-raised-button color="accent" (click)="goBack()"><i
+                                class="fa fa-angle-double-left"></i> Back</button>
+                    </div>
+                    <div class="submit-container col-4 col-md-2">
+                        <button type="submit" mat-raised-button color="primary" [class.spinner]="isSendingEmail"
+                            [disabled]="isSendingEmail">Submit</button>
+                    </div>
+                    <div class="reset-container col-4 col-md-2">
+                        <button type="button" mat-raised-button color="warn" (click)="resetForm()">Reset</button>
+                    </div>
+                </div>
+            </app-card>
+        </form>
+
+        <!-- </app-card> -->
+    </div>
+</div>

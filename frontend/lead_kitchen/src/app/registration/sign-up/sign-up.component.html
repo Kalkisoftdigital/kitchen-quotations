@@ -1,0 +1,108 @@
+<div class="row">
+    <div class="col-sm-12">
+        <app-card cardTitle="Registration" [options]="false">
+            <div class="header-box col-12 col-md-12">
+                <div class="header col-6 col-md-6 col-6"></div>
+                <div class="crossIconBox col-6 col-md-6 col-6"><span class="crossIcon"
+                        (click)="goBack()">&#10006;</span>
+                </div>
+            </div>
+
+            <form [formGroup]="signUpForm" (ngSubmit)="onSubmit()">
+
+                <div class="formContainer">
+                    <!-- left-side -->
+                    <div class="col-md-6 col-12 ltSide">
+
+                        <div class="form-group">
+                            <mat-form-field appearance="outline" class="mat-form-fields">
+                                <mat-label>Full Name</mat-label>
+                                <input matInput formControlName="fullname" placeholder="Full Name">
+                            </mat-form-field>
+                        </div>
+                    </div>
+
+                    <!-- right side -->
+                    <div class="col-md-6 col-12 RtSide">
+                        <div class="form-group">
+                            <mat-form-field appearance="outline" class="mat-form-fields">
+                                <mat-label>Username</mat-label>
+                                <input matInput formControlName="username" placeholder="Username">
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="formContainer">
+                    <!-- left-side -->
+                    <div class="col-md-6 col-12 ltSide">
+
+                        <div class="form-group">
+                            <mat-form-field appearance="outline" class="mat-form-fields">
+                                <mat-label>Email address</mat-label>
+                                <input matInput formControlName="email" placeholder="Email address">
+                            </mat-form-field>
+                        </div>
+                    </div>
+
+                    <!-- right side -->
+                    <div class="col-md-6 col-12 RtSide">
+                        <div class="form-group">
+                            <mat-form-field appearance="outline" class="mat-form-fields">
+                                <mat-label>Password</mat-label>
+                                <input matInput formControlName="password" type="password" placeholder="Password">
+                               
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="formContainer">
+                    <!-- left-side -->
+                    <div class="col-md-6 col-12 ltSide">
+
+                        <div class="form-group">
+                            <mat-form-field appearance="outline" class="mat-form-fields">
+                                <mat-label>Role</mat-label>
+                                <mat-select formControlName="role">
+                                  <mat-option value="admin">Admin</mat-option>
+                                  <mat-option value="kalkisoft">Kalkisoft Super Admin</mat-option>
+                                  <mat-option value="superadmin">Super Admin</mat-option>
+                                  <mat-option value="executive">Executive</mat-option>
+                                  <mat-option value="manager">Manager</mat-option>
+                                  <mat-option value="accountant">Accountant</mat-option>
+                                  <mat-option value="associate">Associate</mat-option>
+                                  <mat-option value="user">User</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                    </div>
+
+                    <!-- right side -->
+                    <div class="col-md-6 col-12 RtSide">
+                        <div class="form-group">
+                            <section class="example-section">
+                                <mat-checkbox class="example-margin" id="status" formControlName="status" value="">Status</mat-checkbox>
+                               
+                              </section>
+                        </div>
+                    </div>
+                </div>
+
+                
+                <div class="button-mainContainer row justify-content-center col-12 col-md-12">
+                    <div class="goBack-container col-4 col-md-2">
+                        <button type="submit" class="btn btn-primary" (click)="goBack()"><i
+                                class="fa fa-angle-double-left"></i> Back</button>
+                    </div>
+                    <div class="submit-container col-4 col-md-2">
+                        <button type="submit" class="btn btn-success">Submit</button>
+                    </div>
+                    <div class="reset-container col-4 col-md-2">
+                        <button type="button" class="btn btn-danger" (click)="resetForm()">Reset</button>
+                    </div>
+                </div>
+            </form>
+        </app-card>
+    </div>
+</div>

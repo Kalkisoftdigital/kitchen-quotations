@@ -1,0 +1,20 @@
+/* your-popup.component.scss */
+
+.your-popup-dialog {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw; /* Full width of the viewport */
+    height: 100vh; /* Full height of the viewport */
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000; /* Adjust z-index as needed */
+  }
+  
+  .your-popup-content {
+    /* Style your pop-up content */
+  }
+  

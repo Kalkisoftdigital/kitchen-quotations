@@ -1,0 +1,225 @@
+mat-tab-group {
+    height: 1000px;
+    overflow: hidden;
+
+    mat-tab {
+        .mat-tab-label1 {}
+
+        .mat-tab-label2 {}
+
+        .mat-tab-label3 {}
+
+        .mat-tab-labels {
+            height: 100%;
+            overflow-y: auto;
+        }
+    }
+}
+
+.md-badge {
+    position: absolute;
+    right: -14px;
+
+
+    @media (max-width: 768px) {
+        position: absolute;
+        right: -14px;
+        // top: 19%;
+        // left: 0%;
+        // transform: translate(-50%, -50%);
+    }
+}
+
+.mat-badge-content {
+    background: white;
+    color: blue;
+}
+
+/* CSS */
+
+.follow-container {
+    padding: 15px 10px 10px 40px !important;
+
+    @media (max-width: 380px) {
+        font-size: 12px;
+    }
+
+    .followUp {
+        color: green;
+    }
+
+    .meeting {
+        color: #101495;
+    }
+
+    .follow-stepper {
+        display: flex;
+        flex-direction: column;
+
+
+        .follow-step {
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+
+            .description {
+                padding-left: 21px;
+                display: flex;
+                flex-direction: row;
+                justify-content: flex-start;
+
+                .rightSide {
+                    padding-right: 10px;
+                }
+
+                .leftSide {
+                    padding-left: 10px;
+                }
+            }
+        }
+
+        .follow-circle {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: #0d6efd;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .follow-label {
+            margin-left: 20px;
+            margin-top: -19px;
+
+            .each-detail {
+                font-weight: 500;
+            }
+        }
+
+        .follow-line {
+            width: 1px;
+            background-color: #0d6efd;
+            flex-grow: 1;
+            height: 56px;
+            margin-left: 5px;
+            margin-top: -28px;
+            margin-bottom: 2px;
+
+            @media (min-width: 381px) and (max-width: 665px) {
+                height: 76px;
+                margin-top: -51px;
+            }
+
+            @media (max-width: 380px) {
+                margin-top: -33px;
+            }
+        }
+
+        .uploadDocs-line {
+            width: 1px;
+            background-color: #0d6efd;
+            flex-grow: 1;
+            height: 49px !important;
+            margin-left: 5px;
+            margin-top: -40px !important;
+            margin-bottom: 1px;
+        }
+
+    }
+}
+
+/* --------------------------COMPANY------------------ */
+.detail-container {
+    padding: 5px 10px 10px 40px !important;
+    display: flex;
+    flex-direction: row;
+
+    .stepper {
+        display: flex;
+        flex-direction: column;
+
+
+        .step {
+            display: flex;
+            align-items: center;
+        }
+
+        .circle {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: #0d6efd;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .label {
+            margin-left: 10px;
+
+            .each-detail {
+                font-weight: 500;
+            }
+        }
+
+        .line {
+            width: 1px;
+            background-color: #0d6efd;
+            flex-grow: 1;
+            height: 19px;
+            margin-left: 5px;
+            margin-top: -5px;
+            margin-bottom: -5px;
+        }
+
+    }
+
+    .pdf-icon {
+        cursor: pointer;
+        margin-bottom: 5px;
+    }
+
+    @media (max-width: 768px) {
+        display: flex;
+        flex-direction: column;
+
+    }
+}
+
+/* --------------------------COMPANY------------------ */
+
+::ng-deep .mat-tab-labels {
+
+    padding: 5px 10px 10px 10px !important;
+
+}
+
+::ng-deep .mat-mdc-tab.mdc-tab--active .mdc-tab__text-label {
+    color: green !important;
+}
+
+::ng-deep .mat-mdc-tab.mdc-tab--active:hover .mdc-tab-indicator__content--underline,
+::ng-deep .mat-mdc-tab.mdc-tab--active .mdc-tab-indicator__content--underline {
+    border-color: green !important;
+}
+
+.details-header {
+    display: flex;
+    flex-direction: row;
+
+    .mdc-dialog__title {
+        padding: 0px 10px 0px 10px !important;
+        font-size: large;
+    }
+
+    .material-icons-container {
+        display: flex;
+        justify-content: flex-end;
+
+        .material-icons {
+            margin-top: 19px;
+            padding: 0px 10px 0px 10px !important;
+        }
+    }
+}

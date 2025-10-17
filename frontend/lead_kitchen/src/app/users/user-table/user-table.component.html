@@ -1,0 +1,165 @@
+<div *ngIf="isLoading">
+  <app-loader></app-loader>
+</div>
+<div class="col-xl-12">
+  <app-card cardTitle="" [options]="false" blockClass="table-border-style">
+
+    <div class="smallContainer">
+      <div class="col-md-6 List-of-Talukas">
+        <p class="Talukas">List of Users</p>
+        <p class="TalukasResponsive">Users</p>
+      </div>
+      <!-- Inside your smallContainer div -->
+      <div class="col-md-6 opennewPopup" *ngIf="canAddUser()">
+        <button *ngIf="canAddUser()" mat-raised-button color="primary" class="customer-popup" (click)="openForm()">
+          <i class="fa fa-plus" aria-hidden="true"></i> Add User
+        </button>
+      </div>
+    </div>
+
+
+    <!------------------------------- table --------------------------------->
+
+
+    <!-- SEARCH -->
+    <!-- <div class="search">
+      <mat-form-field class="col-12 col-md-12">
+        <mat-label>Search</mat-label>
+        <input matInput (keyup)="applyFilter($event)">
+      </mat-form-field>
+    </div> -->
+    <!-- table -->
+    <div class="table-responsive-wrapper">
+    <div class="table-responsive">
+      <table mat-table [dataSource]="dataSource" matSort (matSortChange)="announceSortChange($event)"
+        class="mat-elevation-z0">
+
+        <!-- Position Column -->
+        <!-- <ng-container matColumnDef="id">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by number">
+           S/N
+          </th>
+          <td mat-cell *matCellDef="let element; let i = index"> {{(p - 1) * itemsPerPage + i + 1}} </td>
+        </ng-container> -->
+
+        <!-- Position Column -->
+        <ng-container matColumnDef="created_id">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by created_id">
+            Id
+          </th>
+          <td mat-cell *matCellDef="let element" [ngClass]="{
+            'statusRedColor': element.created_id === null
+          }">
+            {{element.created_id ? element.created_id : 'N/A'}} </td>
+        </ng-container>
+
+        <!-- Position Column -->
+        <ng-container matColumnDef="select_company">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by select_company">
+            Company
+          </th>
+          <td mat-cell *matCellDef="let element" class="truncate"
+            matTooltip="{{element.select_company ? element.select_company : 'N/A'}}"> {{element.select_company ?
+            element.select_company : 'N/A' }} </td>
+        </ng-container>
+
+        <!-- Weight Column -->
+        <ng-container matColumnDef="fullName">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by fullName"
+            class="full-name">
+            Full Name
+          </th>
+          <td mat-cell *matCellDef="let element"> {{element.firstName}} {{element.lastName}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="email">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by email">
+            Email
+          </th>
+          <td mat-cell *matCellDef="let element" class="truncate"
+            matTooltip="{{element.email ? element.email : 'N/A'}}"> {{element.email ? element.email : 'N/A'}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="lastName">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by lastName">
+            Business Name
+          </th>
+          <td mat-cell *matCellDef="let element"> {{element.lastName}} </td>
+        </ng-container>
+        <!-- <ng-container matColumnDef="phoneNo">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by number">
+            Phone No.
+          </th>
+          <td mat-cell *matCellDef="let element"> {{element.phoneNo}} </td>
+        </ng-container> -->
+
+        <ng-container matColumnDef="designation">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by designation">
+            Designation
+          </th>
+          <td mat-cell *matCellDef="let element" class="truncate"
+            matTooltip="{{element.designation ? element.designation : 'N/A'}}"> {{element.designation ?
+            element.designation : 'N/A'}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="role">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by role" class="role">
+            Role
+          </th>
+          <td mat-cell *matCellDef="let element">
+            <!-- use highlighted for color to appear-->
+            <mat-chip [color]="getIcon(element.role).color" highlighted>
+              <mat-icon role="img" class="mat-icon notranslate material-icons mat-icon-no-color" aria-hidden="true"
+                data-mat-icon-type="font">
+                {{ getIcon(element.role).name }}
+              </mat-icon>
+              <span class="material-chip">{{ element.role }}</span>
+            </mat-chip>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="status">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by status">
+            Status
+          </th>
+          <td mat-cell *matCellDef="let element" [ngClass]="{'statusRedColor' : element.status ==='inactive' }">
+            {{element.status === 'active' ? 'Active' : 'Inactive' }} </td>
+        </ng-container>
+
+
+        <ng-container matColumnDef="action">
+          <th mat-header-cell *matHeaderCellDef sortActionDescription="Sort by number" class="action">
+            Action
+          </th>
+          <td mat-cell *matCellDef="let element" class="action">
+            <div class="action-container">
+
+              <span class='material-icons matEditIcon' (click)="editCustomer(element.id)">edit</span>
+              <span class="material-icons matDeleteIcon"
+                (click)="deleteUser(element.id, element.fullname)">delete_outline</span>
+            </div>
+          </td>
+        </ng-container>
+
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+      <!-- <div class="row download-file">
+        <div class="col-md-8 col-12 cont-pagination">
+          <div class="items-per-page-dropdown">
+            <label for="itemsPerPage">Users Per Page:&nbsp;</label>
+            <select id="itemsPerPage" [(ngModel)]="selectedItemsPerPage" (change)="onItemsPerPageChange()">
+              <option *ngFor="let option of itemsPerPageOptions" [value]="option">
+                {{ option }}
+              </option>
+            </select>
+          </div>
+          <ngb-pagination [(page)]="p" [pageSize]="itemsPerPage" [collectionSize]="totalItems"
+            (pageChange)="onPageChange($event)" [maxSize]="5" [boundaryLinks]="true"></ngb-pagination>
+        </div>
+      </div> -->
+    </div>
+  </div>
+  </app-card>
+</div>

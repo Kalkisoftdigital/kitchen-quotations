@@ -1,0 +1,281 @@
+<div class="details-header">
+  <div class="col-6">
+    <p mat-dialog-title>Details</p>
+  </div>
+  <div class="col-6 material-icons-container">
+    <span class="material-icons" mat-dialog-close>close</span>
+  </div>
+</div>
+<mat-tab-group>
+
+
+  <mat-tab>
+    <ng-template mat-tab-label>
+      <mat-icon>query_builder</mat-icon> &nbsp;Meeting/Follow-ups
+      <!-- <span class="md-badge" matBadge="{{ followUpsCount }}"
+        matBadgeColor="warn"></span> -->
+    </ng-template>
+
+    <div class="follow-container">
+      <div class="follow-stepper" *ngFor="let detail of mainTableData.details; let last = last">
+        <div class="follow-step" *ngIf="detail.status === 'Follow Up' || detail.status === 'Meeting'"
+          [ngClass]="{ 'meeting':detail.status === 'Meeting', 'followUp': detail.status === 'Follow Up' }">
+          <div class="col-12 col-md-12">
+            <div class="follow-circle"></div>
+            <div class="follow-label">Date: <span class="each-detail">{{ formatTime(detail.time) }}</span></div>
+          </div>
+          <div class="description col-md-12 col-12">
+            <div col-md-6 col-6 class="rightSide">Status: <span class="each-detail">{{ detail.status ? detail.status :
+                'NA' }}</span></div>
+            <div col-md-6 col-6 class="leftSide">Remark: <span class="each-detail">{{ detail.remark ? detail.remark :
+                'NA' }}</span></div>
+          </div>
+        </div>
+        <div *ngIf="!last && (detail.status === 'Follow Up' || detail.status === 'Meeting')" class="follow-line"></div>
+        <div *ngIf="!last" class="line"></div> <!-- Add this line -->
+      </div>
+    </div>
+
+  </mat-tab>
+
+  <mat-tab>
+    <ng-template mat-tab-label>
+      <mat-icon>note_alt</mat-icon> &nbsp;Notes
+      <!-- <span class="md-badge" matBadge="{{ notesCount }}"
+        matBadgeColor="warn"></span> -->
+    </ng-template>
+
+    <div class="follow-container">
+      <div class="follow-stepper" *ngFor="let detail of mainTableData.details; let last = last">
+        <div class="follow-step" *ngIf="detail.status === 'Note'">
+          <div class="col-12 col-md-12">
+            <div class="follow-circle"></div>
+            <div class="follow-label">Date: <span class="each-detail">{{ detail.date ? (detail.date | date:
+                'dd-MM-yyyy') : 'NA' }}</span></div>
+          </div>
+          <div class="description col-md-12 col-12">
+            <div col-md-6 col-6 class="rightSide">Status: <span class="each-detail">{{ detail.status ? detail.status :
+                'NA' }}</span></div>
+            <div col-md-6 col-6 class="leftSide">Remark: <span class="each-detail">{{ detail.remark ? detail.remark :
+                'NA' }}</span></div>
+
+          </div>
+        </div>
+        <div *ngIf="!last && detail.status === 'Note'" class="follow-line"></div>
+
+      </div>
+    </div>
+
+
+    <!-- <div class="mat-tab-label3 mat-tab-labels">
+      <div *ngIf="mainTableData.details && mainTableData.details.length">
+        <div *ngFor="let detail of mainTableData.details; let last = last">
+          <div *ngIf="detail.status === 'Note'">
+            <p>{{ detail.remark }}</p>
+          </div>
+        </div>
+      </div>
+    </div> -->
+  </mat-tab>
+
+
+  <mat-tab>
+    <ng-template mat-tab-label>
+      <mat-icon>upload</mat-icon> &nbsp;Uploads: Doc/PO
+      <!-- <span class="md-badge" matBadge="{{ uploadsCount }}"
+        matBadgeColor="warn"></span> -->
+    </ng-template>
+
+    <div class="follow-container">
+      <div class="follow-stepper" *ngFor="let detail of mainTableData.details; let last = last">
+        <div class="follow-step" *ngIf="detail.status === 'Document Upload'">
+          <div class="col-12 col-md-12">
+            <div class="follow-circle"></div>
+            <div class="follow-label">
+              Date:
+              <span class="each-detail">
+                {{ detail.date ? (detail.date | date: 'dd-MM-yyyy') : 'NA' }}
+              </span>
+            </div>
+          </div>
+          <div class="description col-md-12 col-12">
+            <div class="col-md-8 col-6 rightSide">
+              Document:
+              <span class="each-detail">
+                <ng-container *ngIf="detail.enquiryId === mainTableData.id && detail.member_files">
+                  <ng-container *ngFor="let file of detail.member_files.split(',')">
+                    <button mat-stroked-button color="primary">
+
+
+                      <a [href]="'https://kitchen-backend-2.cloudjiffy.net/uploads/' + file.trim().replace('\\', '/')" target="_blank">{{
+                        file.trim() }}</a>
+                    </button>
+                    <span *ngIf="!last && file !== detail.member_files.split(',').slice(-1)[0]">, </span>
+                  </ng-container>
+                </ng-container>
+                <span *ngIf="detail.enquiryId !== mainTableData.id || !detail.member_files">NA</span>
+              </span>
+            </div>
+            <div class="col-md-4 col-6 leftSide">
+              Remark:
+              <span class="each-detail">
+                {{ detail.remark ? detail.remark : 'NA' }}
+              </span>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="!last && detail.status === 'Document Upload'" class="follow-line uploadDocs-line"></div>
+      </div>
+    </div>
+
+
+
+
+  </mat-tab>
+
+  <mat-tab>
+    <ng-template mat-tab-label>
+      <mat-icon>business</mat-icon> &nbsp;Company
+    </ng-template>
+    <div class="detail-container">
+
+      <div class="left col-md-6 col-12">
+        <div class="stepper">
+
+          <div class="step">
+            <div class="circle"></div>
+            <div class="label">ID: <span class="each-detail">{{ mainTableData.id ? mainTableData.id : 'NA' }}</span>
+            </div>
+          </div>
+          <div class="line"></div>
+          <div class="step">
+            <div class="circle"></div>
+            <div class="label">Owner Name: <span class="each-detail">{{ mainTableData.name ? mainTableData.name : 'NA'
+                }}</span></div>
+          </div>
+          <div class="line"></div>
+          <div class="step">
+            <div class="circle"></div>
+            <div class="label">Business Name: <span class="each-detail">{{ mainTableData.business_name ?
+                mainTableData.business_name : 'NA' }}</span></div>
+          </div>
+
+          <div class="line"></div>
+
+          <div class="step">
+            <div class="circle"></div>
+            <div class="label">Product/Service: <span class="each-detail">{{ mainTableData.product_service ?
+                mainTableData.product_service : 'NA' }}</span>
+            </div>
+          </div>
+          <div class="line"></div>
+          <div class="step">
+            <div class="circle"></div>
+            <div class="label">Contact Person: <span class="each-detail">{{ mainTableData.contact_person ?
+                mainTableData.contact_person : 'NA' }}</span>
+            </div>
+          </div>
+          <div class="line"></div>
+          <div class="step">
+            <div class="circle"></div>
+            <div class="label">Contact No: <span class="each-detail">{{ mainTableData.contact_number ?
+                mainTableData.contact_number : 'NA' }}</span></div>
+          </div>
+
+
+          <div class="line"></div>
+          <div class="step">
+            <div class="circle"></div>
+            <div class="label">Address: <span class="each-detail">{{ mainTableData.address ? mainTableData.address :
+                'NA' }}</span></div>
+          </div>
+
+          <div class="line"></div>
+          <div class="step">
+            <div class="circle"></div>
+            <div class="label">Email Id: <span class="each-detail">{{ mainTableData.email ? mainTableData.email : 'NA'
+                }}</span></div>
+          </div>
+          <div class="line"></div>
+
+
+          <div class="step">
+            <div class="circle"></div>
+            <div class="label">State: <span class="each-detail">{{ mainTableData.select_state ?
+                mainTableData.select_state : 'NA' }}</span></div>
+          </div>
+
+          <div class="line"></div>
+          <div class="step">
+            <div class="circle"></div>
+            <div class="label">City: <span class="each-detail">{{ mainTableData.select_city ? mainTableData.select_city
+                : 'NA' }}</span></div>
+          </div>
+
+          <div class="line"></div>
+          <div class="step">
+            <div class="circle"></div>
+            <div class="label">Status: <span class="each-detail">{{ mainTableData.status_main ?
+                mainTableData.status_main : 'NA' }}</span></div>
+          </div>
+          <div class="line"></div>
+
+          <div class="step">
+            <div class="circle"></div>
+            <div class="label">Gst in: <span class="each-detail">{{ mainTableData.gst_in ? mainTableData.gst_in : 'NA'
+                }}</span></div>
+          </div>
+
+          <div class="line"></div>
+          <div class="step">
+            <div class="circle"></div>
+            <div class="label">Created On: <span class="each-detail">{{ mainTableData.createdOn | date: 'dd-MM-yyyy'
+                }}</span></div>
+          </div>
+
+
+
+        </div>
+      </div>
+
+      <div class="right col-md-6 col-12">
+        <div class="stepper">
+          <div class="step">
+            <div class="label">
+              View Quotations: 
+              <div *ngIf="quotationSent">
+                <div *ngFor="let url of quotationPrintUrls; let i = index">
+                  <span class="each-detail">ID - QUOTE {{ serviceQuotationIds[i] }}, 
+                    {{ quotationDates[i] | date: 'dd-MM-yyyy' }}
+                    <button mat-raised-button color="primary" (click)="openQuotationPrint(url)" class="pdf-icon">View</button>
+                  </span>
+                </div>
+              </div>
+              <span *ngIf="!quotationSent">Not Sent</span>
+            </div>
+          </div>
+          
+          <!-- <div class="step">
+            <div class="label">
+              Product Quotations: 
+              <div *ngIf="productQuotationSent">
+                <div *ngFor="let url of productQuotationPrintUrls; let i = index">
+                  <span class="each-detail">ID - PROD {{ productQuotationIds[i] }}, 
+                    {{ productQuotationDates[i] | date: 'dd-MM-yyyy' }}
+                    <button mat-raised-button color="primary" (click)="openQuotationPrint(url)" class="pdf-icon">View</button>
+                  </span>
+                </div>
+              </div>
+              <span *ngIf="!productQuotationSent">Not Sent</span>
+            </div>
+          </div> -->
+        </div>
+      </div>
+      
+
+
+
+    </div>
+  </mat-tab>
+
+</mat-tab-group>

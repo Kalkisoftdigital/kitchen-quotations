@@ -1,0 +1,67 @@
+<p mat-dialog-title>Schedule Meeting</p>
+<form [formGroup]="appointmentForm" (ngSubmit)="scheduleMeeting()">
+
+    <mat-dialog-content>
+        <div class="formContainer">
+            <div class="col-md-6 col-12 ltSide">
+                <mat-form-field appearance="outline" class="mat-form-fields">
+                    <mat-label>Title</mat-label>
+                    <input matInput placeholder="Title" formControlName="summary">
+                </mat-form-field>
+            </div>
+
+            <div class="col-md-6 col-12 RtSide ">
+                <mat-form-field appearance="outline" class="mat-form-fields">
+                    <mat-label>Description</mat-label>
+                    <textarea matInput rows="1" placeholder="Description" formControlName="description"></textarea>
+                </mat-form-field>
+            </div>
+        </div>
+
+        <div class="formContainer">
+            <div class="col-md-6 col-12 ltSide">
+                <div class="form-group">
+
+                    <mat-form-field appearance="outline" class="mat-form-fields">
+                        <mat-label>Location</mat-label>
+                        <input matInput placeholder="Location" formControlName="location">
+                    </mat-form-field>
+                </div>
+
+            </div>
+
+            <div class="col-md-6 col-12 RtSide">
+                <mat-form-field appearance="outline" class="mat-form-fields">
+                    <mat-label>Email</mat-label>
+                    <input matInput placeholder="Email" id="email" formControlName="email">
+                </mat-form-field>
+            </div>
+        </div>
+
+
+        <div class="formContainer">
+            <div class="col-md-12 col-12 meeting-container">
+
+                <div class="col-md-6 col-12 ltSides">
+                    <div class="form-group">
+                        <label for="appointmentTime" class="meeting-time" >Meeting Date and Time</label>
+                    </div>
+
+                </div>
+
+                <div class="col-md-6 col-12 RtSides">
+                    <div class="form-group">
+                        <input type="datetime-local" id="appointmentTime" formControlName="appointmentTime" />
+                    </div>
+                </div>
+
+            </div>
+
+
+        </div>
+    </mat-dialog-content>
+    <mat-dialog-actions>
+        <button type="submit" mat-stroked-button color="primary">Save</button>
+        <button mat-stroked-button color="warn" mat-dialog-close (click)="goBack()">Close</button>
+    </mat-dialog-actions>
+</form>

@@ -1,0 +1,128 @@
+<div class="col-xl-12">
+  <app-card cardTitle="" [options]="false" blockClass="table-border-style">
+    <div class="smallContainer">
+      <div class="col-md-6 List-of-Talukas">
+        <p class="Talukas">Company Details</p>
+        <p class="TalukasResponsive">Details</p>
+      </div>
+      <!-- Inside your smallContainer div -->
+      <div class="col-md-6 opennewPopup">
+        <button *ngIf="userRole == 'kalkisoft'" mat-raised-button color="primary" class="customer-popup" (click)="openForm()">
+          <i class="fa fa-plus" aria-hidden="true"></i> Add company
+        </button>
+      </div>
+    </div>
+
+    <!-- Add this at the end of your existing HTML content -->
+
+    <!------------------------------- table --------------------------------->
+
+    <!-- SEARCH -->
+    <!-- <div class="search">
+      <mat-form-field class="col-12 col-md-12">
+        <mat-label>Search</mat-label>
+        <input matInput (keyup)="applyFilter($event)">
+      </mat-form-field>
+    </div> -->
+    <!-- table -->
+    <div class="table-responsive-wrapper">
+      <div class="table-responsive">
+        <table mat-table [dataSource]="dataSource" matSort (matSortChange)="announceSortChange($event)" class="mat-elevation-z0">
+          <!-- Position Column -->
+          <ng-container matColumnDef="id">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by number"> S/N </th>
+            <td mat-cell *matCellDef="let element; let i = index"> {{ (p - 1) * itemsPerPage + i + 1 }} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="start_date">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by start_date"> Start Date </th>
+            <td mat-cell *matCellDef="let element"> {{ element.start_date | date: 'dd-MM-yyyy' }} </td>
+          </ng-container>
+
+          <!-- Symbol Column -->
+          <ng-container matColumnDef="end_date">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by end_date"> End Date </th>
+            <td mat-cell *matCellDef="let element"> {{ element.end_date | date: 'dd-MM-yyyy' }} </td>
+          </ng-container>
+
+          <!-- Name Column -->
+          <ng-container matColumnDef="companyName">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by companyName"> Company Name </th>
+            <!-- <td mat-cell *matCellDef="let element"> {{element.companyName}} </td> -->
+            <td mat-cell *matCellDef="let element" class="truncate" matTooltip="{{ element.companyName ? element.companyName : 'N/A' }}">
+              {{ element.companyName ? element.companyName : 'N/A' }}
+            </td>
+          </ng-container>
+
+          <!-- Weight Column -->
+          <ng-container matColumnDef="phoneNo">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by phoneNo"> Mobile No </th>
+            <td mat-cell *matCellDef="let element"> {{ element.phoneNo }} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="state">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by state"> state </th>
+            <td mat-cell *matCellDef="let element"> {{ element.state }} </td>
+          </ng-container>
+
+          <!-- <ng-container matColumnDef="users_allowed">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by  users_allowed">
+            Users Allowed
+          </th>
+          <td mat-cell *matCellDef="let element" class="action">
+            <div [ngClass]="{
+              
+              'alert alert-success': element.users_allowed,
+         
+            }" role="alert">
+              {{element. users_allowed}}
+            </div>
+
+
+          </td>
+        </ng-container> -->
+
+          <ng-container matColumnDef="status">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by status"> Status </th>
+            <td mat-cell *matCellDef="let element" [ngClass]="{ statusRedColor: element.status === 'inactive' }">
+              {{ element.status === 'active' ? 'Active' : 'Inactive' }}
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="Edit">
+            <th mat-header-cell *matHeaderCellDef sortActionDescription="Sort by number" class="action"> Edit </th>
+            <td mat-cell *matCellDef="let element" class="editIcon"
+              ><span class="material-icons matEditIcon" (click)="editCustomer(element.id)">edit</span>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="Delete" *ngIf="userRole == 'kalkisoft'">
+            <th mat-header-cell *matHeaderCellDef sortActionDescription="Sort by number" class="action"> Delete </th>
+
+            <td mat-cell *matCellDef="let element" class="deleteIcon"
+              ><span class="material-icons matDeleteIcon" (click)="deleteCustomer(element.id, element.companyName)">delete_outline</span>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+
+          <tr mat-row *matRowDef="let row; columns: displayedColumns" [ngClass]="{ 'row-highlight': isEndDateNear(row.end_date) }"></tr>
+        </table>
+        <!-- <div class="row download-file">
+        <div class="col-md-8 col-12 cont-pagination">
+            <div class="items-per-page-dropdown">
+                <label for="itemsPerPage">Companies Per Page:&nbsp;</label>
+                <select id="itemsPerPage" [(ngModel)]="selectedItemsPerPage" (change)="onItemsPerPageChange()">
+                    <option *ngFor="let option of itemsPerPageOptions" [value]="option">
+                        {{ option }}
+                    </option>
+                </select>
+            </div>
+            <ngb-pagination [(page)]="p" [pageSize]="itemsPerPage" [collectionSize]="totalItems"
+                (pageChange)="onPageChange($event)" [maxSize]="5" [boundaryLinks]="true"></ngb-pagination>
+        </div>
+    </div> -->
+      </div>
+    </div>
+  </app-card>
+</div>

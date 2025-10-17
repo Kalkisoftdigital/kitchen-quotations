@@ -1,0 +1,253 @@
+<div class="row">
+    <form action="" [formGroup]="companyForm" (ngSubmit)="onSubmit()">
+        <div class="col-sm-12">
+            <app-card cardTitle="User Infomation" [options]="false">
+                <div class="header-box col-12 col-md-12">
+                    <div class="header col-6 col-md-6"></div>
+                    <div class="crossIconBox col-6 col-md-6"><span class="crossIcon" (click)="goBack()">&#10006;</span>
+                    </div>
+                </div>
+
+
+                <div class="row">
+                    <div class="formContainer">
+                        <div class="col-md-6 ltSide">
+                            <div class="form-group">
+                                <mat-form-field appearance="outline" class="mat-form-fields">
+                                    <mat-label>create Id</mat-label>
+                                    <input matInput formControlName="created_id" placeholder="create Id"
+                                        maxlength="30" />
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="col-md-6 RtSide">
+                            <div class="form-group">
+                                <mat-form-field appearance="outline" class="mat-form-fields">
+                                    <mat-label>Select Company</mat-label>
+                                    <mat-select formControlName="select_company" placeholder="-- Select Company --">
+                                        <mat-option *ngFor="let customer of selectCustomer" [value]="customer.name">
+                                            {{ customer.name }} (ID: {{ customer.id }})
+                                        </mat-option>
+
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="formContainer">
+                        <div class="col-md-6 ltSide">
+                            <div class="form-group">
+                                <mat-form-field appearance="outline" class="mat-form-fields">
+                                    <mat-label>First Name</mat-label>
+                                    <input matInput formControlName="firstName" placeholder="First Name"
+                                        maxlength="30" />
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="col-md-6 RtSide">
+                            <div class="form-group">
+                                <mat-form-field appearance="outline" class="mat-form-fields">
+                                    <mat-label>Last Name</mat-label>
+                                    <input matInput formControlName="lastName" placeholder="Last Name" maxlength="30" />
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="formContainer">
+                        <div class="col-md-6 ltSide">
+                            <div class="form-group">
+                                <mat-form-field appearance="outline" class="mat-form-fields">
+                                    <mat-label>Phone No.</mat-label>
+                                    <input matInput formControlName="phoneNo" placeholder="Phone No."
+                                        (input)="onInput($event)" maxlength="10" />
+                                    <mat-error class="error-msg"
+                                        *ngIf="companyForm.get('phoneNo')?.errors?.['pattern']">
+                                        Phone number must be of 10-digit.
+
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 RtSide">
+                            <div class="form-group">
+                                <mat-form-field appearance="outline" class="mat-form-fields">
+                                    <mat-label>Email id</mat-label>
+                                    <input matInput formControlName="email" placeholder="Enter your email address"
+                                        maxlength="150" />
+                                    <mat-error class="error-msg" *ngIf="companyForm.get('email')?.errors?.['email']">
+                                        Invalid email address.
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="formContainer">
+                        <div class="col-md-6 ltSide">
+                            <div class="form-group">
+                                <mat-form-field appearance="outline" class="mat-form-fields">
+                                    <mat-label>Pan No.</mat-label>
+                                    <input matInput formControlName="panCard" placeholder="Pan No." maxlength="10" />
+                                    <mat-error class="error-msg"
+                                        *ngIf="companyForm.get('panCard')?.errors?.['pattern']">
+                                        PAN number must be in the format ABCDE1234F
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="col-md-6 RtSide">
+                            <div class="form-group">
+                                <mat-form-field appearance="outline" class="mat-form-fields">
+                                    <mat-label>Aadhar No.</mat-label>
+                                    <input matInput formControlName="aadhar" placeholder="Aadhar No."
+                                        (input)="onInput($event)" maxlength="12" />
+                                    <mat-error class="error-msg" *ngIf="companyForm.get('aadhar')?.errors?.['pattern']">
+                                        Aadhar number must be of 12-digit.
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="formContainer">
+                        <div class="col-md-6 ltSide">
+                            <div class="form-group">
+                                <mat-form-field appearance="outline" class="mat-form-fields">
+                                    <mat-label>Designation</mat-label>
+                                    <input matInput formControlName="designation" placeholder="Designation"
+                                        maxlength="30" />
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="col-md-6 RtSide">
+                            <div class="form-group">
+                                <mat-form-field appearance="outline" class="mat-form-fields">
+                                    <mat-label>Address</mat-label>
+                                    <textarea matInput formControlName="address" placeholder="Enter Address..." rows="1"
+                                        maxlength="150"></textarea>
+                                </mat-form-field>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="formContainer">
+                        <div class="col-md-6 ltSide">
+                            <div class="form-group">
+                                <mat-form-field appearance="outline" class="mat-form-fields">
+                                    <mat-label>Password</mat-label>
+                                    <input matInput formControlName="password" placeholder="Password" maxlength="30" />
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="col-md-6 RtSide">
+                            <div class="form-group">
+                                <mat-form-field appearance="outline" class="mat-form-fields">
+                                    <mat-label>Confirm Password</mat-label>
+                                    <input matInput formControlName="confirmPassword" placeholder="Confirm Password"
+                                        maxlength="30" />
+                                    <mat-error class="error-msg"
+                                        *ngIf="companyForm.get('confirmPassword')?.errors?.['passwordMismatch']">
+                                        Passwords do not match.
+                                    </mat-error>
+                                    <mat-hint class="error-msg password-match"
+                                        *ngIf="showPasswordMatchMessage && companyForm.get('confirmPassword')?.value === companyForm.get('password')?.value">
+                                        Passwords match!
+                                    </mat-hint>
+                                </mat-form-field>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="formContainer">
+                        <div class="col-md-6 ltSide">
+                            <div class="form-group">
+                                <mat-form-field appearance="outline" class="mat-form-fields">
+                                    <mat-label>Role</mat-label>
+                                    <mat-select formControlName="role">
+                                        <mat-option value="kalkisoft" *ngIf="userRole === 'kalkisoft'">Kalkisoft Super
+                                            Admin</mat-option>
+                                        <mat-option value="superadmin" id="status-field"
+                                            [class.d-none]="companyForm.get('status')?.disabled"
+                                            [class.d-none]="userRole === 'superadmin'">Super Admin</mat-option>
+                                        <mat-option value="manager">Manager</mat-option>
+                                        <mat-option value="executive">Executive</mat-option>
+                                        <mat-option value="accountant">Accountant</mat-option>
+
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="col-md-6 RtSide">
+
+                            <section class="example-section" id="status-field"
+                                [class.d-none]="companyForm.get('status')?.disabled">
+                                <mat-checkbox class="example-margin" formControlName="status"
+                                    (change)="updateStatus($event)">Status : <label class="form-check-label"
+                                        [ngClass]="{'statusRedColor' : !companyForm.get('status')?.value}">
+                                        {{ companyForm.get('status')?.value ? 'Active' : 'Inactive' }}
+                                    </label>
+                                </mat-checkbox>
+
+                            </section>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="formContainer">
+                        <div class="col-md-6 ltSide">
+
+                        </div>
+                        <div class="col-md-6 RtSide">
+
+
+                        </div>
+                    </div>
+                </div>
+
+                <!-- --------------------------------------------------------------------------------------- -->
+
+
+
+
+                <!-- ------------------------------- ------------------------------- -->
+
+                <div class="button-mainContainer row justify-content-center col-12 col-md-12">
+                    <div class="goBack-container col-4 col-md-2">
+                        <button type="submit" class="btn btn-primary" (click)="goBack()"><i
+                                class="fa fa-angle-double-left"></i>
+                            Back</button>
+                    </div>
+                    <div class="submit-container col-4 col-md-2">
+                        <button type="submit" class="btn btn-success">Submit</button>
+                    </div>
+                    <div class="reset-container col-4 col-md-2">
+                        <button type="button" class="btn btn-danger" (click)="resetForm()">Reset</button>
+                    </div>
+                </div>
+
+            </app-card>
+        </div>
+
+    </form>
+</div>

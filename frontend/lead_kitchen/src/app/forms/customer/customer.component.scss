@@ -1,0 +1,193 @@
+@mixin flex-row {
+    display: flex;
+    flex-direction: row;
+}
+
+@mixin flex-column {
+    display: flex;
+    flex-direction: column;
+}
+
+.fa-angle-double-left {
+    @media (max-width: 768px) {
+        display: none;
+    }
+}
+
+//  spinner
+.spinner:before {
+    content: '';
+    box-sizing: border-box;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 20px;
+    height: 20px;
+    margin-top: -10px;
+    margin-left: -10px;
+    border-radius: 50%;
+    border: 2px solid #ffffff;
+    border-top-color: #000000;
+    animation: spinner .8s linear infinite;
+}
+
+@keyframes spinner {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.radio-box {
+    @include flex-row;
+    margin-bottom: 17px;
+
+    @media (max-width: 768px) {
+        @include flex-row;
+    }
+}
+
+.description-box {
+    @include flex-row;
+
+    .description-box-content {
+        @include flex-row;
+    }
+
+    .del-button {
+        justify-content: center;
+        display: flex;
+
+        .deleteIcon {
+            display: flex;
+            justify-content: center;
+            align-items: center
+        }
+    }
+
+    .button-box {
+        @include flex-row;
+
+        button {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .fa-plus {
+            font-size: 20px;
+            color: #007bffcc;
+            cursor: pointer;
+        }
+
+        .fa-trash {
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        .editIcon i:hover,
+        deleteIcon i:hover {
+            transform: scale(1.2);
+            cursor: pointer;
+        }
+
+    }
+}
+
+.formContainer {
+    @include flex-row;
+
+    .ltSide {
+        padding-right: 5px;
+
+        @media (max-width: 768px) {
+            padding: 0 !important;
+        }
+    }
+
+    .RtSide {
+        padding-left: 5px;
+
+        @media (max-width: 768px) {
+            padding: 0 !important;
+        }
+    }
+
+    .add-button {
+        justify-content: center;
+        display: flex;
+        @media (max-width: 768px) {
+            display: none;
+        }
+    }
+
+    @media (max-width: 768px) {
+        @include flex-column;
+    }
+}
+
+.button-mainContainer {
+    @include flex-row;
+
+    .goBack-container {
+        display: flex;
+        justify-content: flex-end;
+        padding-right: 10px;
+    }
+
+    .submit-container {
+        display: flex;
+        justify-content: center;
+        padding-right: 10px;
+    }
+
+    .reset-container {
+        display: flex;
+        justify-content: flex-start;
+        padding-left: 10px;
+    }
+}
+
+.modal-header {
+    .close {
+        .crossIcon {
+            font-size: 20px;
+        }
+    }
+}
+
+.modal-body {
+    max-height: 450px;
+    overflow-y: auto;
+    padding: 18px;
+}
+
+::ng-deep .mdc-notched-outline {
+    height: 84% !important;
+}
+
+::ng-deep .mat-mdc-text-field-wrapper .mat-mdc-form-field-flex .mat-mdc-floating-label {
+    top: 55% !important;
+    padding-bottom: 5px;
+    font-size: 14px !important;
+}
+
+::ng-deep .mat-mdc-text-field-wrapper.mdc-text-field--outlined .mat-mdc-form-field-infix {
+    padding-top: 11px;
+    padding-bottom: 0px;
+    font-size: 14px !important;
+}
+
+::ng-deep .mat-mdc-option .mdc-list-item__primary-text {
+    font-size: 14px !important;
+}
+
+.detail-row {
+    background-color: #f5f5f5;
+    /* Example color for expanded rows */
+}
+
+::ng-deep mat-form-field {
+    ::placeholder {
+        font-size: 14px !important;
+    }
+}
